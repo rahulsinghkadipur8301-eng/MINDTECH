@@ -15,7 +15,9 @@ import {
   Maximize2,
   ArrowRight,
   Sparkles,
-  MapPin
+  MapPin,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 interface AboutPillar {
@@ -205,68 +207,77 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
         </div>
 
         {/* Major Showcase Box: Large Image (Left) + Active Card Narrative & Progress (Right) */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-emerald-200/80 shadow-md p-4 sm:p-8 lg:p-10 mb-6 sm:mb-12">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-emerald-200/80 shadow-lg p-4 sm:p-7 lg:p-9 mb-6 sm:mb-12">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
             
-            {/* Left: Large High-Resolution Visual Stage with Automated Animation (6 cols) */}
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-3xl overflow-hidden aspect-4/3 sm:aspect-16/11 bg-[#072414] border border-emerald-950/20 shadow-xl group">
+            {/* Left: Large High-Resolution Visual Stage with Automated Animation (7 cols for enlarged presence) */}
+            <div className="lg:col-span-7 relative">
+              <div className="relative rounded-3xl overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[520px] xl:min-h-[560px] w-full bg-[#072414] border border-emerald-950/20 shadow-2xl group flex flex-col justify-between">
                 
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activePillar.id}
-                    initial={{ opacity: 0, scale: 1.02 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: 'easeOut' }}
-                    className="w-full h-full"
-                  >
-                    <ImageWithFallback
-                      src={activePillar.image}
-                      fallbackSrc={activePillar.fallbackImage}
-                      alt={activePillar.title}
-                      className="w-full h-full object-cover"
-                      containerClassName="w-full h-full"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Dark Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
-
-                {/* Top Number & Tag Badge */}
-                <div className="absolute top-4 left-4 flex items-center space-x-2">
-                  <span className="px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-emerald-300 border border-emerald-400/40 text-xs font-black font-mono">
-                    PILLAR {activePillar.number}
-                  </span>
-                  <span className="hidden sm:inline-block px-3 py-1.5 rounded-full bg-emerald-950/80 backdrop-blur-md text-white border border-emerald-600/40 text-xs font-bold">
-                    Mindtech Advantage
-                  </span>
+                <div className="absolute inset-0 w-full h-full">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activePillar.id}
+                      initial={{ opacity: 0, scale: 1.03 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.97 }}
+                      transition={{ duration: 0.4, ease: 'easeOut' }}
+                      className="w-full h-full"
+                    >
+                      <ImageWithFallback
+                        src={activePillar.image}
+                        fallbackSrc={activePillar.fallbackImage}
+                        alt={activePillar.title}
+                        className="w-full h-full object-cover object-center"
+                        containerClassName="w-full h-full"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
-                {/* Lightbox Zoom Trigger */}
-                <button
-                  onClick={() => setLightboxOpen(true)}
-                  aria-label="View fullscreen photo"
-                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/70 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-emerald-600 transition-colors cursor-pointer"
-                  title="Click for full-screen inspection"
-                >
-                  <Maximize2 className="w-4 h-4" />
-                </button>
+                {/* Dark Vignette Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10 pointer-events-none" />
 
-                {/* Bottom Image Caption */}
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-xs sm:text-sm text-emerald-100 font-medium drop-shadow">
-                    {activePillar.imageCaption}
-                  </p>
+                {/* Top Number & Tag Badge */}
+                <div className="relative z-10 p-5 sm:p-6 flex items-center justify-between">
+                  <div className="flex items-center space-x-2.5">
+                    <span className="px-4 py-2 rounded-full bg-black/80 backdrop-blur-md text-emerald-300 border border-emerald-400/40 text-xs sm:text-sm font-black font-mono shadow-md">
+                      PILLAR {activePillar.number}
+                    </span>
+                    <span className="hidden sm:inline-block px-3.5 py-2 rounded-full bg-emerald-950/90 backdrop-blur-md text-white border border-emerald-600/40 text-xs font-bold shadow-md">
+                      Mindtech Advantage
+                    </span>
+                  </div>
+
+                  {/* Lightbox Zoom Trigger */}
+                  <button
+                    onClick={() => setLightboxOpen(true)}
+                    aria-label="View fullscreen photo"
+                    className="w-10 h-10 rounded-full bg-black/75 backdrop-blur-md text-white flex items-center justify-center border border-white/30 hover:bg-emerald-600 hover:scale-105 transition-all cursor-pointer shadow-lg"
+                    title="Click for full-screen inspection"
+                  >
+                    <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                </div>
+
+                {/* Bottom Image Caption & Tag */}
+                <div className="relative z-10 p-5 sm:p-6 mt-auto">
+                  <div className="bg-black/75 backdrop-blur-md rounded-2xl p-4 border border-white/20">
+                    <span className="text-[10px] sm:text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider block mb-1">
+                      Mindtech Core Capability • High Purity Standards
+                    </span>
+                    <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed drop-shadow">
+                      {activePillar.imageCaption}
+                    </p>
+                  </div>
                 </div>
 
               </div>
             </div>
 
-            {/* Right: Active Card Detailed Narrative & Progress Timeline (6 cols) */}
-            <div className="lg:col-span-6 space-y-6 text-left">
+            {/* Right: Active Card Detailed Narrative & Progress Timeline (5 cols) */}
+            <div className="lg:col-span-5 space-y-6 text-left">
               
               {/* Pillar Number & Category Header */}
               <div className="flex items-center justify-between pb-3 border-b border-gray-100">
@@ -343,8 +354,8 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                 </motion.div>
               </AnimatePresence>
 
-              {/* Inquiry Action */}
-              <div className="pt-2 flex items-center justify-between border-t border-gray-100">
+              {/* Inquiry Action & Slide Controls */}
+              <div className="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100">
                 <button
                   onClick={() => onOpenInquiry(`Inquiry: ${activePillar.title}`)}
                   className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer shadow-xs"
@@ -353,85 +364,43 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
 
-                <span className="text-xs text-emerald-800 font-semibold hidden sm:flex items-center space-x-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                  <span>Auto-cycling presentation</span>
-                </span>
+                {/* Slide Switcher Controls */}
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setActiveIndex((current) => (current - 1 + ABOUT_PILLARS.length) % ABOUT_PILLARS.length)}
+                    className="p-2 rounded-full border border-gray-200 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 hover:border-emerald-300 transition-colors cursor-pointer"
+                    aria-label="Previous capability"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  <div className="flex items-center space-x-1.5 px-1">
+                    {ABOUT_PILLARS.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveIndex(i)}
+                        className={`h-2 rounded-full transition-all cursor-pointer ${
+                          activeIndex === i ? 'w-6 bg-emerald-700' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                        }`}
+                        aria-label={`Go to slide ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => setActiveIndex((current) => (current + 1) % ABOUT_PILLARS.length)}
+                    className="p-2 rounded-full border border-gray-200 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 hover:border-emerald-300 transition-colors cursor-pointer"
+                    aria-label="Next capability"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
             </div>
 
           </div>
 
-        </div>
-
-        {/* 6 Interactive Cards Grid (ALL 6 INFORMATION ITEMS from Catalogue Reference) */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="text-sm sm:text-base font-black text-[#072414] uppercase tracking-wider">
-              All 6 Pillars of Mindtech Biotechnology
-            </h4>
-            <span className="text-xs text-gray-500 font-medium">
-              Synchronized automated rotation
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
-            {ABOUT_PILLARS.map((pillar, idx) => {
-              const isActive = activeIndex === idx;
-              const Icon = pillar.icon;
-              return (
-                <button
-                  key={pillar.id}
-                  onClick={() => handleSelectCard(idx)}
-                  className={`text-left p-5 rounded-2xl transition-all cursor-pointer border flex flex-col justify-between space-y-3 relative overflow-hidden ${
-                    isActive
-                      ? 'bg-emerald-900 text-white border-emerald-950 shadow-lg ring-2 ring-emerald-500/40 scale-[1.02]'
-                      : 'bg-white text-gray-900 hover:bg-emerald-50/70 border-gray-200/90 shadow-2xs hover:shadow-sm'
-                  }`}
-                >
-                  {/* Card Header: Number + Icon */}
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex items-center space-x-2">
-                      <span className={`text-base font-black font-mono ${isActive ? 'text-emerald-300' : 'text-emerald-800'}`}>
-                        {pillar.number}
-                      </span>
-                      <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                        isActive ? 'bg-emerald-800 text-emerald-200' : 'bg-emerald-50 text-emerald-900 border border-emerald-200'
-                      }`}>
-                        Pillar
-                      </span>
-                    </div>
-
-                    <div className={`p-2 rounded-xl ${isActive ? 'bg-emerald-800/80 text-emerald-300' : 'bg-emerald-50 text-emerald-700'}`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                  </div>
-
-                  {/* Card Title & Content */}
-                  <div>
-                    <h5 className={`text-sm sm:text-base font-black leading-snug mb-1.5 ${isActive ? 'text-white' : 'text-[#072414]'}`}>
-                      {pillar.title}
-                    </h5>
-                    <p className={`text-xs leading-relaxed line-clamp-3 ${isActive ? 'text-emerald-100/90 font-normal' : 'text-gray-600 font-normal'}`}>
-                      {pillar.description}
-                    </p>
-                  </div>
-
-                  {/* Active Indicator Bar at bottom of card */}
-                  {isActive && (
-                    <motion.div 
-                      key={`card-prog-${idx}`}
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: SLIDE_DURATION / 1000, ease: 'linear' }}
-                      className="w-full h-1 bg-emerald-400 rounded-full mt-2" 
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
         </div>
 
       </div>

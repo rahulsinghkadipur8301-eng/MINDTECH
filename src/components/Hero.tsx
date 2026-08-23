@@ -198,51 +198,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
 
       <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 w-full relative z-10">
         
-        {/* Automatic Showcase Category Tabs */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 sm:pb-5 mb-6 sm:mb-8 border-b border-gray-200/80 gap-3">
-          
-          {/* Automated Slide Category Badges */}
-          <div className="flex items-center space-x-1.5 sm:space-x-3 overflow-x-auto pb-2 sm:pb-0 scrollbar-none w-full sm:w-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-            {SHOWCASE_SLIDES.map((slide, idx) => {
-              const isActive = currentSlideIndex === idx;
-              return (
-                <button
-                  key={slide.id}
-                  onClick={() => handleSelectSlide(idx)}
-                  className={`relative px-3 sm:px-6 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs xl:text-sm font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 sm:space-x-2.5 overflow-hidden shrink-0 ${
-                    isActive
-                      ? 'bg-[#072414] text-white shadow-md shadow-emerald-950/20 ring-2 ring-emerald-500/50'
-                      : 'bg-white/90 backdrop-blur-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 border border-gray-200 shadow-2xs'
-                  }`}
-                >
-                  <span className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full ${isActive ? 'bg-emerald-400 animate-pulse' : 'bg-gray-400'}`} />
-                  <span>{slide.tabLabel}</span>
-
-                  {/* Smooth Animated Mini-Progress line inside active tab */}
-                  {isActive && (
-                    <motion.div 
-                      key={`hero-tab-${idx}`}
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: SLIDE_DURATION / 1000, ease: 'linear' }}
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Sourcing & Verification Status Pill */}
-          <div className="flex items-center space-x-2 text-[11px] sm:text-sm">
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100/90 text-emerald-950 font-bold border border-emerald-300/80 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>Direct Factory Sourcing • 100% Verified COA</span>
-            </span>
-          </div>
-
-        </div>
-
         {/* 2-Column Split: Clean High-Contrast Narrative (Left) + Large Visual Stage (Right) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
           
