@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 115" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sns-blue-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#0288D1" />
+      <stop offset="100%" stopColor="#0D47A1" />
+    </linearGradient>
+    <linearGradient id="sns-green-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#689F38" />
+      <stop offset="100%" stopColor="#8BC34A" />
+    </linearGradient>
+  </defs>
+  <path d="M 85 48 C 65 38, 70 24, 95 22 C 105 32, 100 45, 85 48 Z" fill="url(#sns-green-grad)" />
+  <path d="M 70 42 C 55 35, 62 26, 82 28 C 88 35, 82 42, 70 42 Z" fill="#9CCC65" />
+  <path d="M 115 48 C 105 25, 120 10, 128 8 C 135 15, 132 35, 115 48 Z" fill="#0D47A1" />
+  <path d="M 125 48 C 125 28, 142 16, 155 18 C 158 28, 148 42, 125 48 Z" fill="#0288D1" />
+  <path d="M 138 50 C 145 35, 162 28, 172 32 C 172 42, 158 50, 138 50 Z" fill="#03A9F4" />
+  <path d="M 148 52 C 158 44, 172 40, 180 44 C 178 50, 168 54, 148 52 Z" fill="#4FC3F7" />
+  <path d="M 60 50 C 95 62, 145 38, 180 50 C 150 56, 105 48, 60 50 Z" fill="#0288D1" />
+  <path d="M 75 58 C 105 66, 145 52, 172 58 C 145 64, 110 56, 75 58 Z" fill="#8BC34A" />
+  <text x="120" y="98" text-anchor="middle" font-family="'Times New Roman', Times, 'Cinzel', serif" font-size="28" font-weight="800" letter-spacing="2.5" fill="#0D47A1">SNS SILCOS</text>
+</svg>

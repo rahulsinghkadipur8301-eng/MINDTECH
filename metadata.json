@@ -1,0 +1,6 @@
+{
+  "name": "Mindtech Biotechnology",
+  "description": "Modern, aesthetic, minimalist landing page for Mindtech Biotechnology - Nature Beyond the Future.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fo-leaf-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#43A047" />
+      <stop offset="50%" stopColor="#4CAF50" />
+      <stop offset="100%" stopColor="#7CB342" />
+    </linearGradient>
+  </defs>
+  <path d="M 18 72 C 32 44, 52 20, 84 8 C 80 24, 70 42, 48 56 C 36 64, 26 69, 18 72 Z" fill="url(#fo-leaf-grad)" />
+  <path d="M 28 62 C 40 50, 56 46, 68 44 C 58 58, 44 68, 28 72 Z" fill="#388E3C" />
+  <path d="M 22 68 Q 50 36 80 12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+  <text x="28" y="96" font-family="system-ui, -apple-system, sans-serif" font-size="29" font-weight="800" letter-spacing="0.5" fill="#1E40AF">FINE ORGANICS</text>
+</svg>
