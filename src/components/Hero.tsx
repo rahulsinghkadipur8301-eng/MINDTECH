@@ -199,23 +199,23 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
       <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 w-full relative z-10">
         
         {/* Automatic Showcase Category Tabs */}
-        <div className="flex items-center justify-between pb-5 mb-8 border-b border-gray-200/80 flex-wrap gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 sm:pb-5 mb-6 sm:mb-8 border-b border-gray-200/80 gap-3">
           
           {/* Automated Slide Category Badges */}
-          <div className="flex items-center space-x-2 sm:space-x-3 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+          <div className="flex items-center space-x-1.5 sm:space-x-3 overflow-x-auto pb-2 sm:pb-0 scrollbar-none w-full sm:w-auto -mx-4 px-4 sm:mx-0 sm:px-0">
             {SHOWCASE_SLIDES.map((slide, idx) => {
               const isActive = currentSlideIndex === idx;
               return (
                 <button
                   key={slide.id}
                   onClick={() => handleSelectSlide(idx)}
-                  className={`relative px-4 sm:px-6 py-2.5 rounded-full text-xs xl:text-sm font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap flex items-center space-x-2.5 overflow-hidden ${
+                  className={`relative px-3 sm:px-6 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs xl:text-sm font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 sm:space-x-2.5 overflow-hidden shrink-0 ${
                     isActive
                       ? 'bg-[#072414] text-white shadow-md shadow-emerald-950/20 ring-2 ring-emerald-500/50'
-                      : 'bg-white/85 backdrop-blur-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 border border-gray-200 shadow-2xs'
+                      : 'bg-white/90 backdrop-blur-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 border border-gray-200 shadow-2xs'
                   }`}
                 >
-                  <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-emerald-400 animate-pulse' : 'bg-gray-400'}`} />
+                  <span className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full ${isActive ? 'bg-emerald-400 animate-pulse' : 'bg-gray-400'}`} />
                   <span>{slide.tabLabel}</span>
 
                   {/* Smooth Animated Mini-Progress line inside active tab */}
@@ -234,9 +234,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
           </div>
 
           {/* Sourcing & Verification Status Pill */}
-          <div className="flex items-center space-x-3 text-xs sm:text-sm">
-            <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-emerald-100/90 text-emerald-950 font-bold border border-emerald-300/80 shadow-2xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+          <div className="flex items-center space-x-2 text-[11px] sm:text-sm">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100/90 text-emerald-950 font-bold border border-emerald-300/80 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               <span>Direct Factory Sourcing • 100% Verified COA</span>
             </span>
           </div>
@@ -297,10 +297,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
             </AnimatePresence>
 
             {/* Action CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-2 w-full">
               <button
                 onClick={() => handleCtaClick(activeSlide.ctaAction, activeSlide.tabLabel)}
-                className="inline-flex items-center space-x-2.5 px-7 py-4 rounded-full bg-[#072414] hover:bg-[#0c3c22] text-white font-black text-xs sm:text-sm xl:text-base uppercase tracking-wider transition-all shadow-md hover:shadow-lg cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl sm:rounded-full bg-[#072414] hover:bg-[#0c3c22] text-white font-black text-xs sm:text-sm xl:text-base uppercase tracking-wider transition-all shadow-md hover:shadow-lg cursor-pointer text-center"
               >
                 <span>{activeSlide.ctaLabel}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -309,7 +309,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
               <button
                 onClick={handleDownloadPdf}
                 disabled={isDownloading}
-                className="inline-flex items-center space-x-2.5 px-6 py-4 rounded-full bg-white hover:bg-emerald-50 border border-gray-300 text-gray-800 font-bold text-xs sm:text-sm xl:text-base tracking-wider uppercase transition-colors cursor-pointer shadow-2xs disabled:opacity-75"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl sm:rounded-full bg-white hover:bg-emerald-50 border border-gray-300 text-gray-800 font-bold text-xs sm:text-sm xl:text-base tracking-wider uppercase transition-colors cursor-pointer shadow-2xs disabled:opacity-75 text-center"
               >
                 {isDownloading ? (
                   <>

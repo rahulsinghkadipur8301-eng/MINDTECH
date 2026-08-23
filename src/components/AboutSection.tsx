@@ -175,37 +175,37 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
         initialIndex={activeIndex}
       />
 
-      <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="max-w-[1720px] mx-auto px-3.5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         
         {/* Section Header: Mindtech Corporate Identity & Theme */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 sm:gap-6">
           <div>
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-emerald-100/90 text-emerald-950 text-xs sm:text-sm font-black uppercase tracking-wider mb-3 border border-emerald-300/60 shadow-2xs">
-              <Sparkles className="w-4 h-4 text-emerald-800" />
+            <div className="inline-flex items-center space-x-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-emerald-100/90 text-emerald-950 text-[11px] sm:text-xs md:text-sm font-black uppercase tracking-wider mb-2.5 sm:mb-3 border border-emerald-300/60 shadow-2xs">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-800" />
               <span>NATURE BEYOND THE FUTURE</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#072414] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#072414] tracking-tight leading-tight">
               About Mindtech Biotechnology
             </h2>
-            <p className="mt-2 text-base sm:text-lg text-gray-700 max-w-4xl font-normal leading-relaxed">
+            <p className="mt-2 text-sm sm:text-base md:text-lg text-gray-700 max-w-4xl font-normal leading-relaxed">
               A trusted importer and distributor of specialty personal care raw materials, combining direct global manufacturing channels with responsive domestic technical and logistics support.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
-            <div className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-emerald-950 bg-emerald-50 px-4 py-2.5 rounded-full border border-emerald-200 shadow-2xs">
-              <Building2 className="w-4 h-4 text-emerald-700" />
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 self-start md:self-auto">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-[11px] sm:text-xs md:text-sm font-bold text-emerald-950 bg-emerald-50 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-emerald-200 shadow-2xs">
+              <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700" />
               <span>MSME: {COMPANY_DETAILS.regulatory.msmeNo}</span>
             </div>
-            <div className="flex items-center space-x-2 text-xs sm:text-sm font-semibold text-gray-700 bg-white px-4 py-2.5 rounded-full border border-gray-200 shadow-2xs">
-              <MapPin className="w-4 h-4 text-emerald-700" />
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-[11px] sm:text-xs md:text-sm font-semibold text-gray-700 bg-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-gray-200 shadow-2xs">
+              <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700" />
               <span>Bawana Hub, Delhi</span>
             </div>
           </div>
         </div>
 
         {/* Major Showcase Box: Large Image (Left) + Active Card Narrative & Progress (Right) */}
-        <div className="bg-white rounded-3xl border border-emerald-200/80 shadow-md p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-emerald-200/80 shadow-md p-4 sm:p-8 lg:p-10 mb-6 sm:mb-12">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             

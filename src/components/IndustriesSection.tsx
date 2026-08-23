@@ -64,40 +64,40 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenInqu
         initialIndex={lightboxIndex}
       />
 
-      <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="max-w-[1720px] mx-auto px-3.5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-100/80 text-emerald-950 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2">
-              <FlaskConical className="w-4 h-4 text-emerald-800" />
+            <div className="inline-flex items-center space-x-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-emerald-100/80 text-emerald-950 text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wider mb-2">
+              <FlaskConical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-800" />
               <span>Cosmetic & Personal Care Formulations</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#072414] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#072414] tracking-tight leading-tight">
               Business Lines & Industry Sectors
             </h2>
-            <p className="mt-2 text-base text-gray-600 max-w-3xl font-normal">
+            <p className="mt-2 text-sm sm:text-base text-gray-600 max-w-3xl font-normal">
               High-purity specialty ingredients, bio-fermented actives, specialty emulsifiers, and sensory fluids tailored for distinct formulation matrices.
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex items-center space-x-2 overflow-x-auto pb-1 max-w-full">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto pb-1 max-w-full -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scrollbar-none">
             <button
               onClick={() => setSelectedFilter('all')}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 selectedFilter === 'all'
                   ? 'bg-[#072414] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
-              All Business Lines ({INDUSTRY_SEGMENTS.length})
+              All Lines ({INDUSTRY_SEGMENTS.length})
             </button>
             {INDUSTRY_SEGMENTS.map(seg => (
               <button
                 key={seg.id}
                 onClick={() => setSelectedFilter(seg.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+                className={`px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 shrink-0 ${
                   selectedFilter === seg.id
                     ? 'bg-[#072414] text-white shadow-xs'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'

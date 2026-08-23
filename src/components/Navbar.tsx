@@ -81,17 +81,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-xs border-b border-gray-200 transition-all duration-300">
       {/* Main Navigation Bar */}
       <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        <div className="flex items-center justify-between h-20 sm:h-22">
+        <div className="flex items-center justify-between h-20 sm:h-24 lg:h-26">
           
-          {/* Left: Brand Logo with Official Tagline */}
+          {/* Left: Brand Logo with Prominent Sizing */}
           <a 
             href="#hero" 
-            className="flex items-center group shrink-0 py-1" 
+            className="flex items-center group shrink-0 py-2" 
             id="mindtech-main-logo"
             aria-label="Mindtech Biotechnology Home"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              const hero = document.getElementById('hero');
+              if (hero) {
+                hero.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
           >
-            <Logo height={72} variant="horizontal" className="transition-transform duration-300 group-hover:scale-[1.02]" />
+            <Logo 
+              variant="horizontal" 
+              className="h-12 sm:h-16 lg:h-18 w-auto transition-transform duration-300 group-hover:scale-[1.02]" 
+            />
           </a>
 
           {/* Desktop Navigation Links */}
@@ -275,7 +284,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 top-[80px] sm:top-[88px] bg-black/40 backdrop-blur-xs z-40 lg:hidden"
+              className="fixed inset-0 top-[80px] sm:top-[96px] lg:top-[104px] bg-black/40 backdrop-blur-xs z-40 lg:hidden"
               aria-hidden="true"
             />
 
@@ -285,7 +294,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
               animate={{ opacity: 1, y: 0, height: 'auto' }}
               exit={{ opacity: 0, y: -16, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed inset-x-0 top-[80px] sm:top-[88px] max-h-[calc(100vh-6rem)] overflow-y-auto bg-white border-b border-gray-200 shadow-2xl z-50 lg:hidden"
+              className="fixed inset-x-0 top-[80px] sm:top-[96px] lg:top-[104px] max-h-[calc(100vh-5.5rem)] overflow-y-auto bg-white border-b border-gray-200 shadow-2xl z-50 lg:hidden"
             >
               <div className="px-5 py-5 space-y-4">
                 

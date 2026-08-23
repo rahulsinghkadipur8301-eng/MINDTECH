@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 interface LogoProps {
   className?: string;
@@ -11,27 +11,38 @@ export const Logo: React.FC<LogoProps> = ({
   className = '',
   variant = 'horizontal',
   theme = 'light',
-  height = 56
+  height
 }) => {
+  const uniqueId = useId().replace(/:/g, '_');
   const isDark = theme === 'dark';
+
+  const gradPrimary = `mt_grad_pri_${uniqueId}`;
+  const gradLeaf = `mt_grad_leaf_${uniqueId}`;
+  const gradTech = `mt_grad_tech_${uniqueId}`;
+
+  // Helper to format height for CSS / SVG style if explicitly provided
+  const heightStyle = height ? (typeof height === 'number' ? `${height}px` : height) : undefined;
 
   if (variant === 'monogram') {
     return (
-      <div className={`inline-flex items-center justify-center ${className}`}>
+      <div 
+        className={`inline-flex items-center justify-center shrink-0 ${className}`} 
+        style={heightStyle ? { height: heightStyle } : undefined}
+      >
         <svg
           viewBox="0 0 160 140"
-          className="w-auto"
-          style={{ height }}
+          style={{ height: '100%', width: 'auto', aspectRatio: '160/140' }}
+          className="block select-none max-h-full"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            <linearGradient id="mt-grad-mono" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id={gradPrimary} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#072414" />
-              <stop offset="50%" stopColor="#126b34" />
+              <stop offset="50%" stopColor="#106b32" />
               <stop offset="100%" stopColor="#2ba03f" />
             </linearGradient>
-            <linearGradient id="leaf-grad-mono" x1="0%" y1="100%" x2="100%" y2="0%">
+            <linearGradient id={gradLeaf} x1="0%" y1="100%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#107c41" />
               <stop offset="100%" stopColor="#48c056" />
             </linearGradient>
@@ -40,8 +51,8 @@ export const Logo: React.FC<LogoProps> = ({
           {/* Crest Arc with Molecule Nodes */}
           <path
             d="M 50 15 C 85 -5, 125 15, 140 55 C 150 82, 135 110, 110 125"
-            stroke="url(#mt-grad-mono)"
-            strokeWidth="4"
+            stroke={`url(#${gradPrimary})`}
+            strokeWidth="4.5"
             strokeLinecap="round"
             fill="none"
           />
@@ -58,7 +69,7 @@ export const Logo: React.FC<LogoProps> = ({
           {/* MT Monogram Letters */}
           <path
             d="M 14 110 L 14 25 L 37 70 L 60 25 L 60 110"
-            stroke="url(#mt-grad-mono)"
+            stroke={`url(#${gradPrimary})`}
             strokeWidth="11"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -66,7 +77,7 @@ export const Logo: React.FC<LogoProps> = ({
           />
           <path
             d="M 50 25 L 105 25 M 78 25 L 78 110"
-            stroke="url(#mt-grad-mono)"
+            stroke={`url(#${gradPrimary})`}
             strokeWidth="11"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -76,7 +87,7 @@ export const Logo: React.FC<LogoProps> = ({
           {/* Botanical Leaf */}
           <path
             d="M 50 112 C 50 112, 72 115, 94 88 C 98 82, 96 72, 87 70 C 74 68, 57 90, 50 112 Z"
-            fill="url(#leaf-grad-mono)"
+            fill={`url(#${gradLeaf})`}
           />
           <path
             d="M 50 112 Q 74 90 87 70"
@@ -88,7 +99,7 @@ export const Logo: React.FC<LogoProps> = ({
           />
           <path
             d="M 32 115 Q 57 125 80 112"
-            stroke="url(#leaf-grad-mono)"
+            stroke={`url(#${gradLeaf})`}
             strokeWidth="3.5"
             strokeLinecap="round"
             fill="none"
@@ -98,39 +109,42 @@ export const Logo: React.FC<LogoProps> = ({
     );
   }
 
-  // Horizontal high-impact navbar logo (Crest on left, Mindtech typography on right)
+  // Horizontal high-impact navbar & header logo (Crest on left, Mindtech typography on right)
   if (variant === 'horizontal') {
     return (
-      <div className={`inline-flex items-center select-none ${className}`}>
+      <div 
+        className={`inline-flex items-center shrink-0 select-none ${className}`} 
+        style={heightStyle ? { height: heightStyle } : undefined}
+      >
         <svg
-          viewBox="0 0 460 100"
-          className="w-auto"
-          style={{ height }}
+          viewBox="0 0 470 94"
+          style={{ height: '100%', width: 'auto', aspectRatio: '470/94' }}
+          className="block select-none max-h-full"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            <linearGradient id="mt-grad-h" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id={gradPrimary} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#072414" />
               <stop offset="50%" stopColor="#106b32" />
               <stop offset="100%" stopColor="#2ba03f" />
             </linearGradient>
-            <linearGradient id="leaf-grad-h" x1="0%" y1="100%" x2="100%" y2="0%">
+            <linearGradient id={gradLeaf} x1="0%" y1="100%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#107c41" />
               <stop offset="100%" stopColor="#48c056" />
             </linearGradient>
-            <linearGradient id="tech-green-h" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id={gradTech} x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#107c41" />
               <stop offset="100%" stopColor="#3db34a" />
             </linearGradient>
           </defs>
 
           {/* Left Crest */}
-          <g transform="translate(10, 8) scale(0.82)">
+          <g transform="translate(6, 4) scale(0.86)">
             <path
               d="M 42 12 C 70 -4, 102 12, 114 42 C 122 62, 110 84, 90 95"
-              stroke="url(#mt-grad-h)"
-              strokeWidth="3.5"
+              stroke={`url(#${gradPrimary})`}
+              strokeWidth="3.8"
               strokeLinecap="round"
               fill="none"
             />
@@ -138,22 +152,22 @@ export const Logo: React.FC<LogoProps> = ({
             <circle cx="114" cy="42" r="5" fill="#107c41" />
             <circle cx="102" cy="62" r="4.5" fill="#2ba03f" />
             <circle cx="112" cy="78" r="5" fill="#0c4f26" />
-            <line x1="98" y1="26" x2="114" y2="42" stroke="#1b8a3e" strokeWidth="2.2" />
-            <line x1="114" y1="42" x2="102" y2="62" stroke="#107c41" strokeWidth="2.2" />
-            <line x1="102" y1="62" x2="112" y2="78" stroke="#2ba03f" strokeWidth="2.2" />
+            <line x1="98" y1="26" x2="114" y2="42" stroke="#1b8a3e" strokeWidth="2.4" />
+            <line x1="114" y1="42" x2="102" y2="62" stroke="#107c41" strokeWidth="2.4" />
+            <line x1="102" y1="62" x2="112" y2="78" stroke="#2ba03f" strokeWidth="2.4" />
 
             <path
               d="M 12 85 L 12 20 L 28 54 L 44 20 L 44 85"
-              stroke="url(#mt-grad-h)"
-              strokeWidth="8"
+              stroke={`url(#${gradPrimary})`}
+              strokeWidth="8.5"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
             />
             <path
               d="M 38 20 L 80 20 M 59 20 L 59 85"
-              stroke="url(#mt-grad-h)"
-              strokeWidth="8"
+              stroke={`url(#${gradPrimary})`}
+              strokeWidth="8.5"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
@@ -161,20 +175,20 @@ export const Logo: React.FC<LogoProps> = ({
 
             <path
               d="M 38 86 C 38 86, 56 88, 74 67 C 78 62, 76 54, 69 52 C 58 50, 44 68, 38 86 Z"
-              fill="url(#leaf-grad-h)"
+              fill={`url(#${gradLeaf})`}
             />
             <path
               d="M 38 86 Q 57 70 69 52"
               stroke="#ffffff"
-              strokeWidth="1.2"
+              strokeWidth="1.3"
               strokeLinecap="round"
               fill="none"
               opacity="0.85"
             />
             <path
               d="M 24 88 Q 44 96 62 86"
-              stroke="url(#leaf-grad-h)"
-              strokeWidth="2.8"
+              stroke={`url(#${gradLeaf})`}
+              strokeWidth="3"
               strokeLinecap="round"
               fill="none"
             />
@@ -184,10 +198,10 @@ export const Logo: React.FC<LogoProps> = ({
           {/* Subtitle: BIOTECHNOLOGY */}
           <text
             x="122"
-            y="26"
+            y="23"
             fill={isDark ? '#a7d7bc' : '#143323'}
-            fontSize="14.5"
-            fontWeight="700"
+            fontSize="15"
+            fontWeight="800"
             letterSpacing="0.32em"
             fontFamily="system-ui, -apple-system, sans-serif"
           >
@@ -197,22 +211,22 @@ export const Logo: React.FC<LogoProps> = ({
           {/* Main Title: MINDTECH */}
           <text
             x="122"
-            y="62"
+            y="60"
             fill={isDark ? '#ffffff' : '#072414'}
-            fontSize="38"
+            fontSize="41"
             fontWeight="900"
-            letterSpacing="0.03em"
+            letterSpacing="0.02em"
             fontFamily="'Outfit', 'Plus Jakarta Sans', sans-serif"
           >
             MIND
           </text>
           <text
-            x="248"
-            y="62"
-            fill="url(#tech-green-h)"
-            fontSize="38"
+            x="256"
+            y="60"
+            fill={`url(#${gradTech})`}
+            fontSize="41"
             fontWeight="900"
-            letterSpacing="0.03em"
+            letterSpacing="0.02em"
             fontFamily="'Outfit', 'Plus Jakarta Sans', sans-serif"
           >
             TECH
@@ -221,30 +235,30 @@ export const Logo: React.FC<LogoProps> = ({
           {/* Tagline: NATURE BEYOND THE FUTURE */}
           <line
             x1="122"
-            y1="82"
-            x2="155"
-            y2="82"
+            y1="79"
+            x2="152"
+            y2="79"
             stroke={isDark ? '#3d634c' : '#88a894'}
-            strokeWidth="1.5"
+            strokeWidth="1.6"
           />
           <text
-            x="164"
-            y="85"
+            x="160"
+            y="82"
             fill={isDark ? '#c8ded1' : '#193a28'}
-            fontSize="11.5"
-            fontWeight="600"
+            fontSize="12"
+            fontWeight="700"
             letterSpacing="0.22em"
             fontFamily="'Outfit', 'Plus Jakarta Sans', sans-serif"
           >
             NATURE BEYOND THE FUTURE
           </text>
           <line
-            x1="400"
-            y1="82"
-            x2="435"
-            y2="82"
+            x1="406"
+            y1="79"
+            x2="442"
+            y2="79"
             stroke={isDark ? '#3d634c' : '#88a894'}
-            strokeWidth="1.5"
+            strokeWidth="1.6"
           />
         </svg>
       </div>
@@ -253,25 +267,28 @@ export const Logo: React.FC<LogoProps> = ({
 
   // Stacked centered variant for Hero, Catalog cover, Footer
   return (
-    <div className={`inline-flex items-center select-none ${className}`}>
+    <div 
+      className={`inline-flex items-center shrink-0 select-none ${className}`} 
+      style={heightStyle ? { height: heightStyle } : undefined}
+    >
       <svg
         viewBox="0 0 540 180"
-        className="w-auto"
-        style={{ height }}
+        style={{ height: '100%', width: 'auto', aspectRatio: '540/180' }}
+        className="block select-none max-h-full"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <linearGradient id="mt-grad-full" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id={gradPrimary} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#072414" />
             <stop offset="50%" stopColor="#106b32" />
             <stop offset="100%" stopColor="#2ba03f" />
           </linearGradient>
-          <linearGradient id="leaf-grad-full" x1="0%" y1="100%" x2="100%" y2="0%">
+          <linearGradient id={gradLeaf} x1="0%" y1="100%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#107c41" />
             <stop offset="100%" stopColor="#48c056" />
           </linearGradient>
-          <linearGradient id="tech-green-full" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id={gradTech} x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#107c41" />
             <stop offset="100%" stopColor="#3db34a" />
           </linearGradient>
@@ -281,7 +298,7 @@ export const Logo: React.FC<LogoProps> = ({
         <g transform="translate(205, 5)">
           <path
             d="M 25 10 C 55 -6, 92 8, 105 40 C 114 62, 100 86, 80 98"
-            stroke="url(#mt-grad-full)"
+            stroke={`url(#${gradPrimary})`}
             strokeWidth="3"
             strokeLinecap="round"
             fill="none"
@@ -298,7 +315,7 @@ export const Logo: React.FC<LogoProps> = ({
           {/* 'M' and 'T' Monogram */}
           <path
             d="M -4 82 L -4 18 L 14 54 L 32 18 L 32 82"
-            stroke="url(#mt-grad-full)"
+            stroke={`url(#${gradPrimary})`}
             strokeWidth="8.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -306,7 +323,7 @@ export const Logo: React.FC<LogoProps> = ({
           />
           <path
             d="M 24 18 L 70 18 M 47 18 L 47 82"
-            stroke="url(#mt-grad-full)"
+            stroke={`url(#${gradPrimary})`}
             strokeWidth="8.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -315,7 +332,7 @@ export const Logo: React.FC<LogoProps> = ({
 
           <path
             d="M 26 84 C 26 84, 44 86, 62 65 C 66 60, 64 52, 57 50 C 46 48, 32 66, 26 84 Z"
-            fill="url(#leaf-grad-full)"
+            fill={`url(#${gradLeaf})`}
           />
           <path
             d="M 26 84 Q 45 68 57 50"
@@ -327,7 +344,7 @@ export const Logo: React.FC<LogoProps> = ({
           />
           <path
             d="M 12 87 Q 32 95 50 85"
-            stroke="url(#leaf-grad-full)"
+            stroke={`url(#${gradLeaf})`}
             strokeWidth="2.8"
             strokeLinecap="round"
             fill="none"
@@ -366,7 +383,7 @@ export const Logo: React.FC<LogoProps> = ({
             x="4"
             y="0"
             textAnchor="start"
-            fill="url(#tech-green-full)"
+            fill={`url(#${gradTech})`}
             fontSize="37"
             fontWeight="900"
             letterSpacing="0.04em"

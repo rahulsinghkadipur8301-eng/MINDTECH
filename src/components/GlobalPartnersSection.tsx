@@ -19,24 +19,24 @@ interface GlobalPartnersProps {
 export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInquiry }) => {
   return (
     <section id="partners" className="py-14 sm:py-20 bg-gradient-to-b from-gray-50/70 via-white to-gray-50/50 relative text-left overflow-hidden border-t border-gray-100">
-      <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="max-w-[1720px] mx-auto px-3.5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
           <div>
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-100/80 text-emerald-950 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2.5">
-              <Globe2 className="w-4 h-4 text-emerald-800" />
+            <div className="inline-flex items-center space-x-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-emerald-100/80 text-emerald-950 text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wider mb-2">
+              <Globe2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-800" />
               <span>Direct Manufacturing Alliances</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#072414] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#072414] tracking-tight leading-tight">
               Global Manufacturing Partners
             </h2>
-            <p className="mt-2 text-base text-gray-600 max-w-3xl font-normal">
+            <p className="mt-2 text-sm sm:text-base text-gray-600 max-w-3xl font-normal">
               Mindtech connects formulators across India directly to world-leading specialty chemical, oleochemical, silicone, and bio-ferment producers.
             </p>
           </div>
 
-          <div className="inline-flex items-center space-x-2 text-xs sm:text-sm font-semibold text-emerald-900 bg-emerald-50 px-4 py-2.5 rounded-full border border-emerald-200/60 self-start md:self-auto shadow-2xs">
+          <div className="inline-flex items-center space-x-2 text-xs sm:text-sm font-semibold text-emerald-900 bg-emerald-50 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-emerald-200/60 self-start md:self-auto shadow-2xs">
             <Award className="w-4 h-4 text-emerald-700" />
             <span>Direct Authorized Indian Distributor</span>
           </div>

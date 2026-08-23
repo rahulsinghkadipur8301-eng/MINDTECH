@@ -146,7 +146,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
           {/* Column 1: Company Profile (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
             <a href="#hero" className="inline-block py-1">
-              <Logo height={58} variant="horizontal" />
+              <Logo variant="horizontal" theme="dark" className="h-14 sm:h-16 w-auto" />
             </a>
             
             <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed max-w-sm">
