@@ -162,7 +162,7 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
   return (
     <section 
       id="about" 
-      className="py-16 sm:py-24 bg-gradient-to-b from-white/90 via-emerald-50/25 to-white/90 relative text-left overflow-hidden border-t border-gray-100"
+      className="py-6 sm:py-8 bg-gradient-to-b from-white/90 via-emerald-50/25 to-white/90 relative text-left overflow-hidden border-t border-gray-100"
     >
       {/* Fullscreen Lightbox Modal */}
       <ImageLightbox
@@ -180,26 +180,26 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
       <div className="max-w-[1720px] mx-auto px-3.5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         
         {/* Section Header: Mindtech Corporate Identity & Theme */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 sm:gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-3.5 sm:mb-5 gap-3 sm:gap-5">
           <div>
-            <div className="inline-flex items-center space-x-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-emerald-100/90 text-emerald-950 text-[11px] sm:text-xs md:text-sm font-black uppercase tracking-wider mb-2.5 sm:mb-3 border border-emerald-300/60 shadow-2xs">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-emerald-100/90 text-emerald-950 text-[13px] sm:text-[14px] font-black uppercase tracking-wider mb-2 border border-emerald-300/60 shadow-2xs">
               <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-800" />
               <span>NATURE BEYOND THE FUTURE</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#072414] tracking-tight leading-tight">
+            <h2 className="text-[26px] sm:text-[42px] md:text-[46px] font-black text-[#072414] tracking-tight leading-tight">
               About Mindtech Biotechnology
             </h2>
-            <p className="mt-2 text-sm sm:text-base md:text-lg text-gray-700 max-w-4xl font-normal leading-relaxed">
+            <p className="mt-1.5 text-[16px] sm:text-[18px] md:text-[19.5px] text-gray-700 max-w-4xl font-normal leading-relaxed">
               A trusted importer and distributor of specialty personal care raw materials, combining direct global manufacturing channels with responsive domestic technical and logistics support.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3 self-start md:self-auto">
-            <div className="flex items-center space-x-1.5 sm:space-x-2 text-[11px] sm:text-xs md:text-sm font-bold text-emerald-950 bg-emerald-50 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-emerald-200 shadow-2xs">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 self-start md:self-auto">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-[13px] sm:text-[14px] md:text-[15px] font-bold text-emerald-950 bg-emerald-50 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-emerald-200 shadow-2xs">
               <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700" />
               <span>MSME: {COMPANY_DETAILS.regulatory.msmeNo}</span>
             </div>
-            <div className="flex items-center space-x-1.5 sm:space-x-2 text-[11px] sm:text-xs md:text-sm font-semibold text-gray-700 bg-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-gray-200 shadow-2xs">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-[13px] sm:text-[14px] md:text-[15px] font-semibold text-gray-700 bg-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-gray-200 shadow-2xs">
               <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700" />
               <span>Bawana Hub, Delhi</span>
             </div>
@@ -207,13 +207,13 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
         </div>
 
         {/* Major Showcase Box: Large Image (Left) + Active Card Narrative & Progress (Right) */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-emerald-200/80 shadow-lg p-4 sm:p-7 lg:p-9 mb-6 sm:mb-12">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-emerald-200/80 shadow-lg p-4 sm:p-5 lg:p-6 mb-3 sm:mb-4">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center">
             
-            {/* Left: Large High-Resolution Visual Stage with Automated Animation (7 cols for enlarged presence) */}
+            {/* Left: Large High-Resolution Visual Stage with Automated Animation (7 cols) */}
             <div className="lg:col-span-7 relative">
-              <div className="relative rounded-3xl overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[520px] xl:min-h-[560px] w-full bg-[#072414] border border-emerald-950/20 shadow-2xl group flex flex-col justify-between">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[320px] sm:min-h-[380px] lg:min-h-[440px] xl:min-h-[480px] w-full bg-[#072414] border border-emerald-950/20 shadow-xl group flex flex-col justify-between">
                 
                 <div className="absolute inset-0 w-full h-full">
                   <AnimatePresence mode="wait">
@@ -277,19 +277,19 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
             </div>
 
             {/* Right: Active Card Detailed Narrative & Progress Timeline (5 cols) */}
-            <div className="lg:col-span-5 space-y-6 text-left">
+            <div className="lg:col-span-5 space-y-4 text-left">
               
               {/* Pillar Number & Category Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center justify-between pb-2.5 border-b border-gray-100">
                 <div className="flex items-center space-x-3">
                   <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-800">
                     {activePillar.number}
                   </span>
                   <div>
-                    <span className="text-[11px] font-extrabold uppercase tracking-widest text-emerald-900 block">
+                    <span className="text-[12px] font-extrabold uppercase tracking-widest text-emerald-900 block">
                       Core Company Value
                     </span>
-                    <span className="text-xs text-gray-500 font-medium">
+                    <span className="text-[13px] text-gray-500 font-medium">
                       Mindtech Core Capability
                     </span>
                   </div>
@@ -315,24 +315,24 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25 }}
-                  className="space-y-4"
+                  className="space-y-3"
                 >
-                  <h3 className="text-2xl sm:text-3xl font-black text-[#072414] leading-tight">
+                  <h3 className="text-[25px] sm:text-[30px] font-black text-[#072414] leading-tight">
                     {activePillar.title}
                   </h3>
 
-                  <p className="text-sm font-semibold text-emerald-800">
+                  <p className="text-[15.5px] sm:text-[16.5px] font-semibold text-emerald-800">
                     {activePillar.subtitle}
                   </p>
 
-                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-normal">
+                  <p className="text-[15.5px] sm:text-[17px] text-gray-700 leading-relaxed font-normal">
                     {activePillar.description}
                   </p>
 
                   {/* Bullet Points */}
-                  <div className="space-y-2.5 pt-1">
+                  <div className="space-y-2 pt-1">
                     {activePillar.keyPoints.map((point, idx) => (
-                      <div key={idx} className="flex items-start space-x-2.5 text-xs sm:text-sm text-gray-800 font-medium">
+                      <div key={idx} className="flex items-start space-x-2.5 text-[14px] sm:text-[15px] text-gray-800 font-medium">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{point}</span>
                       </div>
@@ -340,11 +340,11 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                   </div>
 
                   {/* Feature Badges */}
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2 pt-1">
                     {activePillar.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-950 text-xs font-bold border border-emerald-200/80"
+                        className="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-950 text-[13.5px] font-bold border border-emerald-200/80"
                       >
                         {tag}
                       </span>
@@ -355,10 +355,10 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
               </AnimatePresence>
 
               {/* Inquiry Action & Slide Controls */}
-              <div className="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100">
+              <div className="pt-2.5 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100">
                 <button
                   onClick={() => onOpenInquiry(`Inquiry: ${activePillar.title}`)}
-                  className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer shadow-xs"
+                  className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white text-[14px] font-bold uppercase tracking-wider transition-colors cursor-pointer shadow-xs"
                 >
                   <span>Inquire About {activePillar.title}</span>
                   <ArrowRight className="w-3.5 h-3.5" />

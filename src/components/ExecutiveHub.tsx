@@ -337,11 +337,25 @@ export const ExecutiveHub: React.FC<ExecutiveHubProps> = ({ onOpenInquiry }) => 
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <span className="text-xs text-gray-500 font-mono">Direct Sourcing Partner</span>
+                  <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2">
+                    {partner.websiteUrl ? (
+                      <a
+                        href={partner.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors"
+                        title={`Visit ${partner.name} website`}
+                      >
+                        <span>Visit Website</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    ) : (
+                      <span className="text-xs text-gray-500 font-mono">Direct Sourcing Partner</span>
+                    )}
+
                     <button
                       onClick={() => onOpenInquiry(`Principal: ${partner.name}`)}
-                      className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-emerald-800 text-white hover:bg-emerald-900 text-xs font-bold cursor-pointer transition-colors shadow-xs"
+                      className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-emerald-800 text-white hover:bg-emerald-900 text-xs font-bold cursor-pointer transition-colors shadow-xs ml-auto"
                     >
                       <span>Inquire {partner.name}</span>
                       <ArrowRight className="w-3.5 h-3.5" />

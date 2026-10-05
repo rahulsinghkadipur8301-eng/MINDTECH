@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from './Logo';
 import { INDUSTRY_SEGMENTS } from '../data/companyData';
-import { generateAndDownloadCatalogPdf } from '../utils/generateCatalogPdf';
 import { 
   ChevronDown, 
   Menu, 
@@ -11,10 +10,7 @@ import {
   Phone,
   Mail,
   MapPin,
-  ShieldCheck,
-  FileText,
-  Download,
-  Loader2
+  ShieldCheck
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -26,20 +22,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileAboutExpanded, setMobileAboutExpanded] = useState(false);
   const [mobileBusinessExpanded, setMobileBusinessExpanded] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
-
-  const handleDownloadPdf = () => {
-    setIsDownloading(true);
-    setTimeout(() => {
-      try {
-        generateAndDownloadCatalogPdf();
-        setIsDownloading(false);
-      } catch (err) {
-        console.error("PDF download error:", err);
-        setIsDownloading(false);
-      }
-    }, 250);
-  };
 
   // Close mobile menu on resize to desktop
   useEffect(() => {
@@ -81,12 +63,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-xs border-b border-gray-200 transition-all duration-300">
       {/* Main Navigation Bar */}
       <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        <div className="flex items-center justify-between h-20 sm:h-24 lg:h-26">
+        <div className="flex items-center justify-between h-16 sm:h-20 lg:h-22">
           
           {/* Left: Brand Logo with Prominent Sizing */}
           <a 
             href="#hero" 
-            className="flex items-center group shrink-0 py-2" 
+            className="flex items-center group shrink-0 py-1.5" 
             id="mindtech-main-logo"
             aria-label="Mindtech Biotechnology Home"
             onClick={(e) => {
@@ -99,17 +81,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
           >
             <Logo 
               variant="horizontal" 
-              className="h-12 sm:h-16 lg:h-18 w-auto transition-transform duration-300 group-hover:scale-[1.02]" 
+              className="h-10 sm:h-14 lg:h-16 w-auto transition-transform duration-300 group-hover:scale-[1.02]" 
             />
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-2 xl:space-x-4">
+          <nav className="hidden lg:flex items-center space-x-2 xl:space-x-3.5">
             
             {/* Home */}
             <a
               href="#hero"
-              className="px-3.5 py-2 text-xs xl:text-sm font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
             >
               HOME
             </a>
@@ -122,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             >
               <a
                 href="#about"
-                className="px-3.5 py-2 text-xs xl:text-sm font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all flex items-center space-x-1"
+                className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all flex items-center space-x-1"
               >
                 <span>ABOUT US</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${activeDropdown === 'about' ? 'rotate-180 text-emerald-800' : ''}`} />
@@ -133,19 +115,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                 <div className="absolute top-full left-0 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 py-2.5 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
                   <a
                     href="#about"
-                    className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
+                    className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
                   >
                     Corporate Profile & Overview
                   </a>
                   <a
                     href="#about"
-                    className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
+                    className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
                   >
                     6 Value Pillars of Mindtech
                   </a>
                   <a
                     href="#contact"
-                    className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
+                    className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
                   >
                     Bawana Logistics Hub & Warehouse
                   </a>
@@ -161,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             >
               <a
                 href="#industries"
-                className="px-3.5 py-2 text-xs xl:text-sm font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all flex items-center space-x-1"
+                className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all flex items-center space-x-1"
               >
                 <span>BUSINESS LINES</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${activeDropdown === 'business' ? 'rotate-180 text-emerald-800' : ''}`} />
@@ -175,7 +157,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                       key={seg.id}
                       href="#industries"
                       onClick={() => onOpenInquiry(seg.title)}
-                      className="block px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
+                      className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
                     >
                       {seg.title}
                     </a>
@@ -187,7 +169,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             {/* Global Partners */}
             <a
               href="#partners"
-              className="px-3.5 py-2 text-xs xl:text-sm font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
             >
               GLOBAL PARTNERS
             </a>
@@ -195,7 +177,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             {/* Why Choose Us */}
             <a
               href="#why-us"
-              className="px-3.5 py-2 text-xs xl:text-sm font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
             >
               WHY CHOOSE US
             </a>
@@ -203,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             {/* Contact Us */}
             <a
               href="#contact"
-              className="px-3.5 py-2 text-xs xl:text-sm font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
             >
               CONTACT
             </a>
@@ -211,50 +193,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             {/* Quick Phone Desk Badge on Wide Screens */}
             <a
               href="tel:+918368947579"
-              className="hidden 2xl:inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold hover:bg-emerald-100 transition-colors"
+              className="hidden 2xl:inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-[13px] font-bold hover:bg-emerald-100 transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-emerald-700" />
               <span>+91 8368947579</span>
             </a>
 
-            {/* Prominent Navbar Download Catalog Action */}
+            {/* Quick Sourcing & Sample Request Button */}
             <button
-              onClick={handleDownloadPdf}
-              disabled={isDownloading}
-              className="ml-2 inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white font-extrabold text-xs xl:text-sm tracking-wider uppercase transition-all shadow-xs hover:shadow cursor-pointer disabled:opacity-75"
+              onClick={() => onOpenInquiry('Commercial Sample & Formulation')}
+              className="ml-2 inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white font-extrabold text-[13px] xl:text-[14.5px] tracking-wider uppercase transition-all shadow-xs hover:shadow cursor-pointer"
             >
-              {isDownloading ? (
-                <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-300" />
-                  <span>Preparing PDF...</span>
-                </>
-              ) : (
-                <>
-                  <FileText className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>CATALOG PDF</span>
-                </>
-              )}
+              <span>REQUEST SAMPLE</span>
             </button>
 
           </nav>
 
-          {/* Mobile Actions: Download PDF Icon & Hamburger Button */}
+          {/* Mobile Actions: Hamburger Button */}
           <div className="flex items-center space-x-2 lg:hidden">
-            <button
-              onClick={handleDownloadPdf}
-              disabled={isDownloading}
-              aria-label="Download 24-page PDF Catalog"
-              className="p-2.5 rounded-xl bg-emerald-900 text-white hover:bg-emerald-950 transition-colors cursor-pointer flex items-center space-x-1 text-xs font-bold"
-            >
-              {isDownloading ? (
-                <Loader2 className="w-4 h-4 animate-spin text-emerald-300" />
-              ) : (
-                <>
-                  <Download className="w-4 h-4 text-emerald-300" />
-                  <span className="text-[11px]">PDF</span>
-                </>
-              )}
-            </button>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -411,21 +367,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                   >
                     <span>WHY CHOOSE US</span>
                     <ArrowRight className="w-4 h-4 text-gray-400" />
-                  </button>
-
-                  {/* Download Catalog Shortcut */}
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      handleDownloadPdf();
-                    }}
-                    className="w-full py-3.5 flex items-center justify-between text-left bg-emerald-50 px-3 rounded-xl hover:bg-emerald-100 transition-colors uppercase tracking-wide cursor-pointer text-emerald-950 font-black"
-                  >
-                    <span className="flex items-center space-x-2">
-                      <Download className="w-4 h-4 text-emerald-700" />
-                      <span>DOWNLOAD 24-PAGE CATALOG (PDF)</span>
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-emerald-700" />
                   </button>
 
                   {/* Contact Us */}

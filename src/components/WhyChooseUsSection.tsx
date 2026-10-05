@@ -107,7 +107,7 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
   };
 
   return (
-    <section id="why-us" className="py-14 sm:py-20 bg-white relative text-left overflow-hidden border-t border-gray-100">
+    <section id="why-us" className="py-6 sm:py-8 bg-white relative text-left overflow-hidden border-t border-gray-100">
       
       {/* Lightbox Modal */}
       <ImageLightbox
@@ -125,23 +125,23 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
       <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 sm:mb-5 gap-3 sm:gap-4">
           <div>
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-100/80 text-emerald-950 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-100/80 text-emerald-950 text-[13px] sm:text-[14.5px] font-bold uppercase tracking-wider mb-2">
               <ShieldCheck className="w-4 h-4 text-emerald-800" />
               <span>Competitive Advantage</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#072414] tracking-tight">
+            <h2 className="text-[28px] sm:text-[40px] md:text-[46px] font-extrabold text-[#072414] tracking-tight">
               Why Choose Mindtech Biotechnology
             </h2>
-            <p className="mt-2 text-base text-gray-600 max-w-3xl font-normal">
+            <p className="mt-1.5 text-[16px] sm:text-[17.5px] text-gray-600 max-w-3xl font-normal">
               Built on pharmaceutical-grade quality rigor, direct manufacturing alliances, and dependable NCR stockholding.
             </p>
           </div>
 
           <button
             onClick={() => onOpenInquiry('Mindtech Corporate Partnership')}
-            className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-white bg-[#072414] hover:bg-[#0c4024] px-6 py-3 rounded-full transition-all cursor-pointer self-start md:self-auto shadow-md hover:shadow-lg"
+            className="inline-flex items-center space-x-2 text-[13px] sm:text-[14.5px] font-bold text-white bg-[#072414] hover:bg-[#0c4024] px-5 sm:px-6 py-2.5 sm:py-3 rounded-full transition-all cursor-pointer self-start md:self-auto shadow-md hover:shadow-lg"
           >
             <span>Partner With Mindtech</span>
             <ArrowRight className="w-4 h-4" />
@@ -149,7 +149,7 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
         </div>
 
         {/* 6-Pillar Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
           {ADVANTAGE_CARDS.map((card, index) => (
             <motion.div
               key={card.id}
@@ -162,7 +162,7 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
               {/* Image & Number Badge */}
               <div 
                 onClick={() => handleOpenLightbox(index)}
-                className="relative h-44 sm:h-48 overflow-hidden cursor-pointer bg-[#072414]"
+                className="relative h-40 sm:h-44 overflow-hidden cursor-pointer bg-[#072414]"
                 title="Click to view full-screen high-res image"
               >
                 <ImageWithFallback
@@ -178,7 +178,7 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
                   <span className="w-7 h-7 rounded-xl bg-white/90 backdrop-blur-md text-[#072414] text-xs font-mono font-black flex items-center justify-center shadow-xs">
                     {card.number}
                   </span>
-                  <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-emerald-300 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/20">
+                  <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-emerald-300 text-[10.5px] font-bold uppercase tracking-wider border border-emerald-500/20">
                     {card.badge}
                   </span>
                 </div>
@@ -192,27 +192,27 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
 
                 {/* Title & Stats */}
                 <div className="absolute bottom-3.5 left-3.5 right-3.5 text-left pointer-events-none">
-                  <h3 className="text-base sm:text-lg font-bold text-white leading-snug drop-shadow">
+                  <h3 className="text-[17px] sm:text-[19px] font-bold text-white leading-snug drop-shadow">
                     {card.title}
                   </h3>
-                  <div className="text-[11px] text-emerald-300 font-semibold mt-0.5">
+                  <div className="text-[12px] text-emerald-300 font-semibold mt-0.5">
                     {card.stats}
                   </div>
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-3.5 text-left">
-                <p className="text-xs text-gray-600 leading-relaxed">
+              <div className="p-4 sm:p-4.5 flex-1 flex flex-col justify-between space-y-3 text-left">
+                <p className="text-[13.5px] text-gray-600 leading-relaxed">
                   {card.description}
                 </p>
 
-                <div className="flex items-center space-x-2 text-xs font-medium text-emerald-900 bg-emerald-50/70 p-2 rounded-xl border border-emerald-100">
+                <div className="flex items-center space-x-2 text-[13px] font-medium text-emerald-900 bg-emerald-50/70 p-2 rounded-xl border border-emerald-100">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                   <span className="truncate">{card.highlight}</span>
                 </div>
 
-                <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px]">
+                <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-[12px]">
                   <span className="text-gray-400 font-mono">Pillar {card.number}/06</span>
                   <button
                     onClick={() => onOpenInquiry(`Inquiry - ${card.title}`)}

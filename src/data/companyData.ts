@@ -132,7 +132,21 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
 ];
 
 // Global Principal Manufacturing Partners
-export const GLOBAL_PARTNERS = [
+export interface GlobalPartner {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  badge: string;
+  image: string;
+  logoUrl: string;
+  websiteUrl?: string;
+  websiteLabel?: string;
+  categories: string[];
+  keyStrengths: string[];
+}
+
+export const GLOBAL_PARTNERS: GlobalPartner[] = [
   {
     id: "fine-organics",
     name: "FINE ORGANICS",
@@ -141,6 +155,8 @@ export const GLOBAL_PARTNERS = [
     badge: "Sustainable Chemistry",
     image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
     logoUrl: "/logos/fine-organics.svg",
+    websiteUrl: "https://www.fineorganics.com/",
+    websiteLabel: "www.fineorganics.com",
     categories: ["Emollients", "Specialty Esters", "Functional Fluids", "Eco-friendly Ingredients"],
     keyStrengths: [
       "High performance specialty esters",
@@ -157,6 +173,8 @@ export const GLOBAL_PARTNERS = [
     badge: "Oleochemicals & Cleansing",
     image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1200&q=80",
     logoUrl: "/logos/vvf-limited.svg",
+    websiteUrl: "https://www.vvfltd.com/index.html",
+    websiteLabel: "www.vvfltd.com",
     categories: ["Surfactants", "Emollients", "Specialty Chemicals", "Oleochemicals"],
     keyStrengths: [
       "Wide portfolio of mild & sulfate-free surfactants",
@@ -189,6 +207,8 @@ export const GLOBAL_PARTNERS = [
     badge: "Bio-Actives & Nature",
     image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=80",
     logoUrl: "/logos/greentech.svg",
+    websiteUrl: "https://www.greentech.fr/en/",
+    websiteLabel: "www.greentech.fr",
     categories: ["Botanical Actives", "Bio-Ferments", "Anti-aging Peptides", "Haircare Phyto-Actives"],
     keyStrengths: [
       "Science of nature, backed by clinical research",

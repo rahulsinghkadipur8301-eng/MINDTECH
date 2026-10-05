@@ -12,7 +12,6 @@ import { AboutSection } from './components/AboutSection';
 import { IndustriesSection } from './components/IndustriesSection';
 import { GlobalPartnersSection } from './components/GlobalPartnersSection';
 import { WhyChooseUsSection } from './components/WhyChooseUsSection';
-import { CatalogDownloadSection } from './components/CatalogDownloadSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { FadeInSection } from './components/FadeInSection';
@@ -67,12 +66,7 @@ export default function App() {
           <WhyChooseUsSection onOpenInquiry={handleOpenInquiry} />
         </FadeInSection>
 
-        {/* 6. Dedicated 1-Click Official Catalog PDF Download Banner */}
-        <FadeInSection direction="up" delay={50} threshold={0.08}>
-          <CatalogDownloadSection onOpenInquiry={() => handleOpenInquiry('Product Catalog & Formulation Dossier')} />
-        </FadeInSection>
-
-        {/* 7. Central Facility Desk, Bawana Warehouse Hub & Sample Request Form */}
+        {/* 6. Central Facility Desk, Bawana Warehouse Hub & Sample Request Form */}
         <FadeInSection direction="up" delay={50} threshold={0.08}>
           <ContactSection initialSubject={inquiryCategory} />
         </FadeInSection>
