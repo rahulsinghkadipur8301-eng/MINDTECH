@@ -30,7 +30,7 @@ interface HeroVideoPlayerProps {
 }
 
 const DEFAULT_VIDEO_URL = '/videos/mindtech-biotechnology.mp4';
-const TOTAL_DURATION = 25;
+const TOTAL_DURATION = 26;
 const OWNER_PIN = 'mindtech';
 
 interface SceneMeta {
