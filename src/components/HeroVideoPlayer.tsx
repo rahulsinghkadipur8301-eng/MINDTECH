@@ -542,6 +542,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
           loop
           playsInline
           preload="auto"
+          controlsList="nodownload"
           className="absolute inset-0 w-full h-full object-contain bg-black"
           onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
           onLoadedMetadata={(e) => {
@@ -550,6 +551,9 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={handleVideoEnded}
+          onError={(e) => {
+            console.warn('[Video Player] Video stream error:', e);
+          }}
         />
       )}
 

@@ -123,6 +123,92 @@ function videoUploadPlugin(): Plugin {
           return;
         }
 
+        // 3. High-performance video streaming with full HTTP 206 Range Request support
+        if (pathname.startsWith('/videos/') && (req.method === 'GET' || req.method === 'HEAD')) {
+          const relativePath = pathname.replace(/^\//, '');
+          let filePath = path.resolve(__dirname, 'public', relativePath);
+          if (!fs.existsSync(filePath)) {
+            filePath = path.resolve(__dirname, 'dist', relativePath);
+          }
+
+          if (!fs.existsSync(filePath)) {
+            res.statusCode = 404;
+            res.end('Video not found');
+            return;
+          }
+
+          const stat = fs.statSync(filePath);
+          const fileSize = stat.size;
+          const range = req.headers.range;
+
+          if (range) {
+            const parts = range.replace(/bytes=/, '').split('-');
+            const start = parseInt(parts[0], 10);
+            const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+            if (isNaN(start) || start < 0 || start >= fileSize || (parts[1] && (isNaN(end) || end < start || end >= fileSize))) {
+              res.statusCode = 416;
+              res.setHeader('Content-Range', `bytes */${fileSize}`);
+              res.end();
+              return;
+            }
+
+            const chunkSize = (end - start) + 1;
+            res.writeHead(206, {
+              'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+              'Accept-Ranges': 'bytes',
+              'Content-Length': chunkSize,
+              'Content-Type': 'video/mp4',
+              'Cache-Control': 'public, max-age=31536000, immutable',
+            });
+
+            if (req.method === 'HEAD') {
+              res.end();
+              return;
+            }
+
+            const stream = fs.createReadStream(filePath, { start, end });
+            stream.pipe(res);
+            req.on('close', () => {
+              stream.destroy();
+            });
+            stream.on('error', (err) => {
+              console.error('[Video Stream Error]:', err);
+              if (!res.headersSent) {
+                res.statusCode = 500;
+              }
+              res.end();
+            });
+            return;
+          } else {
+            res.writeHead(200, {
+              'Content-Length': fileSize,
+              'Content-Type': 'video/mp4',
+              'Accept-Ranges': 'bytes',
+              'Cache-Control': 'public, max-age=31536000, immutable',
+            });
+
+            if (req.method === 'HEAD') {
+              res.end();
+              return;
+            }
+
+            const stream = fs.createReadStream(filePath);
+            stream.pipe(res);
+            req.on('close', () => {
+              stream.destroy();
+            });
+            stream.on('error', (err) => {
+              console.error('[Video Stream Error]:', err);
+              if (!res.headersSent) {
+                res.statusCode = 500;
+              }
+              res.end();
+            });
+            return;
+          }
+        }
+
         next();
       });
     },
@@ -131,11 +217,17 @@ function videoUploadPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
+    publicDir: 'public',
     plugins: [react(), tailwindcss(), videoUploadPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
       },
+    },
+    build: {
+      outDir: 'dist',
+      assetsDir: 'assets',
+      copyPublicDir: true,
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
