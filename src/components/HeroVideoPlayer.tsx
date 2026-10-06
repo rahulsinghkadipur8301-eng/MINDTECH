@@ -114,6 +114,13 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [urlInput, setUrlInput] = useState('');
 
+  // Development / Studio preview detection (only true inside AI Studio & localhost, never on Vercel)
+  const isDevPreview = typeof window !== 'undefined' && (
+    window.location.hostname.includes('run.app') || 
+    window.location.hostname.includes('localhost') || 
+    window.location.hostname.includes('127.0.0.1')
+  );
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -129,6 +136,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       if (params.get('admin') || params.get('owner')) {
         setIsAdminMode(true);
         setShowAdminModal(true);
+        setIsOwnerAuthenticated(true);
       }
     }
 
@@ -478,24 +486,30 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
             <span className="text-emerald-300 text-[11px] hidden sm:inline">Active Formulation Feed</span>
           </div>
 
-          {/* Owner-Only Admin Indicator (Visible ONLY when owner enables admin mode) */}
-          {isAdminMode && (
+          {/* Owner Console Trigger (Visible in Studio preview or when admin mode is activated) */}
+          {(isAdminMode || isDevPreview) && (
             <div className="flex items-center space-x-1.5">
               <button
-                onClick={() => setShowAdminModal(true)}
+                onClick={() => {
+                  setIsAdminMode(true);
+                  setIsOwnerAuthenticated(true);
+                  setShowAdminModal(true);
+                }}
                 className="px-2.5 py-1 rounded-full bg-amber-500/95 hover:bg-amber-400 text-black text-[11px] font-black uppercase tracking-wider flex items-center space-x-1 cursor-pointer transition-all shadow-md animate-fade-in"
-                title="Open Owner Video Console"
+                title="Open Owner Video Console to upload video for Vercel"
               >
                 <Lock className="w-3 h-3 text-black" />
-                <span>Owner Admin</span>
+                <span>Video Setup</span>
               </button>
-              <button
-                onClick={handleExitAdminMode}
-                className="px-2 py-1 rounded-full bg-black/70 hover:bg-black text-gray-300 hover:text-white text-[10px] font-semibold border border-white/20 cursor-pointer transition-all"
-                title="Exit Admin Mode and return to clean visitor view"
-              >
-                Lock
-              </button>
+              {isAdminMode && !isDevPreview && (
+                <button
+                  onClick={handleExitAdminMode}
+                  className="px-2 py-1 rounded-full bg-black/70 hover:bg-black text-gray-300 hover:text-white text-[10px] font-semibold border border-white/20 cursor-pointer transition-all"
+                  title="Exit Admin Mode and return to clean visitor view"
+                >
+                  Lock
+                </button>
+              )}
             </div>
           )}
 
