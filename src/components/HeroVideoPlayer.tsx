@@ -126,6 +126,47 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const speechUttRef = useRef<SpeechSynthesisUtterance | null>(null);
 
+  // Helper to sync video blob/file to server disk in manageable 4MB chunks (bypasses Cloud Run payload limits)
+  const syncVideoToServer = async (blob: Blob): Promise<boolean> => {
+    try {
+      const CHUNK_SIZE = 4 * 1024 * 1024; // 4MB per chunk
+      const totalChunks = Math.ceil(blob.size / CHUNK_SIZE);
+      const sessionId = 'sync_' + Date.now();
+
+      console.log(`[Video Sync] Starting upload of ${blob.size} bytes in ${totalChunks} chunks`);
+
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, blob.size);
+        const chunk = blob.slice(start, end);
+
+        const res = await fetch(`/api/upload-video-chunk?sessionId=${sessionId}&index=${i}&total=${totalChunks}`, {
+          method: 'POST',
+          body: chunk,
+        });
+
+        if (!res.ok) {
+          throw new Error(`Chunk ${i}/${totalChunks} failed with status ${res.status}`);
+        }
+      }
+
+      console.log(`[Video Sync] Successfully saved video to project disk (mindtech-biotechnology.mp4)!`);
+      return true;
+    } catch (err) {
+      console.warn('[Video Sync] Chunked sync fallback:', err);
+      // Fallback to direct single post
+      try {
+        const directRes = await fetch('/api/upload-video', {
+          method: 'POST',
+          body: blob,
+        });
+        return directRes.ok;
+      } catch {
+        return false;
+      }
+    }
+  };
+
   // 1. Initial Load: Check for persistent video & check if admin mode is requested in URL
   useEffect(() => {
     let active = true;
@@ -163,11 +204,12 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
           videoRef.current.play().catch(() => {});
         }
 
-        // Auto-sync blob to server disk in dev so it writes to public/videos/mindtech-biotechnology.mp4
-        fetch('/api/upload-video', {
-          method: 'POST',
-          body: blob,
-        }).catch(() => {});
+        // Auto-sync user's video blob to server disk in dev so it writes to public/videos/mindtech-biotechnology.mp4
+        syncVideoToServer(blob).then((saved) => {
+          if (saved) {
+            console.log('[Video Sync] Video automatically saved to server disk for Vercel!');
+          }
+        });
       } else if (active) {
         if (videoRef.current) {
           videoRef.current.currentTime = 0;
@@ -243,13 +285,9 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       }
 
       // Persist directly to server disk for Vercel deployment builds!
-      const res = await fetch('/api/upload-video', {
-        method: 'POST',
-        body: file,
-      });
-      const data = await res.json().catch(() => null);
+      const savedOnDisk = await syncVideoToServer(file);
 
-      if (data?.success) {
+      if (savedOnDisk) {
         setStatusMessage('Video permanently saved to mindtech-biotechnology.mp4! Deployed visitors will only see this video.');
       } else {
         setStatusMessage('Video saved to browser storage! Deployed visitors will only see this video.');
