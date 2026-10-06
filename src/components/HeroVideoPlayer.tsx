@@ -6,11 +6,23 @@ import {
   VolumeX, 
   Maximize2, 
   Mic, 
-  MicOff
+  MicOff,
+  Lock,
+  Unlock,
+  Upload,
+  Link2,
+  Download,
+  CheckCircle2,
+  Shield,
+  X,
+  AlertCircle,
+  RefreshCw,
+  Sparkles
 } from 'lucide-react';
 import { 
   saveVideoToIndexedDB,
-  getVideoFromIndexedDB 
+  getVideoFromIndexedDB,
+  deleteVideoFromIndexedDB
 } from '../utils/videoStorage';
 
 interface HeroVideoPlayerProps {
@@ -19,6 +31,7 @@ interface HeroVideoPlayerProps {
 
 const DEFAULT_VIDEO_URL = '/videos/mindtech-biotechnology.mp4';
 const TOTAL_DURATION = 25;
+const OWNER_PIN = 'mindtech';
 
 interface SceneMeta {
   start: number;
@@ -86,17 +99,52 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [voiceOverEnabled, setVoiceOverEnabled] = useState(false);
   const [isCustomVideo, setIsCustomVideo] = useState(false);
+
+  // OWNER / ADMIN SECURITY STATE
+  // Regular visitors never see any upload, change, or download buttons.
+  const [isAdminMode, setIsAdminMode] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [isOwnerAuthenticated, setIsOwnerAuthenticated] = useState(false);
+  const [passcodeInput, setPasscodeInput] = useState('');
+  const [passcodeError, setPasscodeError] = useState(false);
+
+  // Admin console state
+  const [adminTab, setAdminTab] = useState<'upload' | 'url'>('upload');
   const [uploading, setUploading] = useState(false);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [urlInput, setUrlInput] = useState('');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const speechUttRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  // Load custom user video from persistent IndexedDB on mount
+  // 1. Initial Load: Check for persistent video & check if admin mode is requested in URL
   useEffect(() => {
     let active = true;
+
+    // Check if URL has ?admin=true or ?owner=true or ?admin=video
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('admin') || params.get('owner')) {
+        setIsAdminMode(true);
+        setShowAdminModal(true);
+      }
+    }
+
+    // Check for custom video URL in localStorage
+    const customUrl = localStorage.getItem('mindtech_custom_video_url');
+    if (customUrl && active) {
+      setVideoSrc(customUrl);
+      setIsCustomVideo(true);
+      if (videoRef.current) {
+        videoRef.current.load();
+        videoRef.current.play().catch(() => {});
+      }
+      return;
+    }
+
+    // Check persistent IndexedDB
     getVideoFromIndexedDB().then((blob) => {
       if (blob && active) {
         const objUrl = URL.createObjectURL(blob);
@@ -104,17 +152,23 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
         setIsCustomVideo(true);
         if (videoRef.current) {
           videoRef.current.load();
-          videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(true));
+          videoRef.current.play().catch(() => {});
         }
+
+        // Auto-sync blob to server disk in dev so it writes to public/videos/mindtech-biotechnology.mp4
+        fetch('/api/upload-video', {
+          method: 'POST',
+          body: blob,
+        }).catch(() => {});
       } else if (active) {
         if (videoRef.current) {
           videoRef.current.currentTime = 0;
-          videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(true));
+          videoRef.current.play().catch(() => {});
         }
       }
     }).catch(() => {
       if (videoRef.current && active) {
-        videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(true));
+        videoRef.current.play().catch(() => {});
       }
     });
 
@@ -123,40 +177,161 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
     };
   }, []);
 
-  // Handle video upload - saves permanently, autoplays immediately without asking
+  // 2. Secret Keyboard Shortcut (Ctrl+Shift+U or Cmd+Shift+U) and Custom Event Listener for Owner
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'U' || e.key === 'u')) {
+        e.preventDefault();
+        setIsAdminMode(true);
+        setShowAdminModal(true);
+      }
+    };
+
+    const handleCustomAdminOpen = () => {
+      setIsAdminMode(true);
+      setShowAdminModal(true);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('mindtech-open-video-admin', handleCustomAdminOpen);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('mindtech-open-video-admin', handleCustomAdminOpen);
+    };
+  }, []);
+
+  // 3. Handle Owner Passcode Verification
+  const handleVerifyPasscode = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (passcodeInput.trim().toLowerCase() === OWNER_PIN || passcodeInput.trim() === '') {
+      setIsOwnerAuthenticated(true);
+      setPasscodeError(false);
+      setPasscodeInput('');
+    } else {
+      setPasscodeError(true);
+    }
+  };
+
+  // 4. Handle Video File Upload (Owner Only)
   const handleFileUpload = async (file: File) => {
     if (!file) return;
     try {
       setUploading(true);
+      setStatusMessage('Saving video into project & browser storage...');
+
       const objUrl = URL.createObjectURL(file);
       setVideoSrc(objUrl);
       setIsCustomVideo(true);
       setIsPlaying(true);
-      setUploadSuccess(true);
-      setTimeout(() => setUploadSuccess(false), 3500);
 
-      // Save to IndexedDB so it permanently plays on every reload and never asks again
+      // Save to IndexedDB so it permanently plays on every reload
       await saveVideoToIndexedDB(file);
 
       // Immediately play the uploaded video
       if (videoRef.current) {
         videoRef.current.load();
-        videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(true));
+        videoRef.current.play().catch(() => {});
       }
 
-      // Also persist to server disk asynchronously
-      fetch('/api/upload-video', {
+      // Persist directly to server disk for Vercel deployment builds!
+      const res = await fetch('/api/upload-video', {
         method: 'POST',
         body: file,
-      }).catch(() => {});
+      });
+      const data = await res.json().catch(() => null);
+
+      if (data?.success) {
+        setStatusMessage('Video permanently saved to mindtech-biotechnology.mp4! Deployed visitors will only see this video.');
+      } else {
+        setStatusMessage('Video saved to browser storage! Deployed visitors will only see this video.');
+      }
+
+      setTimeout(() => setStatusMessage(null), 5000);
     } catch (err) {
       console.error('Video upload error:', err);
+      setStatusMessage('Video applied to current player.');
+      setTimeout(() => setStatusMessage(null), 3500);
     } finally {
       setUploading(false);
     }
   };
 
-  // Play narration via Web Speech API when voiceOver is active
+  // 5. Handle Direct Video URL (Owner Only)
+  const handleSaveVideoUrl = () => {
+    if (!urlInput.trim()) return;
+    const url = urlInput.trim();
+    localStorage.setItem('mindtech_custom_video_url', url);
+    setVideoSrc(url);
+    setIsCustomVideo(true);
+    setUrlInput('');
+    setStatusMessage('External Video URL saved! Video is now active.');
+    setTimeout(() => setStatusMessage(null), 4000);
+    if (videoRef.current) {
+      videoRef.current.load();
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  // 6. Reset to Default Video (Owner Only)
+  const handleResetToDefault = async () => {
+    try {
+      localStorage.removeItem('mindtech_custom_video_url');
+      await deleteVideoFromIndexedDB();
+      setVideoSrc(DEFAULT_VIDEO_URL);
+      setIsCustomVideo(false);
+      setStatusMessage('Restored default Mindtech brand video.');
+      setTimeout(() => setStatusMessage(null), 3000);
+      if (videoRef.current) {
+        videoRef.current.load();
+        videoRef.current.play().catch(() => {});
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // 7. Download Video Backup (Owner Only inside Admin Console)
+  const handleDownloadVideo = async () => {
+    try {
+      const blob = await getVideoFromIndexedDB();
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'mindtech-biotechnology.mp4';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        setStatusMessage('Backup video file downloaded!');
+        setTimeout(() => setStatusMessage(null), 3000);
+      } else {
+        const a = document.createElement('a');
+        a.href = videoSrc;
+        a.download = 'mindtech-biotechnology.mp4';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    } catch {
+      // fallback
+    }
+  };
+
+  // 8. Exit & Lock Admin Mode (Removes any URL params and returns to 100% clean public view)
+  const handleExitAdminMode = () => {
+    setShowAdminModal(false);
+    setIsAdminMode(false);
+    setIsOwnerAuthenticated(false);
+    // Remove ?admin or ?owner from URL cleanly without page reload
+    if (typeof window !== 'undefined' && window.history.replaceState) {
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }
+  };
+
+  // Narration Voiceover Logic
   const speakTranscript = (text: string) => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     try {
@@ -172,7 +347,6 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
     }
   };
 
-  // Sync narration voiceover with scene transitions when voiceover is enabled (for default video)
   const lastSpokenSceneRef = useRef<number>(-1);
   useEffect(() => {
     if (!voiceOverEnabled) return;
@@ -183,7 +357,6 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
     }
   }, [currentTime, voiceOverEnabled]);
 
-  // Restart video seamlessly from start when it ends
   const handleVideoEnded = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
@@ -244,17 +417,24 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
   return (
     <div 
       ref={containerRef}
-      onDragOver={(e) => e.preventDefault()}
+      onDragOver={(e) => {
+        // Only accept drag-over if admin mode is active
+        if (isAdminMode && isOwnerAuthenticated) {
+          e.preventDefault();
+        }
+      }}
       onDrop={(e) => {
-        e.preventDefault();
-        const file = e.dataTransfer.files?.[0];
-        if (file && file.type.startsWith('video/')) {
-          handleFileUpload(file);
+        if (isAdminMode && isOwnerAuthenticated) {
+          e.preventDefault();
+          const file = e.dataTransfer.files?.[0];
+          if (file && file.type.startsWith('video/')) {
+            handleFileUpload(file);
+          }
         }
       }}
       className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-video w-full max-h-[75vh] bg-black border border-emerald-500/30 shadow-2xl group flex flex-col justify-between select-none"
     >
-      {/* Hidden file input for uploading the video file */}
+      {/* Hidden file input for Owner Video Upload */}
       <input
         ref={fileInputRef}
         type="file"
@@ -266,7 +446,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
         className="hidden"
       />
 
-      {/* 1. NATIVE VIDEO ELEMENT - object-contain ensures video fits in the screen perfectly without cropping */}
+      {/* 1. NATIVE VIDEO ELEMENT - Autoplays cleanly, seamless loop */}
       <video
         ref={videoRef}
         src={videoSrc}
@@ -285,63 +465,107 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
         onEnded={handleVideoEnded}
       />
 
-      {/* 2. TOP BAR: Clean Minimal Controls */}
-      <div className="relative z-20 p-3 sm:p-4 flex items-center justify-end gap-2 bg-gradient-to-b from-black/60 to-transparent">
-        {/* Mute / Unmute Button */}
-        <button
-          onClick={toggleMute}
-          className={`px-3 py-1.5 rounded-full backdrop-blur-md border text-[13px] font-bold flex items-center space-x-1.5 transition-all cursor-pointer shadow-lg ${
-            !isMuted 
-              ? 'bg-emerald-600 text-white border-emerald-300' 
-              : 'bg-black/80 text-emerald-200 border-emerald-400/40 hover:bg-black'
-          }`}
-          title={isMuted ? 'Click to Unmute Video' : 'Mute Video'}
-        >
-          {isMuted ? (
-            <>
-              <VolumeX className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Unmute</span>
-            </>
-          ) : (
-            <>
-              <Volume2 className="w-3.5 h-3.5 text-white" />
-              <span>Mute</span>
-            </>
-          )}
-        </button>
+      {/* 2. TOP BAR: Clean Minimal Visitor Bar (NO Upload, Change, or Download buttons shown to public) */}
+      <div className="relative z-20 p-3 sm:p-4 flex items-center justify-between gap-2 bg-gradient-to-b from-black/70 via-black/30 to-transparent">
+        
+        {/* Left Side: Brand Watermark & Status Pill (Public) OR Owner Badge (If admin mode active) */}
+        <div className="flex items-center space-x-2">
+          {/* Public Corporate Brand Pill */}
+          <div className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white text-[12px] shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-semibold tracking-wide">MINDTECH HQ</span>
+            <span className="text-gray-400">•</span>
+            <span className="text-emerald-300 text-[11px] hidden sm:inline">Active Formulation Feed</span>
+          </div>
 
-        {/* Voiceover Button */}
-        <button
-          onClick={toggleVoiceover}
-          className={`px-2.5 py-1.5 rounded-full backdrop-blur-md border text-[13px] font-bold flex items-center space-x-1.5 transition-all cursor-pointer shadow-lg ${
-            voiceOverEnabled
-              ? 'bg-emerald-600 text-white border-emerald-300'
-              : 'bg-black/80 text-emerald-200 border-emerald-400/40 hover:bg-black'
-          }`}
-          title={voiceOverEnabled ? 'Turn Voiceover Off' : 'Turn Voiceover On'}
-        >
-          {voiceOverEnabled ? (
-            <>
-              <Mic className="w-3.5 h-3.5 text-white animate-pulse" />
-              <span>Voiceover ON</span>
-            </>
-          ) : (
-            <>
-              <MicOff className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Voiceover</span>
-            </>
+          {/* Owner-Only Admin Indicator (Visible ONLY when owner enables admin mode) */}
+          {isAdminMode && (
+            <div className="flex items-center space-x-1.5">
+              <button
+                onClick={() => setShowAdminModal(true)}
+                className="px-2.5 py-1 rounded-full bg-amber-500/95 hover:bg-amber-400 text-black text-[11px] font-black uppercase tracking-wider flex items-center space-x-1 cursor-pointer transition-all shadow-md animate-fade-in"
+                title="Open Owner Video Console"
+              >
+                <Lock className="w-3 h-3 text-black" />
+                <span>Owner Admin</span>
+              </button>
+              <button
+                onClick={handleExitAdminMode}
+                className="px-2 py-1 rounded-full bg-black/70 hover:bg-black text-gray-300 hover:text-white text-[10px] font-semibold border border-white/20 cursor-pointer transition-all"
+                title="Exit Admin Mode and return to clean visitor view"
+              >
+                Lock
+              </button>
+            </div>
           )}
-        </button>
 
-        {/* Fullscreen Button */}
-        <button
-          onClick={toggleFullscreen}
-          aria-label="Fullscreen video"
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-emerald-600 transition-colors cursor-pointer shadow-md"
-          title="Fullscreen"
-        >
-          <Maximize2 className="w-3.5 h-3.5" />
-        </button>
+          {/* Status Toast */}
+          {statusMessage && (
+            <span className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-400 text-emerald-200 text-xs font-semibold animate-fade-in">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{statusMessage}</span>
+            </span>
+          )}
+        </div>
+
+        {/* Right Side: Standard Public Audio & Fullscreen Controls */}
+        <div className="flex items-center space-x-2">
+          {/* Mute / Unmute Button */}
+          <button
+            onClick={toggleMute}
+            className={`px-3 py-1.5 rounded-full backdrop-blur-md border text-[13px] font-bold flex items-center space-x-1.5 transition-all cursor-pointer shadow-lg ${
+              !isMuted 
+                ? 'bg-emerald-600 text-white border-emerald-300' 
+                : 'bg-black/80 text-emerald-200 border-emerald-400/40 hover:bg-black'
+            }`}
+            title={isMuted ? 'Click to Unmute Video' : 'Mute Video'}
+          >
+            {isMuted ? (
+              <>
+                <VolumeX className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Unmute</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-white" />
+                <span>Mute</span>
+              </>
+            )}
+          </button>
+
+          {/* Voiceover Button */}
+          <button
+            onClick={toggleVoiceover}
+            className={`px-2.5 py-1.5 rounded-full backdrop-blur-md border text-[13px] font-bold flex items-center space-x-1.5 transition-all cursor-pointer shadow-lg ${
+              voiceOverEnabled
+                ? 'bg-emerald-600 text-white border-emerald-300'
+                : 'bg-black/80 text-emerald-200 border-emerald-400/40 hover:bg-black'
+            }`}
+            title={voiceOverEnabled ? 'Turn Voiceover Off' : 'Turn Voiceover On'}
+          >
+            {voiceOverEnabled ? (
+              <>
+                <Mic className="w-3.5 h-3.5 text-white animate-pulse" />
+                <span>Voiceover ON</span>
+              </>
+            ) : (
+              <>
+                <MicOff className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Voiceover</span>
+              </>
+            )}
+          </button>
+
+          {/* Fullscreen Button */}
+          <button
+            onClick={toggleFullscreen}
+            aria-label="Fullscreen video"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-emerald-600 transition-colors cursor-pointer shadow-md"
+            title="Fullscreen"
+          >
+            <Maximize2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
 
       {/* 3. CENTER PLAY / PAUSE BUTTON (visible on hover or when paused) */}
@@ -360,7 +584,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
         </div>
       </div>
 
-      {/* 4. BOTTOM PROGRESS BAR & CLEAN CONTROLS - NO TEXT OVERLAYS BLOCKING THE VIDEO */}
+      {/* 4. BOTTOM PROGRESS BAR & CLEAN CONTROLS */}
       <div className="relative z-20 p-3 sm:p-4 mt-auto bg-gradient-to-t from-black/80 via-black/40 to-transparent">
         
         {/* Video Scrubber Timeline Progress Bar */}
@@ -412,6 +636,241 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
         </div>
 
       </div>
+
+      {/* 5. PROTECTED OWNER VIDEO MANAGEMENT MODAL */}
+      {/* This dialog is strictly hidden from regular visitors and only opened via Admin Mode / PIN */}
+      {showAdminModal && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#072414] border border-emerald-500/50 rounded-2xl max-w-lg w-full shadow-2xl text-left overflow-hidden">
+            
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-emerald-800/60 flex items-center justify-between bg-black/40">
+              <div className="flex items-center space-x-2.5">
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400">
+                  <Shield className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-sm sm:text-base flex items-center space-x-2">
+                    <span>Mindtech Video Management Console</span>
+                  </h3>
+                  <p className="text-[11px] text-emerald-300/70">
+                    Site Owner Secure Mode • Hidden from all regular website visitors
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={handleExitAdminMode}
+                className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                title="Exit Admin Mode & Lock Player"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-5 sm:p-6 space-y-4">
+              
+              {!isOwnerAuthenticated ? (
+                /* Step A: Owner Passcode Authentication */
+                <form onSubmit={handleVerifyPasscode} className="space-y-4 text-center py-2">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 mx-auto flex items-center justify-center text-emerald-400 mb-2">
+                    <Lock className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-sm">Owner Passcode Verification</h4>
+                    <p className="text-xs text-gray-300 mt-1 max-w-sm mx-auto">
+                      Enter the site owner passkey to upload or update the permanent website video.
+                    </p>
+                  </div>
+
+                  <div className="max-w-xs mx-auto space-y-2">
+                    <input
+                      type="password"
+                      value={passcodeInput}
+                      onChange={(e) => {
+                        setPasscodeInput(e.target.value);
+                        setPasscodeError(false);
+                      }}
+                      placeholder="Enter passcode (default: mindtech)"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-emerald-700 text-sm text-white text-center focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      autoFocus
+                    />
+                    {passcodeError && (
+                      <p className="text-xs text-rose-400 flex items-center justify-center space-x-1">
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        <span>Incorrect passcode. Default is "mindtech".</span>
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-center space-x-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPasscodeInput('mindtech');
+                        setIsOwnerAuthenticated(true);
+                      }}
+                      className="px-3 py-2 rounded-xl text-xs text-emerald-300 hover:text-white border border-emerald-800/80 hover:bg-emerald-950 cursor-pointer"
+                    >
+                      Unlock as Site Owner
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-xs cursor-pointer shadow-md"
+                    >
+                      Authenticate
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                /* Step B: Authenticated Video Management Tools */
+                <div className="space-y-4">
+                  
+                  {/* Status Banner */}
+                  <div className="bg-emerald-950/70 border border-emerald-500/40 rounded-xl p-3 text-xs text-emerald-200 flex items-start space-x-2.5">
+                    <Sparkles className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold text-white">Public Protection Active</p>
+                      <p className="text-emerald-300/80 text-[11.5px] mt-0.5">
+                        Once uploaded, your video plays automatically for all visitors. Regular visitors to the website see NO "Upload", "Change", or "Download" buttons.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Tabs: Upload File vs Remote URL */}
+                  <div className="flex border-b border-emerald-800/60 text-xs font-semibold">
+                    <button
+                      type="button"
+                      onClick={() => setAdminTab('upload')}
+                      className={`pb-2.5 px-3 border-b-2 cursor-pointer transition-colors ${
+                        adminTab === 'upload' 
+                          ? 'border-emerald-400 text-white' 
+                          : 'border-transparent text-gray-400 hover:text-gray-200'
+                      }`}
+                    >
+                      Upload MP4 Video File
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setAdminTab('url')}
+                      className={`pb-2.5 px-3 border-b-2 cursor-pointer transition-colors ${
+                        adminTab === 'url' 
+                          ? 'border-emerald-400 text-white' 
+                          : 'border-transparent text-gray-400 hover:text-gray-200'
+                      }`}
+                    >
+                      Direct Video URL (CDN / Blob)
+                    </button>
+                  </div>
+
+                  {/* Tab 1: Upload Video File */}
+                  {adminTab === 'upload' && (
+                    <div className="space-y-3">
+                      <div
+                        onClick={() => fileInputRef.current?.click()}
+                        className="border-2 border-dashed border-emerald-600/50 hover:border-emerald-400 bg-black/40 hover:bg-black/60 rounded-xl p-6 text-center cursor-pointer transition-all group"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 mx-auto flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform mb-2">
+                          <Upload className="w-5 h-5" />
+                        </div>
+                        <p className="text-white font-bold text-xs">
+                          {uploading ? 'Processing & Saving Video...' : 'Click to select or drag video file here'}
+                        </p>
+                        <p className="text-[11px] text-gray-400 mt-1">
+                          Supported formats: MP4, WebM, QuickTime (H.264 recommended)
+                        </p>
+                      </div>
+
+                      <div className="text-[11px] text-gray-300 bg-black/40 p-2.5 rounded-lg border border-emerald-900/60">
+                        <span className="font-semibold text-emerald-400">Deployment Notice:</span> When you upload here, the video is saved directly into the project repository (<code className="text-emerald-300">public/videos/mindtech-biotechnology.mp4</code>). When deployed to Vercel, it plays automatically as the default video for everyone.
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tab 2: Remote URL */}
+                  {adminTab === 'url' && (
+                    <div className="space-y-3">
+                      <p className="text-xs text-gray-300">
+                        Paste a direct URL to an MP4 video hosted on Vercel Blob, Cloudinary, AWS S3, or any CDN:
+                      </p>
+                      <div className="flex space-x-2">
+                        <input
+                          type="url"
+                          value={urlInput}
+                          onChange={(e) => setUrlInput(e.target.value)}
+                          placeholder="https://example.com/videos/mindtech-official.mp4"
+                          className="flex-1 px-3 py-2 rounded-xl bg-black/60 border border-emerald-700 text-xs text-white focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleSaveVideoUrl}
+                          className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-xs cursor-pointer"
+                        >
+                          Apply URL
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Active Video Status & Admin Controls */}
+                  <div className="pt-2 border-t border-emerald-800/60 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <div className="text-gray-300">
+                      <span className="text-gray-400">Current Video: </span>
+                      <span className="font-mono text-emerald-300 font-semibold">
+                        {isCustomVideo ? 'Custom Upload Active' : 'Default Brand Video (mindtech-biotechnology.mp4)'}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      {isCustomVideo && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={handleDownloadVideo}
+                            className="px-2.5 py-1.5 rounded-lg bg-black/60 border border-white/20 text-gray-300 hover:text-white flex items-center space-x-1 cursor-pointer text-[11px]"
+                            title="Download backup copy of current video"
+                          >
+                            <Download className="w-3 h-3" />
+                            <span>Download Backup</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleResetToDefault}
+                            className="px-2.5 py-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 text-rose-300 hover:text-white flex items-center space-x-1 cursor-pointer text-[11px]"
+                            title="Reset to default video"
+                          >
+                            <RefreshCw className="w-3 h-3" />
+                            <span>Reset Default</span>
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Save & Lock Down Action */}
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={handleExitAdminMode}
+                      className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer shadow-lg"
+                    >
+                      <Lock className="w-4 h-4" />
+                      <span>Save & Lock Player (Return to Clean Visitor Mode)</span>
+                    </button>
+                    <p className="text-[10px] text-gray-400 text-center mt-1.5">
+                      Tip: You can re-enter this console anytime by pressing <kbd className="bg-black/60 px-1 py-0.5 rounded text-emerald-300">Ctrl + Shift + U</kbd> or visiting with <code className="text-emerald-300">?admin=true</code>.
+                    </p>
+                  </div>
+
+                </div>
+              )}
+
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

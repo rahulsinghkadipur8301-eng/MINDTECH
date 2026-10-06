@@ -10,7 +10,8 @@ import {
   ChevronRight, 
   Sparkles,
   Globe2,
-  Award
+  Award,
+  Lock
 } from 'lucide-react';
 
 interface FooterProps {
@@ -282,8 +283,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
 
         {/* Bottom Copyright & Regulatory Strip */}
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-between text-[12.5px] text-emerald-300/70 gap-3">
-          <div>
-            © {new Date().getFullYear()} {COMPANY_DETAILS.name}. All rights reserved.
+          <div className="flex items-center space-x-2">
+            <span>© {new Date().getFullYear()} {COMPANY_DETAILS.name}. All rights reserved.</span>
+            {/* Discrete Owner Admin Link for Video Console (Ctrl+Shift+U) */}
+            <button
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('mindtech-open-video-admin'));
+              }}
+              className="text-emerald-500/30 hover:text-emerald-300 p-0.5 rounded transition-colors cursor-pointer"
+              title="Site Owner Video Admin (Ctrl+Shift+U)"
+              aria-label="Site Owner Video Console"
+            >
+              <Lock className="w-3 h-3" />
+            </button>
           </div>
           <div className="flex items-center space-x-3">
             <span>{COMPANY_DETAILS.tagline}</span>

@@ -18,8 +18,15 @@ function videoUploadPlugin(): Plugin {
               const targetPath = path.resolve(__dirname, 'public/videos/mindtech-biotechnology.mp4');
               fs.mkdirSync(path.dirname(targetPath), { recursive: true });
               fs.writeFileSync(targetPath, buffer);
+
+              const distPath = path.resolve(__dirname, 'dist/videos/mindtech-biotechnology.mp4');
+              if (fs.existsSync(path.dirname(distPath))) {
+                fs.writeFileSync(distPath, buffer);
+              }
+
+              console.log(`[Video Sync] Saved ${buffer.length} bytes to ${targetPath}`);
               res.setHeader('Content-Type', 'application/json');
-              res.end(JSON.stringify({ success: true, path: '/videos/mindtech-biotechnology.mp4' }));
+              res.end(JSON.stringify({ success: true, size: buffer.length, path: '/videos/mindtech-biotechnology.mp4' }));
             } catch (err: any) {
               res.statusCode = 500;
               res.end(JSON.stringify({ error: err?.message || 'Upload failed' }));
@@ -27,6 +34,20 @@ function videoUploadPlugin(): Plugin {
           });
           return;
         }
+
+        if (req.url === '/api/video-status' && req.method === 'GET') {
+          const targetPath = path.resolve(__dirname, 'public/videos/mindtech-biotechnology.mp4');
+          if (fs.existsSync(targetPath)) {
+            const stat = fs.statSync(targetPath);
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ exists: true, size: stat.size, mtime: stat.mtime }));
+            return;
+          }
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ exists: false }));
+          return;
+        }
+
         next();
       });
     },
