@@ -91,6 +91,24 @@ const SCENES: SceneMeta[] = [
   }
 ];
 
+function getYouTubeEmbedUrl(url: string): string | null {
+  if (!url) return null;
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  if (ytMatch && ytMatch[1]) {
+    return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&mute=1&loop=1&playlist=${ytMatch[1]}&controls=1&rel=0&modestbranding=1`;
+  }
+  return null;
+}
+
+function getVimeoEmbedUrl(url: string): string | null {
+  if (!url) return null;
+  const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeoMatch && vimeoMatch[1]) {
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1&muted=1&loop=1&autopause=0`;
+  }
+  return null;
+}
+
 export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
   const [videoSrc, setVideoSrc] = useState<string>(DEFAULT_VIDEO_URL);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -134,13 +152,17 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       const sessionId = 'sync_' + Date.now();
 
       console.log(`[Video Sync] Starting upload of ${blob.size} bytes in ${totalChunks} chunks`);
+      setStatusMessage(`Starting video upload to project (${Math.round(blob.size / 1024 / 1024)} MB)...`);
 
       for (let i = 0; i < totalChunks; i++) {
         const start = i * CHUNK_SIZE;
         const end = Math.min(start + CHUNK_SIZE, blob.size);
         const chunk = blob.slice(start, end);
+        const percent = Math.round(((i + 1) / totalChunks) * 100);
 
-        const res = await fetch(`/api/upload-video-chunk?sessionId=${sessionId}&index=${i}&total=${totalChunks}`, {
+        setStatusMessage(`Saving video to project: ${percent}% (Chunk ${i + 1}/${totalChunks})...`);
+
+        const res = await fetch(`/api/upload-video-chunk?sessionId=${sessionId}&index=${i}&total=${totalChunks}&offset=${start}&fileSize=${blob.size}`, {
           method: 'POST',
           body: chunk,
         });
@@ -151,6 +173,8 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       }
 
       console.log(`[Video Sync] Successfully saved video to project disk (mindtech-biotechnology.mp4)!`);
+      setStatusMessage('SUCCESS! Video saved directly into public/videos/mindtech-biotechnology.mp4. Push to GitHub so Vercel deploys it!');
+      setTimeout(() => setStatusMessage(null), 10000);
       return true;
     } catch (err) {
       console.warn('[Video Sync] Chunked sync fallback:', err);
@@ -492,24 +516,42 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
         className="hidden"
       />
 
-      {/* 1. NATIVE VIDEO ELEMENT - Autoplays cleanly, seamless loop */}
-      <video
-        ref={videoRef}
-        src={videoSrc}
-        autoPlay
-        muted={isMuted}
-        loop
-        playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-contain bg-black"
-        onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
-        onLoadedMetadata={(e) => {
-          if (e.currentTarget.duration) setDuration(e.currentTarget.duration);
-        }}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={handleVideoEnded}
-      />
+      {/* 1. EMBED OR NATIVE VIDEO ELEMENT */}
+      {getYouTubeEmbedUrl(videoSrc) ? (
+        <iframe
+          src={getYouTubeEmbedUrl(videoSrc)!}
+          className="absolute inset-0 w-full h-full border-0 bg-black z-0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          title="Mindtech Biotechnology Video"
+        />
+      ) : getVimeoEmbedUrl(videoSrc) ? (
+        <iframe
+          src={getVimeoEmbedUrl(videoSrc)!}
+          className="absolute inset-0 w-full h-full border-0 bg-black z-0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          title="Mindtech Biotechnology Video"
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          autoPlay
+          muted={isMuted}
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-contain bg-black"
+          onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+          onLoadedMetadata={(e) => {
+            if (e.currentTarget.duration) setDuration(e.currentTarget.duration);
+          }}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={handleVideoEnded}
+        />
+      )}
 
       {/* 2. TOP BAR: Clean Minimal Visitor Bar (NO Upload, Change, or Download buttons shown to public) */}
       <div className="relative z-20 p-3 sm:p-4 flex items-center justify-between gap-2 bg-gradient-to-b from-black/70 via-black/30 to-transparent">
@@ -619,6 +661,36 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
           </button>
         </div>
       </div>
+
+      {/* Studio Preview Helper Banner: visible ONLY in Google AI Studio when a custom video is detected */}
+      {isDevPreview && isCustomVideo && (
+        <div className="relative z-20 mx-3 sm:mx-4 -mt-1 mb-2 bg-emerald-950/90 border border-emerald-400 p-2 sm:p-2.5 rounded-xl shadow-xl flex items-center justify-between gap-2 text-left">
+          <div className="flex items-center space-x-2 text-white text-xs">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div>
+              <span className="font-bold text-white text-[12px] block">Your custom video is active in AI Studio!</span>
+              <span className="text-emerald-200/80 text-[11px]">Click "Save Video for Vercel" to permanently bake it into the project files so Vercel deploys it.</span>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              getVideoFromIndexedDB().then(blob => {
+                if (blob) {
+                  setStatusMessage('Saving video to project files...');
+                  syncVideoToServer(blob).then(saved => {
+                    if (saved) {
+                      setStatusMessage('Saved to public/videos/mindtech-biotechnology.mp4! Push to GitHub to deploy to Vercel.');
+                    }
+                  });
+                }
+              });
+            }}
+            className="px-3 py-1.5 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-emerald-950 font-black text-xs cursor-pointer shadow-md shrink-0 transition-all"
+          >
+            Save Video for Vercel
+          </button>
+        </div>
+      )}
 
       {/* 3. CENTER PLAY / PAUSE BUTTON (visible on hover or when paused) */}
       <div 

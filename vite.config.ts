@@ -5,7 +5,14 @@ import fs from 'fs';
 import {defineConfig, Plugin} from 'vite';
 
 function videoUploadPlugin(): Plugin {
-  const uploadSessions: Record<string, Buffer[]> = {};
+  interface UploadSession {
+    tmpPath: string;
+    fd: number;
+    received: Set<number>;
+    totalChunks: number;
+    fileSize: number;
+  }
+  const uploadSessions: Record<string, UploadSession> = {};
 
   return {
     name: 'video-upload-handler',
@@ -14,7 +21,7 @@ function videoUploadPlugin(): Plugin {
         const urlObj = new URL(req.url || '/', 'http://localhost:3000');
         const pathname = urlObj.pathname;
 
-        // 1. Direct single-stream upload
+        // 1. Direct single-stream upload (for smaller files)
         if (pathname === '/api/upload-video' && req.method === 'POST') {
           const chunks: Buffer[] = [];
           req.on('data', (chunk: Buffer) => chunks.push(chunk));
@@ -41,47 +48,63 @@ function videoUploadPlugin(): Plugin {
           return;
         }
 
-        // 2. Chunked upload for large video files (bypasses Cloud Run 32MB limit)
+        // 2. High-performance chunked upload for large video files (bypasses Cloud Run 32MB limit & 0-RAM overhead)
         if (pathname === '/api/upload-video-chunk' && req.method === 'POST') {
           const sessionId = urlObj.searchParams.get('sessionId') || 'default';
           const chunkIndex = parseInt(urlObj.searchParams.get('index') || '0', 10);
           const totalChunks = parseInt(urlObj.searchParams.get('total') || '1', 10);
+          const offset = parseInt(urlObj.searchParams.get('offset') || '0', 10);
+          const fileSize = parseInt(urlObj.searchParams.get('fileSize') || '0', 10);
 
           if (!uploadSessions[sessionId]) {
-            uploadSessions[sessionId] = new Array(totalChunks);
+            const tmpPath = path.resolve('/tmp', `video_${sessionId}_${Date.now()}.mp4`);
+            const fd = fs.openSync(tmpPath, 'w+');
+            uploadSessions[sessionId] = {
+              tmpPath,
+              fd,
+              received: new Set<number>(),
+              totalChunks,
+              fileSize
+            };
           }
 
+          const session = uploadSessions[sessionId];
           const chunks: Buffer[] = [];
           req.on('data', (c: Buffer) => chunks.push(c));
           req.on('end', () => {
             try {
-              uploadSessions[sessionId][chunkIndex] = Buffer.concat(chunks);
+              const buffer = Buffer.concat(chunks);
+              fs.writeSync(session.fd, buffer, 0, buffer.length, offset);
+              session.received.add(chunkIndex);
 
-              // Check if all chunks received
-              const allReceived = uploadSessions[sessionId].every(c => c && c.length > 0);
-              if (allReceived) {
-                const completeBuffer = Buffer.concat(uploadSessions[sessionId]);
-                delete uploadSessions[sessionId];
+              console.log(`[Chunk Upload] Chunk ${chunkIndex + 1}/${session.totalChunks} (${buffer.length} bytes, total received: ${session.received.size}/${session.totalChunks})`);
 
+              if (session.received.size >= session.totalChunks) {
+                fs.closeSync(session.fd);
                 const targetPath = path.resolve(__dirname, 'public/videos/mindtech-biotechnology.mp4');
                 fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-                fs.writeFileSync(targetPath, completeBuffer);
+                fs.copyFileSync(session.tmpPath, targetPath);
 
                 const distPath = path.resolve(__dirname, 'dist/videos/mindtech-biotechnology.mp4');
                 if (fs.existsSync(path.dirname(distPath))) {
-                  fs.writeFileSync(distPath, completeBuffer);
+                  fs.copyFileSync(session.tmpPath, distPath);
                 }
 
-                console.log(`[Chunked Video Sync] All ${totalChunks} chunks assembled. Saved ${completeBuffer.length} bytes to ${targetPath}`);
+                try { fs.unlinkSync(session.tmpPath); } catch {}
+                delete uploadSessions[sessionId];
+
+                const stat = fs.statSync(targetPath);
+                console.log(`[Chunk Upload] COMPLETE! Assembled and saved ${stat.size} bytes to ${targetPath}`);
                 res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ success: true, complete: true, size: completeBuffer.length }));
+                res.end(JSON.stringify({ success: true, complete: true, size: stat.size, path: '/videos/mindtech-biotechnology.mp4' }));
               } else {
                 res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ success: true, complete: false, chunkIndex, totalChunks }));
+                res.end(JSON.stringify({ success: true, complete: false, received: session.received.size, total: session.totalChunks }));
               }
             } catch (err: any) {
+              console.error('[Chunk Upload Error]:', err);
               res.statusCode = 500;
-              res.end(JSON.stringify({ error: err?.message || 'Chunk upload failed' }));
+              res.end(JSON.stringify({ error: err?.message || 'Chunk write failed' }));
             }
           });
           return;
