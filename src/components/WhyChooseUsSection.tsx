@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ImageWithFallback } from './ImageWithFallback';
 import { ImageLightbox } from './ImageLightbox';
+import { PillarVectorIconRenderer } from './PillarIcons';
 import { 
   Globe, 
   Boxes, 
@@ -183,11 +184,12 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
                   </span>
                 </div>
 
-                {/* Zoom Icon */}
-                <div className="absolute top-3.5 right-3.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-emerald-600 transition-colors">
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </span>
+                {/* Custom Vector Icon Floating Medallion in Top-Right */}
+                <div 
+                  className="absolute top-3.5 right-3.5 z-10 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/95 backdrop-blur-md border border-white/60 shadow-md flex items-center justify-center p-1.5 group-hover:scale-110 group-hover:shadow-emerald-500/25 group-hover:shadow-lg transition-all duration-300"
+                  title={`${card.title} - Pillar ${card.number}`}
+                >
+                  <PillarVectorIconRenderer pillarId={card.id} size={36} />
                 </div>
 
                 {/* Title & Stats */}
@@ -201,13 +203,33 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
                 </div>
               </div>
 
-              {/* Card Body */}
-              <div className="p-4 sm:p-4.5 flex-1 flex flex-col justify-between space-y-3 text-left">
+              {/* Card Body with Prominent Custom Vector Icon Header */}
+              <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5 text-left bg-gradient-to-b from-white via-white to-emerald-50/20">
+                {/* Pillar Header with Vector Icon */}
+                <div className="flex items-start space-x-3.5">
+                  <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-50 via-teal-50/80 to-white border border-emerald-200/90 shadow-2xs flex items-center justify-center shrink-0 p-1.5 group-hover:scale-110 group-hover:shadow-md group-hover:border-emerald-500/60 transition-all duration-300">
+                    <PillarVectorIconRenderer pillarId={card.id} size={42} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-md">
+                        PILLAR {card.number}
+                      </span>
+                      <span className="text-[11px] text-gray-500 font-semibold truncate">
+                        {card.tagline}
+                      </span>
+                    </div>
+                    <h4 className="text-[16px] sm:text-[17.5px] font-extrabold text-[#072414] mt-0.5 leading-snug group-hover:text-emerald-900 transition-colors">
+                      {card.title}
+                    </h4>
+                  </div>
+                </div>
+
                 <p className="text-[13.5px] text-gray-600 leading-relaxed">
                   {card.description}
                 </p>
 
-                <div className="flex items-center space-x-2 text-[13px] font-medium text-emerald-900 bg-emerald-50/70 p-2 rounded-xl border border-emerald-100">
+                <div className="flex items-center space-x-2 text-[13px] font-medium text-emerald-900 bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-100">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                   <span className="truncate">{card.highlight}</span>
                 </div>

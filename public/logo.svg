@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720">
+  <defs>
+    <!-- Deep Forest to Emerald Green Gradient for M-T Monogram -->
+    <linearGradient id="mt-monogram-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#082912" />
+      <stop offset="40%" stop-color="#0e471d" />
+      <stop offset="100%" stop-color="#146d2e" />
+    </linearGradient>
+
+    <!-- Vibrant Botanical Leaf Gradient -->
+    <linearGradient id="mt-leaf-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0e7829" />
+      <stop offset="100%" stop-color="#1eb543" />
+    </linearGradient>
+
+    <!-- Subtle distressed organic stipple pattern for authentic biotechnology look -->
+    <filter id="distressed-organic" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+
+  <!-- ======================================================== -->
+  <!-- 1. AUTHENTIC CREST EMBLEM (CENTERED AT X=500, Y=30..390) -->
+  <!-- ======================================================== -->
+  <g id="crest-emblem">
+    <!-- Outer Orbit Arc & Molecular Nodes on Right -->
+    <path 
+      d="M 430 75 C 550 65, 680 125, 700 240 C 710 305, 675 355, 620 380" 
+      fill="none" 
+      stroke="#0f6428" 
+      stroke-width="12" 
+      stroke-linecap="round"
+    />
+
+    <!-- Molecule Nodes along the circular orbit -->
+    <circle cx="655" cy="180" r="17" fill="#0f6428" />
+    <line x1="655" y1="180" x2="628" y2="238" stroke="#0f6428" stroke-width="8" stroke-linecap="round" />
+    <circle cx="628" cy="238" r="19" fill="#137830" />
+    <line x1="628" y1="238" x2="650" y2="295" stroke="#0f6428" stroke-width="8" stroke-linecap="round" />
+    <circle cx="650" cy="295" r="14" fill="#0d5422" />
+
+    <!-- Left Column of 'M' -->
+    <polygon 
+      points="275,100 325,100 325,360 275,360" 
+      fill="url(#mt-monogram-grad)" 
+    />
+    <polygon 
+      points="275,100 325,142 325,360 275,360" 
+      fill="#06220f" 
+    />
+
+    <!-- Diagonal Inner Leg of 'M' -->
+    <polygon 
+      points="325,175 435,280 435,335 325,235" 
+      fill="url(#mt-monogram-grad)" 
+    />
+
+    <!-- Top Horizontal Crossbar of 'T' -->
+    <polygon 
+      points="445,135 635,135 605,195 475,195" 
+      fill="#0c4722" 
+    />
+    <polygon 
+      points="425,135 475,182 475,195 425,135" 
+      fill="#072613" 
+    />
+
+    <!-- Vertical Stem of 'T' -->
+    <polygon 
+      points="490,195 560,195 560,360 490,360" 
+      fill="url(#mt-monogram-grad)" 
+    />
+
+    <!-- Swirling Organic Base Leaves underneath the T stem -->
+    <path 
+      d="M 390,370 C 445,392 520,395 610,320 C 550,362 470,375 390,370 Z" 
+      fill="#0d5422" 
+    />
+    <path 
+      d="M 412,382 C 470,405 555,402 630,340 C 570,388 495,396 412,382 Z" 
+      fill="#137830" 
+    />
+
+    <!-- Upright Botanical Leaf Accent at base of T -->
+    <path 
+      d="M 510,370 C 518,315 552,270 616,270 C 616,315 585,365 510,370 Z" 
+      fill="url(#mt-leaf-grad)" 
+    />
+    <path 
+      d="M 515,365 Q 558,328 612,274" 
+      fill="none" 
+      stroke="#ffffff" 
+      stroke-width="5" 
+      stroke-linecap="round" 
+      opacity="0.9" 
+    />
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 2. "BIOTECHNOLOGY" SUBTITLE (CENTERED AT X=500, Y=445)   -->
+  <!-- ======================================================== -->
+  <text 
+    x="500" 
+    y="445" 
+    font-family="'Times New Roman', 'Nimbus Roman', 'Georgia', serif" 
+    font-size="44" 
+    font-weight="900" 
+    letter-spacing="0.34em" 
+    fill="#0e3d19"
+    text-anchor="middle"
+  >BIOTECHNOLOGY</text>
+
+  <!-- ======================================================== -->
+  <!-- 3. MAIN TITLE: "M I N D  T E C H" (CENTERED AT X=500)    -->
+  <!-- ======================================================== -->
+  <!-- Centered horizontally around X=500 (spanning X=78 to 923) -->
+  <g id="main-brandmark" transform="translate(78, 480)">
+    <!-- "MIND" in Deep Forest Green (#0e3d19) -->
+    <g id="wordmark-mind" fill="#0e3d19">
+      <!-- M -->
+      <path d="M 0,105 L 0,0 L 26,0 L 56,62 L 86,0 L 112,0 L 112,105 L 91,105 L 91,32 L 65,84 L 46,84 L 21,32 L 21,105 Z" />
+      <!-- I -->
+      <path d="M 145,0 L 166,0 L 166,105 L 145,105 Z" />
+      <!-- N -->
+      <path d="M 202,105 L 202,0 L 225,0 L 270,69 L 270,0 L 291,0 L 291,105 L 268,105 L 223,36 L 223,105 Z" />
+      <!-- D -->
+      <path d="M 326,0 L 374,0 C 412,0 436,23 436,52.5 C 436,82 412,105 374,105 L 326,105 Z M 349,21 L 349,84 L 371,84 C 396,84 411,71 411,52.5 C 411,34 396,21 371,21 Z" />
+    </g>
+
+    <!-- "TECH" in Vibrant Brand Green (#0a9629) with iconic 3-Bar E -->
+    <g id="wordmark-tech" fill="#0a9629">
+      <!-- T -->
+      <path d="M 480,0 L 550,0 L 550,21 L 526,21 L 526,105 L 504,105 L 504,21 L 480,21 Z" />
+      <!-- E (Iconic 3 Horizontal Bars) -->
+      <g id="letter-e-bars">
+        <rect x="570" y="0" width="70" height="20" rx="3" />
+        <rect x="570" y="42" width="70" height="20" rx="3" />
+        <rect x="570" y="85" width="70" height="20" rx="3" />
+      </g>
+      <!-- C -->
+      <path d="M 738,24 C 726,9 706,0 682,0 C 646,0 618,26 618,60 C 618,94 646,120 682,120 C 706,120 726,111 738,97 L 720,81 C 712,90 698,98 682,98 C 658,98 640,80 640,60 C 640,39 658,22 682,22 C 698,22 712,30 720,39 Z" transform="translate(42, -8)" />
+      <!-- H -->
+      <path d="M 764,0 L 786,0 L 786,41 L 823,41 L 823,0 L 845,0 L 845,105 L 823,105 L 823,62 L 786,62 L 786,105 L 764,105 Z" />
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 4. BOTTOM TAGLINE (CENTERED AT X=500, Y=655)             -->
+  <!-- ======================================================== -->
+  <text 
+    x="500" 
+    y="655" 
+    font-family="'Times New Roman', 'Nimbus Roman', 'Georgia', serif" 
+    font-size="36" 
+    font-weight="900" 
+    letter-spacing="0.28em" 
+    fill="#0e3d19"
+    text-anchor="middle"
+  >NATURE BEYOND THE FUTURE</text>
+</svg>

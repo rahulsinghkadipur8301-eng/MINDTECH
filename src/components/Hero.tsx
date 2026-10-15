@@ -2,7 +2,6 @@ import React from 'react';
 import { HeroVideoPlayer } from './HeroVideoPlayer';
 import { COMPANY_DETAILS } from '../data/companyData';
 import { 
-  Sparkles, 
   CheckCircle2, 
   ArrowRight, 
   ShieldCheck, 
@@ -14,9 +13,18 @@ import {
 
 interface HeroProps {
   onOpenInquiry: (category?: string) => void;
+  onOpenExplorer?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenInquiry, onOpenExplorer }) => {
+  const [copiedMsme, setCopiedMsme] = React.useState(false);
+
+  const handleCopyMsme = () => {
+    navigator.clipboard.writeText(COMPANY_DETAILS.regulatory.msmeNo);
+    setCopiedMsme(true);
+    setTimeout(() => setCopiedMsme(false), 2000);
+  };
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -39,15 +47,19 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
             
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-300/80 text-emerald-950 text-[13px] sm:text-[14.5px] font-black tracking-wider uppercase shadow-2xs">
-                <Sparkles className="w-4 h-4 text-emerald-700" />
-                <span>NATURE BEYOND THE FUTURE</span>
-              </span>
-
-              <span className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-200 text-teal-950 text-[13px] sm:text-[14px] font-semibold">
-                <ShieldCheck className="w-3.5 h-3.5 text-teal-700" />
+              <button
+                onClick={handleCopyMsme}
+                className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-teal-50/90 hover:bg-teal-100/90 border border-teal-200/90 text-teal-950 text-[13px] sm:text-[14px] font-semibold shadow-2xs transition-all cursor-pointer group"
+                title="Click to copy MSME registration number"
+              >
+                <ShieldCheck className="w-4 h-4 text-teal-700 group-hover:scale-110 transition-transform" />
                 <span>MSME Reg: {COMPANY_DETAILS.regulatory.msmeNo}</span>
-              </span>
+                {copiedMsme && (
+                  <span className="text-[11px] font-mono text-emerald-800 bg-emerald-200/90 px-2 py-0.5 rounded ml-1 transition-all">
+                    Copied ✓
+                  </span>
+                )}
+              </button>
             </div>
 
             {/* Main Headline */}
@@ -91,17 +103,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-1 w-full">
               {/* Explore Portfolio */}
               <button
-                onClick={() => scrollToSection('industries')}
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-[#072414] hover:bg-[#0c3c22] text-white font-black text-[13px] sm:text-[15px] xl:text-[16px] uppercase tracking-wider transition-all shadow-md hover:shadow-lg cursor-pointer text-center"
+                onClick={onOpenExplorer || (() => scrollToSection('industries'))}
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-[#072414] hover:bg-[#0c3c22] text-white font-black text-[13px] sm:text-[15px] xl:text-[16px] uppercase tracking-wider transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-[0.98] cursor-pointer text-center"
               >
-                <span>Explore Ingredients</span>
+                <span>Explore Ingredients & Specs</span>
                 <ArrowRight className="w-4 h-4 text-emerald-400" />
               </button>
 
               {/* Request Sample / Sourcing */}
               <button
                 onClick={() => onOpenInquiry('Commercial Sample & Formulation Inquiry')}
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-emerald-100/90 hover:bg-emerald-200 text-emerald-950 font-bold text-[13px] sm:text-[15px] xl:text-[16px] tracking-wider uppercase transition-colors cursor-pointer border border-emerald-300 shadow-2xs"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-emerald-100/90 hover:bg-emerald-200 text-emerald-950 font-bold text-[13px] sm:text-[15px] xl:text-[16px] tracking-wider uppercase transition-all hover:scale-105 active:scale-[0.98] cursor-pointer border border-emerald-300 shadow-2xs"
               >
                 <FlaskConical className="w-4 h-4 text-emerald-700" />
                 <span>Request Sample</span>

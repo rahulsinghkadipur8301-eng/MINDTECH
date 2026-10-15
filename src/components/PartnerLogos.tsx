@@ -247,15 +247,17 @@ export const PartnerLogoRenderer: React.FC<{ partnerId: string; height?: number 
   height = 42,
   className = ''
 }) => {
+  const hoverClass = 'transition-all duration-300 ease-out transform hover:scale-105 active:scale-[0.98]';
+  const mergedClass = `${hoverClass} ${className}`.trim();
   switch (partnerId) {
     case 'fine-organics':
-      return <FineOrganicsLogo height={height} className={className} />;
+      return <FineOrganicsLogo height={height} className={mergedClass} />;
     case 'vvf-limited':
-      return <VvfLimitedLogo height={height} className={className} />;
+      return <VvfLimitedLogo height={height} className={mergedClass} />;
     case 'sns-silcos':
-      return <SnsSilcosLogo height={height} className={className} />;
+      return <SnsSilcosLogo height={height} className={mergedClass} />;
     case 'greentech':
-      return <GreentechLogo height={height} className={className} />;
+      return <GreentechLogo height={height} className={mergedClass} />;
     default:
       return null;
   }

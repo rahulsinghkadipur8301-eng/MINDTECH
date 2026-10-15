@@ -23,6 +23,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
   const [mobileAboutExpanded, setMobileAboutExpanded] = useState(false);
   const [mobileBusinessExpanded, setMobileBusinessExpanded] = useState(false);
 
+  const [scrolled, setScrolled] = useState(false);
+
+  // Monitor scroll position for sticky navbar adaptation
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Close mobile menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
@@ -60,161 +71,179 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-xs border-b border-gray-200 transition-all duration-300">
-      {/* Main Navigation Bar */}
-      <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        <div className="flex items-center justify-between h-16 sm:h-20 lg:h-22">
-          
-          {/* Left: Brand Logo with Prominent Sizing */}
-          <a 
-            href="#hero" 
-            className="flex items-center group shrink-0 py-1.5" 
-            id="mindtech-main-logo"
-            aria-label="Mindtech Biotechnology Home"
-            onClick={(e) => {
-              setMobileMenuOpen(false);
-              const hero = document.getElementById('hero');
-              if (hero) {
-                hero.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            <Logo 
-              variant="horizontal" 
-              className="h-10 sm:h-14 lg:h-16 w-auto transition-transform duration-300 group-hover:scale-[1.02]" 
-            />
-          </a>
+    <header className={`sticky top-0 z-50 w-full bg-white/98 backdrop-blur-md transition-all duration-300 border-b border-gray-100/90 ${
+      scrolled 
+        ? 'shadow-sm' 
+        : 'shadow-[0_1px_3px_rgba(0,0,0,0.03)]'
+    }`}>
+      {/* Thin Emerald Corporate Accent Line */}
+      <div className="h-[3px] w-full bg-gradient-to-r from-emerald-800 via-emerald-600 to-teal-700" />
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-2 xl:space-x-3.5">
+      {/* Main Navigation Bar */}
+      <div className="w-full max-w-[1760px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+        <div className="flex items-center justify-between w-full transition-all duration-200 py-0.5 sm:py-1">
+          
+          {/* Logo container */}
+          <div className="flex items-center shrink-0">
+            <a 
+              href="#hero" 
+              className="flex items-center focus:outline-hidden" 
+              id="mindtech-main-logo"
+              aria-label="Mindtech Biotechnology Home"
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                const hero = document.getElementById('hero');
+                if (hero) {
+                  hero.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              <Logo 
+                className="h-14 sm:h-16 md:h-[72px] lg:h-20 xl:h-[92px] 2xl:h-[102px] w-auto" 
+              />
+            </a>
+          </div>
+
+          {/* Navigation Menu (Evenly distributed across the space without empty gaps) */}
+          <nav className="hidden lg:flex items-center justify-between flex-1 mx-3 lg:mx-4 xl:mx-7 2xl:mx-10">
             
-            {/* Home */}
+            {/* 1. HOME */}
             <a
               href="#hero"
-              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="inline-flex items-center justify-center py-2.5 px-3 lg:px-2.5 xl:px-4 2xl:px-5 text-[14.5px] xl:text-[16.5px] 2xl:text-[18px] font-extrabold tracking-wide text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/80 rounded-full uppercase transform transition-all duration-200 ease-out hover:scale-105 active:scale-[0.97] whitespace-nowrap"
             >
               HOME
             </a>
 
-            {/* About Us (Dropdown) */}
+            {/* 2. ABOUT US (Dropdown) */}
             <div 
-              className="relative"
+              className="relative inline-flex items-center"
               onMouseEnter={() => setActiveDropdown('about')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <a
                 href="#about"
-                className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all flex items-center space-x-1"
+                className={`inline-flex items-center justify-center py-2.5 px-3 lg:px-2.5 xl:px-4 2xl:px-5 text-[14.5px] xl:text-[16.5px] 2xl:text-[18px] font-extrabold tracking-wide rounded-full uppercase transform transition-all duration-200 ease-out hover:scale-105 active:scale-[0.97] whitespace-nowrap space-x-1.5 ${
+                  activeDropdown === 'about'
+                    ? 'text-emerald-800 bg-emerald-50/80 scale-105'
+                    : 'text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/80'
+                }`}
               >
                 <span>ABOUT US</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${activeDropdown === 'about' ? 'rotate-180 text-emerald-800' : ''}`} />
+                <ChevronDown className={`w-4.5 h-4.5 xl:w-5 xl:h-5 text-gray-500 transition-transform duration-200 ${activeDropdown === 'about' ? 'rotate-180 text-emerald-800' : ''}`} />
               </a>
 
               {/* Dropdown Menu */}
               {activeDropdown === 'about' && (
-                <div className="absolute top-full left-0 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 py-2.5 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
-                  <a
-                    href="#about"
-                    className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
-                  >
-                    Corporate Profile & Overview
-                  </a>
-                  <a
-                    href="#about"
-                    className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
-                  >
-                    6 Value Pillars of Mindtech
-                  </a>
-                  <a
-                    href="#contact"
-                    className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
-                  >
-                    Bawana Logistics Hub & Warehouse
-                  </a>
+                <div className="absolute top-full left-0 pt-2 w-72 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
+                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 py-2.5 overflow-hidden">
+                    <a
+                      href="#about"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-4 py-2.5 text-[13.5px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-all duration-150 hover:translate-x-1"
+                    >
+                      Corporate Profile & Overview
+                    </a>
+                    <a
+                      href="#about"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-4 py-2.5 text-[13.5px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-all duration-150 hover:translate-x-1"
+                    >
+                      6 Value Pillars of Mindtech
+                    </a>
+                    <a
+                      href="#contact"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-4 py-2.5 text-[13.5px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-all duration-150 hover:translate-x-1"
+                    >
+                      Bawana Logistics Hub & Warehouse
+                    </a>
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Business Lines / Industries (Dropdown) */}
+            {/* 3. BUSINESS LINES (Dropdown) */}
             <div 
-              className="relative"
+              className="relative inline-flex items-center"
               onMouseEnter={() => setActiveDropdown('business')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <a
                 href="#industries"
-                className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all flex items-center space-x-1"
+                className={`inline-flex items-center justify-center py-2.5 px-3 lg:px-2.5 xl:px-4 2xl:px-5 text-[14.5px] xl:text-[16.5px] 2xl:text-[18px] font-extrabold tracking-wide rounded-full uppercase transform transition-all duration-200 ease-out hover:scale-105 active:scale-[0.97] whitespace-nowrap space-x-1.5 ${
+                  activeDropdown === 'business'
+                    ? 'text-emerald-800 bg-emerald-50/80 scale-105'
+                    : 'text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/80'
+                }`}
               >
                 <span>BUSINESS LINES</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${activeDropdown === 'business' ? 'rotate-180 text-emerald-800' : ''}`} />
+                <ChevronDown className={`w-4.5 h-4.5 xl:w-5 xl:h-5 text-gray-500 transition-transform duration-200 ${activeDropdown === 'business' ? 'rotate-180 text-emerald-800' : ''}`} />
               </a>
 
               {/* Dropdown Menu */}
               {activeDropdown === 'business' && (
-                <div className="absolute top-full left-0 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2.5 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
-                  {INDUSTRY_SEGMENTS.map((seg) => (
-                    <a
-                      key={seg.id}
-                      href="#industries"
-                      onClick={() => onOpenInquiry(seg.title)}
-                      className="block px-4 py-2.5 text-[13px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-colors"
-                    >
-                      {seg.title}
-                    </a>
-                  ))}
+                <div className="absolute top-full left-0 pt-2 w-80 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
+                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 py-2.5 max-h-[420px] overflow-y-auto">
+                    {INDUSTRY_SEGMENTS.map((seg) => (
+                      <a
+                        key={seg.id}
+                        href="#industries"
+                        onClick={() => {
+                          setActiveDropdown(null);
+                          onOpenInquiry(seg.title);
+                        }}
+                        className="block px-4 py-2.5 text-[13.5px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-all duration-150 hover:translate-x-1"
+                      >
+                        {seg.title}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Global Partners */}
+            {/* 4. GLOBAL PARTNERS */}
             <a
               href="#partners"
-              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="inline-flex items-center justify-center py-2.5 px-3 lg:px-2.5 xl:px-4 2xl:px-5 text-[14.5px] xl:text-[16.5px] 2xl:text-[18px] font-extrabold tracking-wide text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/80 rounded-full uppercase transform transition-all duration-200 ease-out hover:scale-105 active:scale-[0.97] whitespace-nowrap"
             >
               GLOBAL PARTNERS
             </a>
 
-            {/* Why Choose Us */}
+            {/* 5. WHY CHOOSE US */}
             <a
               href="#why-us"
-              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="inline-flex items-center justify-center py-2.5 px-3 lg:px-2.5 xl:px-4 2xl:px-5 text-[14.5px] xl:text-[16.5px] 2xl:text-[18px] font-extrabold tracking-wide text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/80 rounded-full uppercase transform transition-all duration-200 ease-out hover:scale-105 active:scale-[0.97] whitespace-nowrap"
             >
               WHY CHOOSE US
             </a>
 
-            {/* Contact Us */}
+            {/* 6. CONTACT */}
             <a
               href="#contact"
-              className="px-3.5 py-2 text-[13px] xl:text-[14.5px] font-extrabold tracking-wider text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/60 rounded-full uppercase transition-all"
+              className="inline-flex items-center justify-center py-2.5 px-3 lg:px-2.5 xl:px-4 2xl:px-5 text-[14.5px] xl:text-[16.5px] 2xl:text-[18px] font-extrabold tracking-wide text-gray-800 hover:text-emerald-800 hover:bg-emerald-50/80 rounded-full uppercase transform transition-all duration-200 ease-out hover:scale-105 active:scale-[0.97] whitespace-nowrap"
             >
               CONTACT
             </a>
 
-            {/* Quick Phone Desk Badge on Wide Screens */}
-            <a
-              href="tel:+918368947579"
-              className="hidden 2xl:inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-[13px] font-bold hover:bg-emerald-100 transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-emerald-700" />
-              <span>+91 8368947579</span>
-            </a>
+          </nav>
 
-            {/* Quick Sourcing & Sample Request Button */}
+          {/* Request Sample CTA Button */}
+          <div className="hidden lg:flex items-center shrink-0">
             <button
               onClick={() => onOpenInquiry('Commercial Sample & Formulation')}
-              className="ml-2 inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white font-extrabold text-[13px] xl:text-[14.5px] tracking-wider uppercase transition-all shadow-xs hover:shadow cursor-pointer"
+              className="inline-flex items-center justify-center py-2.5 xl:py-3 2xl:py-3.5 px-5 xl:px-6.5 2xl:px-8 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white font-extrabold text-[14px] xl:text-[15.5px] 2xl:text-[17px] tracking-wide uppercase transform transition-all duration-200 ease-out shadow-md hover:shadow-lg hover:scale-105 active:scale-[0.98] cursor-pointer whitespace-nowrap shrink-0"
             >
               <span>REQUEST SAMPLE</span>
             </button>
-
-          </nav>
+          </div>
 
           {/* Mobile Actions: Hamburger Button */}
-          <div className="flex items-center space-x-2 lg:hidden">
-
+          <div className="flex items-center lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-2xl text-gray-800 hover:bg-emerald-50 focus:outline-hidden focus:ring-2 focus:ring-emerald-600 transition-colors cursor-pointer"
+              className="p-2.5 rounded-xl text-gray-800 hover:bg-emerald-50 focus:outline-hidden focus:ring-2 focus:ring-emerald-600 transition-colors cursor-pointer"
               aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
               aria-expanded={mobileMenuOpen}
             >
@@ -240,7 +269,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 top-[80px] sm:top-[96px] lg:top-[104px] bg-black/40 backdrop-blur-xs z-40 lg:hidden"
+              className="fixed inset-0 top-[67px] sm:top-[75px] bg-black/40 backdrop-blur-xs z-40 lg:hidden"
               aria-hidden="true"
             />
 
@@ -250,9 +279,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
               animate={{ opacity: 1, y: 0, height: 'auto' }}
               exit={{ opacity: 0, y: -16, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed inset-x-0 top-[80px] sm:top-[96px] lg:top-[104px] max-h-[calc(100vh-5.5rem)] overflow-y-auto bg-white border-b border-gray-200 shadow-2xl z-50 lg:hidden"
+              className="fixed inset-x-0 top-[67px] sm:top-[75px] max-h-[calc(100vh-4.75rem)] overflow-y-auto bg-white border-b border-gray-200 shadow-2xl z-50 lg:hidden"
             >
               <div className="px-5 py-5 space-y-4">
+                {/* Official Brand Logo in Mobile Drawer */}
+                <div className="flex items-center justify-center py-2 relative">
+                  <Logo className="h-12 sm:h-14 md:h-16 w-auto" />
+                </div>
                 
                 {/* Direct Contact & MSME Banner for Mobile */}
                 <div className="p-4 bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 rounded-2xl border border-emerald-200/70 space-y-2.5">
@@ -374,11 +407,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                     onClick={() => handleMobileNavClick('#contact')}
                     className="w-full py-3.5 flex items-center justify-between text-left hover:text-emerald-800 transition-colors uppercase tracking-wide cursor-pointer text-emerald-800 font-extrabold"
                   >
-                    <span>CONTACT & INQUIRIES</span>
+                    <span>CONTACT</span>
                     <ArrowRight className="w-4 h-4 text-emerald-800" />
                   </button>
 
                 </nav>
+
+                {/* Mobile Request Sample CTA */}
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenInquiry('Commercial Sample & Formulation');
+                    }}
+                    className="w-full py-3.5 px-4 rounded-xl bg-emerald-900 hover:bg-emerald-950 text-white font-bold text-sm tracking-wider uppercase transition-all shadow-md flex items-center justify-center space-x-2 cursor-pointer"
+                  >
+                    <span>REQUEST SAMPLE</span>
+                    <ArrowRight className="w-4 h-4 text-emerald-200" />
+                  </button>
+                </div>
 
                 {/* Location / Direct Details Footer in Mobile Drawer */}
                 <div className="pt-3 pb-2 text-[11px] text-gray-500 flex items-center justify-between border-t border-gray-100">

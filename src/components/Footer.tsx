@@ -126,9 +126,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-7 pb-8 border-b border-emerald-900/60">
           
           {/* Column 1: Company Profile (4 cols) */}
-          <div className="lg:col-span-4 space-y-3.5">
-            <a href="#hero" className="inline-block py-1">
-              <Logo variant="horizontal" theme="dark" className="h-12 sm:h-14 w-auto" />
+          <div className="lg:col-span-4 space-y-4">
+            {/* Footer Company Identity Logo */}
+            <a href="#hero" className="inline-block py-1 group focus:outline-hidden relative" aria-label="Return to top">
+              <div className="relative bg-white/95 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl inline-flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:shadow-xl group-hover:shadow-emerald-500/20 group-hover:-translate-y-1 border border-emerald-900/30">
+                <Logo className="h-[72px] sm:h-[84px] lg:h-[96px] w-auto" />
+              </div>
             </a>
             
             <p className="text-[13.5px] sm:text-[14.5px] text-emerald-100/80 leading-relaxed max-w-sm">
@@ -261,19 +264,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
                     href={partner.websiteUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white/95 hover:bg-white rounded-xl px-3 py-1.5 shadow-2xs border border-white/20 hover:border-emerald-400 transition-all flex items-center justify-center cursor-pointer group"
+                    className="bg-white/95 hover:bg-white rounded-xl px-3 py-1.5 shadow-2xs border border-white/20 hover:border-emerald-400 hover:shadow-md hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer group"
                     title={`Visit official ${partner.name} website (${partner.websiteUrl})`}
                   >
-                    <PartnerLogoRenderer partnerId={partner.id} height={26} className="group-hover:scale-105 transition-transform" />
+                    <PartnerLogoRenderer partnerId={partner.id} height={26} className="group-hover:scale-110 transition-transform duration-300" />
                   </a>
                 ) : (
                   <div
                     key={partner.id}
                     onClick={() => onOpenInquiry(`${partner.name} - Sourcing Portfolio`)}
-                    className="bg-white/95 hover:bg-white rounded-xl px-3 py-1.5 shadow-2xs border border-white/20 transition-all flex items-center justify-center cursor-pointer group"
+                    className="bg-white/95 hover:bg-white rounded-xl px-3 py-1.5 shadow-2xs border border-white/20 hover:border-emerald-400 hover:shadow-md hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer group"
                     title={`Authorized distributor for ${partner.name}`}
                   >
-                    <PartnerLogoRenderer partnerId={partner.id} height={26} className="group-hover:scale-105 transition-transform" />
+                    <PartnerLogoRenderer partnerId={partner.id} height={26} className="group-hover:scale-110 transition-transform duration-300" />
                   </div>
                 )
               ))}

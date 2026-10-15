@@ -15,14 +15,16 @@ import {
   Sun,
   Palette,
   HeartPulse,
-  Leaf
+  Leaf,
+  Search
 } from 'lucide-react';
 
 interface IndustriesSectionProps {
   onOpenInquiry: (categoryTitle?: string) => void;
+  onOpenExplorer?: () => void;
 }
 
-export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenInquiry }) => {
+export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenInquiry, onOpenExplorer }) => {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -83,6 +85,16 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenInqu
 
           {/* Filter Pills */}
           <div className="flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto pb-1 max-w-full -mx-3.5 px-3.5 sm:mx-0 sm:px-0 scrollbar-none">
+            {onOpenExplorer && (
+              <button
+                onClick={onOpenExplorer}
+                className="px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[13px] sm:text-[14.5px] font-bold bg-gradient-to-r from-emerald-700 to-teal-800 text-white hover:from-emerald-800 hover:to-teal-900 transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 shrink-0 shadow-xs hover:shadow-md hover:scale-105 active:scale-[0.98]"
+                title="Open interactive raw material catalog and batch calculator"
+              >
+                <Search className="w-3.5 h-3.5 text-emerald-200" />
+                <span>Ingredient Explorer & Specs</span>
+              </button>
+            )}
             <button
               onClick={() => setSelectedFilter('all')}
               className={`px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[13px] sm:text-[14.5px] font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 ${

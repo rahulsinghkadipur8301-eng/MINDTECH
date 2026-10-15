@@ -15,9 +15,12 @@ import { WhyChooseUsSection } from './components/WhyChooseUsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { FadeInSection } from './components/FadeInSection';
+import { ScrollToTop } from './components/ScrollToTop';
+import { IngredientExplorerModal } from './components/IngredientExplorerModal';
 
 export default function App() {
   const [inquiryCategory, setInquiryCategory] = useState<string | undefined>(undefined);
+  const [isExplorerOpen, setIsExplorerOpen] = useState(false);
 
   const handleOpenInquiry = (categoryOrPartner?: string) => {
     if (categoryOrPartner) {
@@ -44,7 +47,10 @@ export default function App() {
       <main className="flex-grow relative z-10">
         
         {/* 1. Automated & Animated Showcase Hero with Green Dots and Chemical Shapes Floating Behind */}
-        <Hero onOpenInquiry={handleOpenInquiry} />
+        <Hero 
+          onOpenInquiry={handleOpenInquiry} 
+          onOpenExplorer={() => setIsExplorerOpen(true)}
+        />
 
         {/* 2. Corporate Profile, 6 Pillars with Automated Animation & MSME Credibility */}
         <FadeInSection direction="up" delay={50} threshold={0.08}>
@@ -53,7 +59,10 @@ export default function App() {
 
         {/* 3. Application Sectors & Specialty Ingredients */}
         <FadeInSection direction="up" delay={50} threshold={0.08}>
-          <IndustriesSection onOpenInquiry={handleOpenInquiry} />
+          <IndustriesSection 
+            onOpenInquiry={handleOpenInquiry} 
+            onOpenExplorer={() => setIsExplorerOpen(true)}
+          />
         </FadeInSection>
 
         {/* 4. Global Manufacturing Partners (Fine Organics, VVF Limited, SNS Silcos, Greentech France) */}
@@ -76,6 +85,16 @@ export default function App() {
       <FadeInSection direction="none" delay={0} threshold={0.05}>
         <Footer onOpenInquiry={handleOpenInquiry} />
       </FadeInSection>
+
+      {/* Floating ScrollToTop Button with Smooth Header Return & Emerald Branding */}
+      <ScrollToTop />
+
+      {/* Interactive Ingredient & Formulation Explorer Modal */}
+      <IngredientExplorerModal
+        isOpen={isExplorerOpen}
+        onClose={() => setIsExplorerOpen(false)}
+        onRequestSample={handleOpenInquiry}
+      />
     </div>
   );
 }

@@ -64,17 +64,17 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                       href={partner.websiteUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-white px-4 py-2.5 rounded-2xl border border-gray-200/80 shadow-2xs inline-flex items-center justify-center min-h-[58px] hover:border-emerald-500/70 hover:shadow-md transition-all group/logo relative cursor-pointer"
+                      className="bg-white px-4 py-2.5 rounded-2xl border border-gray-200/80 shadow-2xs inline-flex items-center justify-center min-h-[58px] hover:border-emerald-500/70 hover:shadow-lg hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 group/logo relative cursor-pointer"
                       title={`Visit official ${partner.name} website (${partner.websiteUrl})`}
                     >
-                      <PartnerLogoRenderer partnerId={partner.id} height={40} className="group-hover/logo:scale-105 transition-transform duration-300" />
-                      <span className="absolute top-2 right-2 text-emerald-600 opacity-60 group-hover/logo:opacity-100 transition-opacity">
+                      <PartnerLogoRenderer partnerId={partner.id} height={40} className="group-hover/logo:scale-110 transition-transform duration-300" />
+                      <span className="absolute top-2 right-2 text-emerald-600 opacity-60 group-hover/logo:opacity-100 group-hover/logo:translate-x-0.5 group-hover/logo:-translate-y-0.5 transition-all">
                         <ExternalLink className="w-3.5 h-3.5" />
                       </span>
                     </a>
                   ) : (
-                    <div className="bg-white px-4 py-2.5 rounded-2xl border border-gray-200/80 shadow-2xs inline-flex items-center justify-center min-h-[58px] group-hover:border-emerald-500/40 transition-colors">
-                      <PartnerLogoRenderer partnerId={partner.id} height={40} className="group-hover:scale-105 transition-transform duration-300" />
+                    <div className="bg-white px-4 py-2.5 rounded-2xl border border-gray-200/80 shadow-2xs inline-flex items-center justify-center min-h-[58px] hover:border-emerald-500/70 hover:shadow-lg hover:-translate-y-1 group-hover:border-emerald-500/40 transition-all duration-300 group/logo cursor-pointer">
+                      <PartnerLogoRenderer partnerId={partner.id} height={40} className="group-hover/logo:scale-110 transition-transform duration-300" />
                     </div>
                   )}
 
