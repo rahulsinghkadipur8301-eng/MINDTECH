@@ -145,7 +145,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                       Corporate Profile & Overview
                     </a>
                     <a
-                      href="#about"
+                      href="#vision-mission"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-4 py-2.5 text-[13.5px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-all duration-150 hover:translate-x-1"
+                    >
+                      Company Vision & Mission
+                    </a>
+                    <a
+                      href="#about-pillars"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-4 py-2.5 text-[13.5px] text-gray-700 hover:bg-emerald-50 hover:text-emerald-950 font-semibold transition-all duration-150 hover:translate-x-1"
                     >
@@ -342,10 +349,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                           onClick={() => handleMobileNavClick('#about')}
                           className="block w-full text-left py-1.5 hover:text-emerald-800 cursor-pointer"
                         >
-                          • Corporate Profile & Mission
+                          • Corporate Profile & Overview
                         </button>
                         <button
-                          onClick={() => handleMobileNavClick('#about')}
+                          onClick={() => handleMobileNavClick('#vision-mission')}
+                          className="block w-full text-left py-1.5 hover:text-emerald-800 cursor-pointer"
+                        >
+                          • Company Vision & Mission
+                        </button>
+                        <button
+                          onClick={() => handleMobileNavClick('#about-pillars')}
                           className="block w-full text-left py-1.5 hover:text-emerald-800 cursor-pointer"
                         >
                           • 6 Pillars of Mindtech

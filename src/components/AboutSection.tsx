@@ -17,7 +17,11 @@ import {
   Sparkles,
   MapPin,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Target,
+  Compass,
+  Quote,
+  ShieldCheck
 } from 'lucide-react';
 
 interface AboutPillar {
@@ -208,8 +212,213 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
           </div>
         </div>
 
+        {/* Company Vision & Mission Section */}
+        <div id="vision-mission" className="mb-6 sm:mb-8 pt-1 scroll-mt-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+            
+            {/* 1. Corporate Vision Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35 }}
+              className="relative bg-gradient-to-br from-[#042817] via-[#07361f] to-[#0b4d2c] text-white rounded-3xl p-6 sm:p-7 shadow-xl border border-emerald-500/30 overflow-hidden flex flex-col justify-between group"
+            >
+              {/* Subtle Ambient Background Decorative Glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-400/15 transition-all duration-500" />
+              <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-teal-400/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="relative z-10 space-y-4">
+                {/* Header Tag & Icon */}
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-emerald-400/30 text-emerald-300 text-xs sm:text-[13px] font-black uppercase tracking-wider">
+                    <Compass className="w-4 h-4 text-emerald-300" />
+                    <span>OUR CORPORATE VISION</span>
+                  </div>
+                  <span className="text-[12px] font-mono text-emerald-300/80 uppercase tracking-widest hidden sm:inline-block">
+                    The Future Horizon
+                  </span>
+                </div>
+
+                {/* Vision Statement Title */}
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug">
+                    Pioneering Personal Care Sourcing
+                  </h3>
+                  <p className="text-emerald-300/90 text-sm font-semibold mt-1">
+                    Connecting Global Innovation with Modern Domestic Chemistry
+                  </p>
+                </div>
+
+                {/* Exact Vision Statement Quote Block */}
+                <div className="relative bg-black/35 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-emerald-500/25">
+                  <Quote className="w-5 h-5 text-emerald-400/60 absolute top-3.5 left-3.5 -scale-x-100" />
+                  <p className="text-[15.5px] sm:text-[17px] text-emerald-50 font-medium leading-relaxed pl-6 italic">
+                    "{COMPANY_DETAILS.vision}"
+                  </p>
+                </div>
+
+                {/* Strategic Objectives */}
+                <div className="space-y-2 pt-1">
+                  <div className="text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider">
+                    Key Strategic Horizons:
+                  </div>
+                  <div className="grid grid-cols-1 gap-2 text-xs sm:text-[13.5px] text-emerald-100/90">
+                    <div className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span><strong>Global Innovation Bridge:</strong> Direct access to Tier-1 international producers (Fine Organics, VVF Limited, SNS Silcos, Greentech France).</span>
+                    </div>
+                    <div className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span><strong>Modern Formulation Excellence:</strong> Equipping Indian R&D labs with cutting-edge specialty silicones, bio-ferments, and skin-barrier actives.</span>
+                    </div>
+                    <div className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span><strong>Sustainable Chemistry:</strong> Prioritizing eco-friendly, REACH-compliant, clean beauty ingredients for modern consumers.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Action */}
+              <div className="relative z-10 pt-4 sm:pt-5 mt-4 sm:mt-5 border-t border-emerald-500/20 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs text-emerald-300/80 font-medium">Mindtech Biotechnology Vision</span>
+                <button
+                  onClick={() => onOpenInquiry('Inquiry - Vision & Formulation Partnership')}
+                  className="inline-flex items-center space-x-1.5 text-xs sm:text-[13px] font-bold text-emerald-200 hover:text-white bg-white/10 hover:bg-emerald-600 px-3.5 py-1.5 rounded-full border border-emerald-400/30 transition-all cursor-pointer"
+                >
+                  <span>Partner With Our Vision</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+
+            {/* 2. Corporate Mission Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: 0.1 }}
+              className="relative bg-gradient-to-br from-[#032422] via-[#053633] to-[#084b47] text-white rounded-3xl p-6 sm:p-7 shadow-xl border border-teal-500/30 overflow-hidden flex flex-col justify-between group"
+            >
+              {/* Subtle Ambient Background Decorative Glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none group-hover:bg-teal-400/15 transition-all duration-500" />
+              <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-emerald-400/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="relative z-10 space-y-4">
+                {/* Header Tag & Icon */}
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-teal-400/30 text-teal-300 text-xs sm:text-[13px] font-black uppercase tracking-wider">
+                    <Target className="w-4 h-4 text-teal-300" />
+                    <span>OUR CORPORATE MISSION</span>
+                  </div>
+                  <span className="text-[12px] font-mono text-teal-300/80 uppercase tracking-widest hidden sm:inline-block">
+                    Everyday Execution
+                  </span>
+                </div>
+
+                {/* Mission Statement Title */}
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug">
+                    Uncompromising Quality & Dependable Supply
+                  </h3>
+                  <p className="text-teal-300/90 text-sm font-semibold mt-1">
+                    Serving Formulators with Responsive Technical Support
+                  </p>
+                </div>
+
+                {/* Exact Mission Statement Quote Block */}
+                <div className="relative bg-black/35 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-teal-500/25">
+                  <Quote className="w-5 h-5 text-teal-400/60 absolute top-3.5 left-3.5 -scale-x-100" />
+                  <p className="text-[15.5px] sm:text-[17px] text-teal-50 font-medium leading-relaxed pl-6 italic">
+                    "{COMPANY_DETAILS.mission}"
+                  </p>
+                </div>
+
+                {/* Action Commitments */}
+                <div className="space-y-2 pt-1">
+                  <div className="text-xs font-mono font-bold text-teal-300 uppercase tracking-wider">
+                    Our Everyday Commitments:
+                  </div>
+                  <div className="grid grid-cols-1 gap-2 text-xs sm:text-[13.5px] text-teal-100/90">
+                    <div className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                      <span><strong>Analytical Quality Rigor:</strong> 100% CoA & TDS verified, HPLC assay screening, heavy metal compliance, and zero adulteration.</span>
+                    </div>
+                    <div className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                      <span><strong>Buffer Stock & 24–48h Dispatch:</strong> Strategically managed NCR inventory in Bawana, preventing manufacturing bottlenecks.</span>
+                    </div>
+                    <div className="flex items-start space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                      <span><strong>Responsive Formulator Support:</strong> Dedicated cosmetic chemists offering solubility testing, HLB guidance, and free bench samples.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Action */}
+              <div className="relative z-10 pt-4 sm:pt-5 mt-4 sm:mt-5 border-t border-teal-500/20 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs text-teal-300/80 font-medium">Mindtech Biotechnology Mission</span>
+                <button
+                  onClick={() => onOpenInquiry('Sample Request - Quality & Mission Support')}
+                  className="inline-flex items-center space-x-1.5 text-xs sm:text-[13px] font-bold text-teal-200 hover:text-white bg-white/10 hover:bg-teal-600 px-3.5 py-1.5 rounded-full border border-teal-400/30 transition-all cursor-pointer"
+                >
+                  <span>Request Bench Sample</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* Guiding Corporate Philosophy Strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, delay: 0.15 }}
+            className="mt-4 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200/90 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+          >
+            <div className="space-y-1 max-w-4xl">
+              <div className="flex items-center space-x-2 text-xs font-bold text-emerald-900 uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Our Guiding Philosophy & Operating Principle</span>
+              </div>
+              <p className="text-sm sm:text-[15px] font-medium text-emerald-950 leading-relaxed">
+                "{COMPANY_DETAILS.philosophy}"
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0 self-stretch md:self-auto justify-end">
+              <button
+                onClick={() => {
+                  const pillarsEl = document.getElementById('about-pillars');
+                  if (pillarsEl) pillarsEl.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs sm:text-[13px] font-bold shadow-xs transition-colors cursor-pointer"
+              >
+                <span>View 6 Operational Pillars</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* 6 Value Pillars Section Header */}
+        <div className="flex items-center justify-between mb-3 pt-2">
+          <div>
+            <span className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider block">
+              EXECUTION EXCELLENCE
+            </span>
+            <h3 className="text-xl sm:text-2xl font-black text-[#072414] tracking-tight">
+              6 Core Operational Pillars of Mindtech
+            </h3>
+          </div>
+        </div>
+
         {/* Major Showcase Box: Large Image (Left) + Active Card Narrative & Progress (Right) */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-emerald-200/80 shadow-lg p-4 sm:p-5 lg:p-6 mb-3 sm:mb-4">
+        <div id="about-pillars" className="bg-white rounded-2xl sm:rounded-3xl border border-emerald-200/80 shadow-lg p-4 sm:p-5 lg:p-6 mb-3 sm:mb-4 scroll-mt-24">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center">
             
