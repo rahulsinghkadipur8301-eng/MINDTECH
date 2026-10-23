@@ -14,10 +14,8 @@ function videoUploadPlugin(): Plugin {
   }
   const uploadSessions: Record<string, UploadSession> = {};
 
-  return {
-    name: 'video-upload-handler',
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
+  const registerMiddlewares = (server: any) => {
+    server.middlewares.use((req: any, res: any, next: any) => {
         const urlObj = new URL(req.url || '/', 'http://localhost:3000');
         const pathname = urlObj.pathname;
 
@@ -211,9 +209,18 @@ function videoUploadPlugin(): Plugin {
 
         next();
       });
-    },
-  };
-}
+    };
+
+    return {
+      name: 'video-upload-handler',
+      configureServer(server) {
+        registerMiddlewares(server);
+      },
+      configurePreviewServer(server) {
+        registerMiddlewares(server);
+      },
+    };
+  }
 
 export default defineConfig(() => {
   return {
@@ -228,13 +235,39 @@ export default defineConfig(() => {
       outDir: 'dist',
       assetsDir: 'assets',
       copyPublicDir: true,
+      target: 'es2022',
+      cssCodeSplit: true,
+      chunkSizeWarningLimit: 700,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('lucide-react')) {
+                return 'vendor-icons';
+              }
+              if (id.includes('react') || id.includes('motion')) {
+                return 'vendor-framework';
+              }
+              return 'vendor-libs';
+            }
+          },
+        },
+      },
     },
     server: {
+      port: Number(process.env.PORT) || 3000,
+      host: '0.0.0.0',
+      allowedHosts: true as const,
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
+    },
+    preview: {
+      port: Number(process.env.PORT) || 3000,
+      host: '0.0.0.0',
+      allowedHosts: true as const,
     },
   };
 });

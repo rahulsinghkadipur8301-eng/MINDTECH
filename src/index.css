@@ -1,9 +1,50 @@
 @import "tailwindcss";
 
 @layer base {
+  *, ::before, ::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 112px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    html {
+      scroll-padding-top: 124px;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    html {
+      scroll-padding-top: 136px;
+    }
+  }
+
+  html, body, #root {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     background-color: #fafbf9;
     color: #15291f;
+    position: relative;
+    overscroll-behavior-x: none;
+  }
+
+  img, video, canvas, svg {
+    max-width: 100%;
   }
 }
 
@@ -64,5 +105,63 @@
 
 .botanical-glow {
   background: radial-gradient(circle at 50% 50%, rgba(52, 168, 83, 0.08) 0%, rgba(240, 248, 243, 0) 70%);
+}
+
+@keyframes slide-beam {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.animate-slide-beam {
+  animation: slide-beam 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes biotech-shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-15deg);
+  }
+  30%, 100% {
+    transform: translateX(250%) skewX(-15deg);
+  }
+}
+
+.animate-shimmer-sweep {
+  animation: biotech-shimmer 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes ambient-pulse-glow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.02);
+  }
+}
+
+.animate-ambient-glow {
+  animation: ambient-pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes micro-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(8px, -4px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.animate-micro-drift {
+  animation: micro-drift 14s ease-in-out infinite;
 }
 

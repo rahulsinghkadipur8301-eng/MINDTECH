@@ -103,21 +103,37 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry, onOpenExplorer }) => 
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-1 w-full">
               {/* Explore Portfolio */}
               <button
-                onClick={onOpenExplorer || (() => scrollToSection('industries'))}
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-[#072414] hover:bg-[#0c3c22] text-white font-black text-[13px] sm:text-[15px] xl:text-[16px] uppercase tracking-wider transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-[0.98] cursor-pointer text-center"
+                onClick={() => scrollToSection('portfolio')}
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-[#072414] hover:bg-[#0c3c22] text-white font-extrabold text-[13.5px] sm:text-[15px] xl:text-[16px] uppercase tracking-wider transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-[0.98] cursor-pointer text-center"
               >
-                <span>Explore Ingredients & Specs</span>
+                <span>Explore Product Portfolio</span>
                 <ArrowRight className="w-4 h-4 text-emerald-400" />
               </button>
 
               {/* Request Sample / Sourcing */}
               <button
                 onClick={() => onOpenInquiry('Commercial Sample & Formulation Inquiry')}
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-emerald-100/90 hover:bg-emerald-200 text-emerald-950 font-bold text-[13px] sm:text-[15px] xl:text-[16px] tracking-wider uppercase transition-all hover:scale-105 active:scale-[0.98] cursor-pointer border border-emerald-300 shadow-2xs"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 sm:px-8 py-3.5 rounded-2xl sm:rounded-full bg-emerald-100/90 hover:bg-emerald-200 text-emerald-950 font-bold text-[13.5px] sm:text-[15px] xl:text-[16px] tracking-wider uppercase transition-all hover:scale-105 active:scale-[0.98] cursor-pointer border border-emerald-300 shadow-2xs"
               >
                 <FlaskConical className="w-4 h-4 text-emerald-700" />
                 <span>Request Sample</span>
               </button>
+            </div>
+
+            {/* Sourcing Assurance Strip to fill space with valuable operational credentials */}
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/90 text-emerald-900 border border-emerald-200/90 text-[12px] sm:text-[13px] font-semibold">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <span>Direct Global Principals</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/90 text-emerald-900 border border-emerald-200/90 text-[12px] sm:text-[13px] font-semibold">
+                <FileCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <span>Batch-Specific COA &amp; TDS</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/90 text-emerald-900 border border-emerald-200/90 text-[12px] sm:text-[13px] font-semibold">
+                <Clock className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <span>24–48h Dispatch TAT</span>
+              </span>
             </div>
 
             {/* Operational Meta Grid */}

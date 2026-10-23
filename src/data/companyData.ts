@@ -142,6 +142,8 @@ export interface GlobalPartner {
   logoUrl: string;
   websiteUrl?: string;
   websiteLabel?: string;
+  internalRoute?: string;
+  internalLabel?: string;
   categories: string[];
   keyStrengths: string[];
 }
@@ -172,7 +174,7 @@ export const GLOBAL_PARTNERS: GlobalPartner[] = [
     description: "VVF Limited is a diversified global leader offering high-purity surfactants, fatty alcohols, and specialty oleochemical building blocks.",
     badge: "Oleochemicals & Cleansing",
     image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1200&q=80",
-    logoUrl: "/logos/vvf-limited.svg",
+    logoUrl: "/logo.gif",
     websiteUrl: "https://www.vvfltd.com/index.html",
     websiteLabel: "www.vvfltd.com",
     categories: ["Surfactants", "Emollients", "Specialty Chemicals", "Oleochemicals"],
@@ -191,6 +193,8 @@ export const GLOBAL_PARTNERS: GlobalPartner[] = [
     badge: "Sensory & Silicones",
     image: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=1200&q=80",
     logoUrl: "/logos/sns-silcos.svg",
+    internalRoute: "/partners/sns-silcos",
+    internalLabel: "Explore Partner Microsite",
     categories: ["Silicones", "Silicone Emulsions", "Functional Elastomers", "Specialty Actives"],
     keyStrengths: [
       "Superior silicone synthesis technology",
@@ -206,7 +210,7 @@ export const GLOBAL_PARTNERS: GlobalPartner[] = [
     description: "Greentech specializes in natural, potent and research-backed bio-active ingredients derived from marine algae, plant ferments, and rare botanicals.",
     badge: "Bio-Actives & Nature",
     image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=80",
-    logoUrl: "/logos/greentech.svg",
+    logoUrl: "/logo-greentech1.png",
     websiteUrl: "https://www.greentech.fr/en/",
     websiteLabel: "www.greentech.fr",
     categories: ["Botanical Actives", "Bio-Ferments", "Anti-aging Peptides", "Haircare Phyto-Actives"],

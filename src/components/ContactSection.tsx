@@ -287,7 +287,7 @@ Please confirm sample availability and dispatch timeline.`
               <div className="text-[13px] text-gray-700 leading-relaxed bg-gray-50 p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border border-gray-200/70 space-y-2">
                 <div className="flex items-center justify-between pb-1.5 border-b border-gray-200/60">
                   <div className="relative inline-flex items-center">
-                    <Logo className="h-[48px] sm:h-[58px] w-auto" />
+                    <Logo className="h-[60px] sm:h-[72px] w-auto" />
                   </div>
                   <span className="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-md">HQ DESK</span>
                 </div>

@@ -129,8 +129,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
           <div className="lg:col-span-4 space-y-4">
             {/* Footer Company Identity Logo */}
             <a href="#hero" className="inline-block py-1 group focus:outline-hidden relative" aria-label="Return to top">
-              <div className="relative bg-white/95 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl inline-flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:shadow-xl group-hover:shadow-emerald-500/20 group-hover:-translate-y-1 border border-emerald-900/30">
-                <Logo className="h-[72px] sm:h-[84px] lg:h-[96px] w-auto" />
+              <div className="relative bg-white/95 px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl inline-flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:shadow-xl group-hover:shadow-emerald-500/20 group-hover:-translate-y-1 border border-emerald-900/30">
+                <Logo className="h-[88px] sm:h-[104px] lg:h-[120px] w-auto" />
               </div>
             </a>
             
@@ -175,15 +175,39 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
                 </a>
               </li>
               <li>
-                <a href="#industries" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="#portfolio" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Industries</span>
+                  <span>Global Partners &amp; Portfolio</span>
                 </a>
               </li>
               <li>
-                <a href="#partners" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="#supplier/greentech" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Global Partners</span>
+                  <span>Greentech Biotechnologies</span>
+                </a>
+              </li>
+              <li>
+                <a href="#partners/sns-silcos" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>SNS Silcos (Partner Microsite)</span>
+                </a>
+              </li>
+              <li>
+                <a href="#supplier/fine-organics" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Fine Organics</span>
+                </a>
+              </li>
+              <li>
+                <a href="#supplier/vvf-limited" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>VVF Limited</span>
+                </a>
+              </li>
+              <li>
+                <a href="#industries" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Application Sectors</span>
                 </a>
               </li>
               <li>

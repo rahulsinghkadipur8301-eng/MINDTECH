@@ -63,65 +63,20 @@ export const FineOrganicsLogo: React.FC<PartnerLogoProps> = ({ className = '', h
 // 2. VVF LIMITED LOGO
 export const VvfLimitedLogo: React.FC<PartnerLogoProps> = ({ className = '', height = 48 }) => {
   return (
-    <svg 
-      viewBox="0 0 220 120" 
+    <img
+      src="/logo.gif"
+      alt="VVF Limited - A Partner of Choice"
       style={{ height, width: 'auto' }}
-      className={`inline-block select-none ${className}`}
-      aria-label="VVF Limited Logo"
-    >
-      <defs>
-        <linearGradient id="vvf-teal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#00A8B5" />
-          <stop offset="50%" stopColor="#0097A7" />
-          <stop offset="100%" stopColor="#00838F" />
-        </linearGradient>
-      </defs>
-
-      {/* Outer Cyan/Teal Oval Badge */}
-      <ellipse cx="110" cy="44" rx="88" ry="38" fill="url(#vvf-teal-grad)" />
-      
-      {/* Oval Ring Stroke */}
-      <ellipse cx="110" cy="44" rx="83" ry="34" fill="none" stroke="#ffffff" strokeWidth="2.5" />
-      <ellipse cx="110" cy="44" rx="86" ry="36.5" fill="none" stroke="#0097A7" strokeWidth="1.5" />
-
-      {/* Upper Organic Wave */}
-      <path 
-        d="M 46 34 C 65 24, 85 40, 110 32 C 135 24, 155 36, 174 30 C 158 38, 138 28, 110 36 C 82 44, 62 30, 46 34 Z" 
-        fill="#ffffff" 
-        opacity="0.95" 
-      />
-
-      {/* Center 'vvf' Typography */}
-      <g fill="#ffffff" fontWeight="900" fontStyle="italic" fontFamily="system-ui, -apple-system, sans-serif">
-        {/* 'v' letter 1 */}
-        <path d="M 52 26 L 68 56 L 82 56 L 94 26 L 82 26 L 75 46 L 64 26 Z" />
-        {/* 'v' letter 2 */}
-        <path d="M 88 26 L 104 56 L 118 56 L 130 26 L 118 26 L 111 46 L 100 26 Z" />
-        {/* 'f' letter */}
-        <path d="M 124 26 L 124 56 L 136 56 L 136 43 L 148 43 L 148 35 L 136 35 L 136 32 C 136 29, 138 27, 143 27 L 149 27 L 149 20 C 145 19, 139 19, 133 21 C 127 23, 124 26, 124 26 Z" />
-      </g>
-
-      {/* Lower Organic Wave */}
-      <path 
-        d="M 46 54 C 65 62, 85 46, 110 54 C 135 62, 155 50, 174 56 C 158 48, 138 58, 110 50 C 82 42, 62 56, 46 54 Z" 
-        fill="#ffffff" 
-        opacity="0.95" 
-      />
-
-      {/* Bottom Sub-text: VVF Limited */}
-      <text 
-        x="110" 
-        y="108" 
-        textAnchor="middle" 
-        fontFamily="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
-        fontSize="23" 
-        fontWeight="800" 
-        fill="#111827"
-        letterSpacing="0.3"
-      >
-        VVF Limited
-      </text>
-    </svg>
+      className={`inline-block object-contain select-none transition-transform duration-300 ${className}`}
+      loading="eager"
+      onError={(e) => {
+        // Fallback to svg in public/logos if needed
+        const target = e.currentTarget as HTMLImageElement;
+        if (!target.src.endsWith('/logos/vvf-limited.svg')) {
+          target.src = '/logos/vvf-limited.svg';
+        }
+      }}
+    />
   );
 };
 
@@ -186,58 +141,20 @@ export const SnsSilcosLogo: React.FC<PartnerLogoProps> = ({ className = '', heig
 // 4. GREENTECH BIOTECHNOLOGIES LOGO
 export const GreentechLogo: React.FC<PartnerLogoProps> = ({ className = '', height = 48 }) => {
   return (
-    <svg 
-      viewBox="0 0 250 115" 
+    <img
+      src="/logo-greentech1.png"
+      alt="Greentech Biotechnologies"
       style={{ height, width: 'auto' }}
-      className={`inline-block select-none ${className}`}
-      aria-label="Greentech Biotechnologies Logo"
-    >
-      {/* Left Circular Gray Background */}
-      <circle cx="48" cy="40" r="32" fill="#E5E7EB" />
-
-      {/* Overlapping Geometric Diamond / Leaf Pyramid */}
-      {/* Top green pyramid segment */}
-      <polygon points="90,8 60,42 120,42" fill="#7CB342" />
-      
-      {/* White chevron vein lines inside green segment */}
-      <line x1="90" y1="8" x2="90" y2="42" stroke="#ffffff" strokeWidth="1.8" />
-      <line x1="90" y1="18" x2="72" y2="34" stroke="#ffffff" strokeWidth="1.5" />
-      <line x1="90" y1="18" x2="108" y2="34" stroke="#ffffff" strokeWidth="1.5" />
-      <line x1="90" y1="28" x2="66" y2="40" stroke="#ffffff" strokeWidth="1.5" />
-      <line x1="90" y1="28" x2="114" y2="40" stroke="#ffffff" strokeWidth="1.5" />
-
-      {/* Bottom Left Light Gray Triangle */}
-      <polygon points="60,42 90,42 90,74" fill="#D1D5DB" />
-      
-      {/* Bottom Right Dark Slate / Black Triangle */}
-      <polygon points="90,42 120,42 90,74" fill="#27272A" />
-
-      {/* Right Side Header: BIOTECHNOLOGIES */}
-      <text 
-        x="108" 
-        y="58" 
-        fontFamily="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
-        fontSize="16" 
-        fontWeight="400" 
-        letterSpacing="0.8" 
-        fill="#374151"
-      >
-        BIOTECHNOLOGIES
-      </text>
-
-      {/* Main Bold Text: GREENTECH */}
-      <text 
-        x="18" 
-        y="98" 
-        fontFamily="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
-        fontSize="34" 
-        fontWeight="900" 
-        letterSpacing="-0.5"
-      >
-        <tspan fill="#7CB342">GREEN</tspan>
-        <tspan fill="#1F2937">TECH</tspan>
-      </text>
-    </svg>
+      className={`inline-block object-contain select-none transition-transform duration-300 ${className}`}
+      loading="eager"
+      onError={(e) => {
+        // Fallback to svg in public/logos if needed
+        const target = e.currentTarget as HTMLImageElement;
+        if (!target.src.endsWith('/logos/greentech.svg')) {
+          target.src = '/logos/greentech.svg';
+        }
+      }}
+    />
   );
 };
 

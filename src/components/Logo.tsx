@@ -52,9 +52,9 @@ export const Logo: React.FC<LogoProps> = ({
   // Natural logo aspect ratio: 2048 x 1134 (approx 1.806)
   const effectiveAspectRatio = stretchX === 1.0 ? '2048 / 1134' : `${(2048 * stretchX).toFixed(1)} / 1134`;
 
-  // Determine if a custom height class was provided; if not and no height prop given, apply reduced responsive default
+  // Determine if a custom height class was provided; if not and no height prop given, apply enlarged responsive default
   const hasHeightClass = className && /\bh-\S+/.test(className);
-  const responsiveClass = (!height && !hasHeightClass) ? 'h-14 sm:h-16 md:h-[72px] lg:h-20 xl:h-[92px] 2xl:h-[102px]' : '';
+  const responsiveClass = (!height && !hasHeightClass) ? 'h-18 sm:h-20 md:h-24 lg:h-26 xl:h-[108px] 2xl:h-[120px]' : '';
 
   return (
     <motion.div 
