@@ -95,7 +95,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-white bg-[#072414] hover:bg-emerald-900 px-5 py-3 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer group"
             >
               <Package className="w-4 h-4 text-emerald-300" />
-              <span>Explore Products on Next Page</span>
+              <span>Explore Full Ingredient Catalogue</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -138,7 +138,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               </h3>
             </div>
             <span className="text-xs font-mono text-gray-500 hidden sm:inline-block">
-              Click any card to open dedicated supplier catalogue on next page
+              Click any card to explore dedicated supplier portfolio &amp; technical specs
             </span>
           </div>
 
@@ -212,7 +212,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 {/* Interactive Action Buttons */}
                 <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>View Greentech on Next Page</span>
+                    <span>Explore Bio-Actives &amp; Botanicals Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
 
@@ -300,7 +300,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 {/* Interactive Action Buttons */}
                 <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>View SNS Silcos on Next Page</span>
+                    <span>Explore Silicone &amp; Sensory Fluids Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
 
@@ -389,7 +389,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 {/* Interactive Action Buttons */}
                 <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>View Fine Organics on Next Page</span>
+                    <span>Explore Specialty Esters &amp; Additives Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
 
@@ -477,7 +477,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 {/* Interactive Action Buttons */}
                 <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-teal-50 group-hover:bg-[#072414] text-teal-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>View VVF on Next Page</span>
+                    <span>Explore Surfactants &amp; Oleochemicals Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
 
@@ -542,7 +542,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
 
                 <div className="space-y-1.5">
                   <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-300">
-                    INTERACTIVE CATALOGUE EXPLORER (NEXT PAGE)
+                    INTERACTIVE TECHNICAL CATALOGUE &amp; SPECIFICATIONS
                   </span>
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
                     Explore All {totalVerifiedCount}+ Chemical &amp; Cosmetic Ingredients
@@ -576,7 +576,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                   className="px-8 py-4 rounded-2xl bg-white hover:bg-emerald-50 text-[#072414] font-black text-sm uppercase tracking-wider transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center space-x-3 cursor-pointer group"
                 >
                   <Package className="w-5 h-5 text-emerald-800" />
-                  <span>Launch Full Catalogue on Next Page</span>
+                  <span>Launch Interactive Product Catalogue</span>
                   <ArrowRight className="w-5 h-5 text-emerald-800 group-hover:translate-x-1.5 transition-transform" />
                 </button>
 

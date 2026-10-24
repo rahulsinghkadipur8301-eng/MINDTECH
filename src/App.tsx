@@ -304,7 +304,7 @@ export default function App() {
                       onClick={() => handleSelectSupplier('all-products')}
                       className="px-4 py-1.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white font-bold transition-colors shadow-2xs cursor-pointer text-xs"
                     >
-                      Open Catalogue on Next Page →
+                      Open Full Product Catalogue &rarr;
                     </button>
                   </div>
                 </div>
