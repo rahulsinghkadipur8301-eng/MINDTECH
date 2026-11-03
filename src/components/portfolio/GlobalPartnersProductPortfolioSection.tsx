@@ -13,14 +13,13 @@ import {
   Leaf, 
   Atom, 
   ShieldCheck, 
-  ExternalLink, 
   Sparkles, 
   Layers, 
   ChevronRight,
   Package,
   Droplets,
-  Globe,
-  X
+  X,
+  Play
 } from 'lucide-react';
 
 interface GlobalPartnersProductPortfolioSectionProps {
@@ -40,6 +39,8 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
   // Supplier product counts calculated strictly from verified dataset
   const greentechCount = useMemo(() => ALL_PRODUCTS.filter(p => p.supplierId === 'greentech').length, []);
   const snsCount = useMemo(() => ALL_PRODUCTS.filter(p => p.supplierId === 'sns-silcos').length, []);
+  const fineCount = useMemo(() => ALL_PRODUCTS.filter(p => p.supplierId === 'fine-organics').length, []);
+  const vvfCount = useMemo(() => ALL_PRODUCTS.filter(p => p.supplierId === 'vvf-limited').length, []);
   const generalCount = useMemo(() => ALL_PRODUCTS.filter(p => p.supplierId === 'general-range').length, []);
   const totalVerifiedCount = ALL_PRODUCTS.length;
 
@@ -145,7 +146,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 sm:gap-6">
             
             {/* -----------------------------------------------------------------------
-                1. GREENTECH BIOTECHNOLOGIES
+                1. GREENTECH BIOTECHNOLOGIES (France)
                ----------------------------------------------------------------------- */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -153,12 +154,18 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.4 }}
               onClick={() => onSelectSupplier('greentech')}
-              className="group relative bg-white rounded-3xl border border-emerald-200/80 hover:border-emerald-500 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
+              className="group relative bg-white rounded-3xl border border-emerald-200/90 hover:border-emerald-500 shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
             >
-              {/* Clean Company Logo Showcase Header (No photo image, enlarged company logo) */}
-              <div className="relative h-48 sm:h-52 bg-gradient-to-b from-emerald-50/50 via-white to-emerald-50/20 border-b border-emerald-100/80 flex items-center justify-center p-6 overflow-hidden">
-                <div className="relative z-10 flex items-center justify-center w-full max-w-[240px] transform group-hover:scale-110 transition-transform duration-300">
-                  <PartnerLogoRenderer partnerId="greentech" height={70} className="drop-shadow-xs" />
+              {/* Clean Company Logo Showcase Header */}
+              <div className="relative h-44 sm:h-48 bg-gradient-to-b from-emerald-50/70 via-white to-emerald-50/30 border-b border-emerald-100 flex items-center justify-center p-5 overflow-hidden">
+                <div className="relative z-10 flex items-center justify-center w-full max-w-[220px] transform group-hover:scale-105 transition-transform duration-300">
+                  <PartnerLogoRenderer partnerId="greentech" height={68} className="drop-shadow-xs" />
+                </div>
+                <div className="absolute top-3 right-3">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-100/90 text-emerald-900 border border-emerald-300/80">
+                    <Leaf className="w-3 h-3 text-emerald-700" />
+                    <span>France · Biotech</span>
+                  </span>
                 </div>
               </div>
 
@@ -166,35 +173,95 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
                   <span className="text-[11px] font-mono font-extrabold text-emerald-800 uppercase tracking-widest block mb-1">
-                    Bio-Actives &amp; Botanicals
+                    Bio-Actives, Microbiota &amp; Botanical Oils
                   </span>
                   <h4 className="text-xl sm:text-[22px] font-black text-gray-950 leading-tight">
                     GREENTECH BIOTECHNOLOGIES
                   </h4>
+                  <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal mt-2">
+                    French biotechnology-inspired cosmetic actives, cellular longevity modulators, and pure botanical oils.
+                  </p>
                 </div>
 
-                <p className="text-xs sm:text-[13.5px] text-gray-600 leading-relaxed font-normal">
-                  Biotechnology-inspired cosmetic actives and botanical solutions for skin-care, hair-care and related applications.
-                </p>
+                {/* Sourced Metrics Badge */}
+                <div className="p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 flex items-center justify-between text-xs font-mono">
+                  <span className="font-bold text-emerald-950 flex items-center space-x-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>92 Actives · 47 Oils &amp; Butters</span>
+                  </span>
+                  <span className="text-[11px] text-emerald-800 font-semibold">136 Pages / 5 Guides</span>
+                </div>
 
-                {/* Category Labels */}
-                <div className="space-y-1.5 pt-1">
-                  <span className="text-[11px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
-                    Product Families:
+                {/* PRODUCT INFORMATION & FLAGSHIP GRADES */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-extrabold text-gray-700 uppercase tracking-wider block">
+                      Key Catalogued Products &amp; Grades:
+                    </span>
+                    <span className="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                      Verified
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5 text-left">
+                    {/* Product 1: HAIRILINE */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">HAIRILINE®</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">Dosage: 1%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Lindera Strychnifolia Root Extract · Scalp microbiota &amp; hair loss (+34% A/T ratio)
+                      </p>
+                    </div>
+
+                    {/* Product 2: HEBELYS */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">HEBELYS®</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">Dosage: 1%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Sphingomonas Ferment Polar Lipids · Eliminates senescent "zombie" cells
+                      </p>
+                    </div>
+
+                    {/* Product 3: ACNILYS */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">ACNILYS®</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">Dosage: 2%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Rhodomyrtus Tomentosa · Sebum control &amp; acne microbiota rebalancing
+                      </p>
+                    </div>
+
+                    {/* Product 4: REVERSKIN & Pure Oils */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">Pure Oils &amp; Butters</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">47 Grades</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        Argan, Baobab, Camelina, Jojoba Oils &amp; Murumuru, Shea, Mango Butters
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Flagship Pills */}
+                <div className="space-y-1 pt-1">
+                  <span className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
+                    Other Sourced Actives:
                   </span>
                   <div className="flex flex-wrap gap-1">
-                    {[
-                      'Skin Care Actives',
-                      'Anti-ageing',
-                      'Hydration',
-                      'Hair Care',
-                      'Botanicals'
-                    ].map((label, idx) => (
+                    {['TIMELYS®', 'CIRCALYS®', 'SOLIBERINE®', 'DANDRILYS®', 'LIFTISS®', 'ZORYALYS®'].map((item, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-950 border border-emerald-200/70"
+                        className="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-900 border border-emerald-200/70"
                       >
-                        {label}
+                        {item}
                       </span>
                     ))}
                   </div>
@@ -204,37 +271,27 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
                   <span className="flex items-center space-x-1">
                     <Leaf className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Catalog Pages 12–22</span>
+                    <span>COSMOS &amp; Ecocert Verified</span>
                   </span>
-                  <span className="font-mono text-emerald-800 font-bold">{greentechCount} Documented Actives</span>
+                  <span className="inline-flex items-center space-x-1 font-mono text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full font-bold text-[11px] border border-emerald-200/70">
+                    <Play className="w-2.5 h-2.5 fill-current text-emerald-600" />
+                    <span>HAIRILINE® Video</span>
+                  </span>
                 </div>
 
-                {/* Interactive Action Buttons */}
-                <div className="pt-1 space-y-2">
+                {/* Interactive Action Button */}
+                <div className="pt-1">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>Explore Bio-Actives &amp; Botanicals Portfolio</span>
+                    <span>Explore Greentech Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
-
-                  <a
-                    href="https://www.greentech.fr/en/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#FFFDF5] hover:bg-[#F3EFE0] border-2 border-emerald-300 hover:border-emerald-600 text-[#072414] font-black text-xs sm:text-[13px] tracking-wide flex items-center justify-center space-x-2 transition-all duration-200 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group/web cursor-pointer"
-                    title="Visit official Greentech website (greentech.fr)"
-                  >
-                    <Globe className="w-3.5 h-3.5 text-emerald-800 shrink-0" />
-                    <span>Visit Official Website (greentech.fr)</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-emerald-700 opacity-80 group-hover/web:opacity-100 group-hover/web:translate-x-0.5 group-hover/web:-translate-y-0.5 transition-all shrink-0" />
-                  </a>
                 </div>
               </div>
             </motion.div>
 
 
             {/* -----------------------------------------------------------------------
-                2. SNS SILCOS
+                2. SNS SILCOS (Silicones & Sensory Technologies)
                ----------------------------------------------------------------------- */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -242,47 +299,114 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.4, delay: 0.08 }}
               onClick={() => onSelectSupplier('sns-silcos')}
-              className="group relative bg-white rounded-3xl border border-emerald-200/80 hover:border-emerald-500 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
+              className="group relative bg-white rounded-3xl border border-emerald-200/90 hover:border-emerald-500 shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
             >
-              {/* Clean Company Logo Showcase Header (No photo image, enlarged company logo) */}
-              <div className="relative h-48 sm:h-52 bg-gradient-to-b from-emerald-50/50 via-white to-emerald-50/20 border-b border-emerald-100/80 flex items-center justify-center p-6 overflow-hidden">
-                <div className="relative z-10 flex items-center justify-center w-full max-w-[240px] transform group-hover:scale-110 transition-transform duration-300">
-                  <PartnerLogoRenderer partnerId="sns-silcos" height={70} className="drop-shadow-xs" />
+              {/* Clean Company Logo Showcase Header */}
+              <div className="relative h-44 sm:h-48 bg-gradient-to-b from-blue-50/60 via-white to-blue-50/20 border-b border-blue-100 flex items-center justify-center p-5 overflow-hidden">
+                <div className="relative z-10 flex items-center justify-center w-full max-w-[220px] transform group-hover:scale-105 transition-transform duration-300">
+                  <PartnerLogoRenderer partnerId="sns-silcos" height={68} className="drop-shadow-xs" />
+                </div>
+                <div className="absolute top-3 right-3">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-blue-100/90 text-blue-900 border border-blue-300/80">
+                    <Atom className="w-3 h-3 text-blue-700" />
+                    <span>Specialty Silicones</span>
+                  </span>
                 </div>
               </div>
 
               {/* Card Body */}
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <span className="text-[11px] font-mono font-extrabold text-emerald-800 uppercase tracking-widest block mb-1">
-                    Sensory Silicones &amp; Fluids
+                  <span className="text-[11px] font-mono font-extrabold text-blue-800 uppercase tracking-widest block mb-1">
+                    Silicone Fluids, Gels &amp; Film Formers
                   </span>
                   <h4 className="text-xl sm:text-[22px] font-black text-gray-950 leading-tight">
                     SNS SILCOS
                   </h4>
+                  <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal mt-2">
+                    Advanced silicone elastomer gels, volatile carrier fluids, MQ resins, and micro-emulsions for hair and cosmetics.
+                  </p>
                 </div>
 
-                <p className="text-xs sm:text-[13.5px] text-gray-600 leading-relaxed font-normal">
-                  Specialty silicone materials and formulation-focused solutions for cosmetic applications.
-                </p>
+                {/* Sourced Metrics Badge */}
+                <div className="p-2.5 rounded-xl bg-blue-50/80 border border-blue-200/80 flex items-center justify-between text-xs font-mono">
+                  <span className="font-bold text-blue-950 flex items-center space-x-1.5">
+                    <Atom className="w-3.5 h-3.5 text-blue-700" />
+                    <span>14 Catalogued Specialties</span>
+                  </span>
+                  <span className="text-[11px] text-blue-800 font-semibold">Mindtech 2026 Page 5</span>
+                </div>
 
-                {/* Category Labels */}
-                <div className="space-y-1.5 pt-1">
-                  <span className="text-[11px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
-                    Product Families:
+                {/* PRODUCT INFORMATION & FLAGSHIP GRADES */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-extrabold text-gray-700 uppercase tracking-wider block">
+                      Key Catalogued Products &amp; Grades:
+                    </span>
+                    <span className="text-[10px] font-mono text-blue-700 font-bold bg-blue-100/70 px-1.5 py-0.5 rounded">
+                      Verified
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5 text-left">
+                    {/* Product 1: SNS SGB 15 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-blue-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-blue-950">SNS SGB 15</span>
+                        <span className="text-[10px] font-mono font-semibold text-blue-800 bg-white px-1.5 py-0.2 rounded border border-blue-200">Dosage: 1–50%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Cyclopentasiloxane &amp; Dimethiconol · Rich velvet hair cushion &amp; split-end repair
+                      </p>
+                    </div>
+
+                    {/* Product 2: SNS SEB 45 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-blue-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-blue-950">SNS SEB 45</span>
+                        <span className="text-[10px] font-mono font-semibold text-blue-800 bg-white px-1.5 py-0.2 rounded border border-blue-200">Dosage: 1–50%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Dimethicone Crosspolymer Gel · Matte powdery finish &amp; optical pore blurring
+                      </p>
+                    </div>
+
+                    {/* Product 3: SNS SAF 701 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-blue-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-blue-950">SNS SAF 701</span>
+                        <span className="text-[10px] font-mono font-semibold text-blue-800 bg-white px-1.5 py-0.2 rounded border border-blue-200">Dosage: 1–20%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Dimethicone Crosspolymer + Silica · Spherical soft-focus powder feel
+                      </p>
+                    </div>
+
+                    {/* Product 4: SNS SCB 79 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-blue-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-blue-950">SNS SCB 79 / SMR 16</span>
+                        <span className="text-[10px] font-mono font-semibold text-blue-800 bg-white px-1.5 py-0.2 rounded border border-blue-200">Dosage: 1–8%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Trimethylsiloxysilicate (MQ Resin) · Waterproof transfer-resistant cosmetics
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Flagship Pills */}
+                <div className="space-y-1 pt-1">
+                  <span className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
+                    Other Silicone Grades:
                   </span>
                   <div className="flex flex-wrap gap-1">
-                    {[
-                      'Silicone Fluids',
-                      'Functional Silicones',
-                      'Emulsions',
-                      'Elastomer Gels'
-                    ].map((label, idx) => (
+                    {['SNS SFL 45', 'SNS STC 44', 'SNS SF 350 M', 'SNS SPF 56', 'SNS SAE 49', 'SNS SEP 93', 'SNS SCB 21'].map((item, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-950 border border-emerald-200/70"
+                        className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-900 border border-blue-200/70"
                       >
-                        {label}
+                        {item}
                       </span>
                     ))}
                   </div>
@@ -291,39 +415,25 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 {/* Features & Catalog Source */}
                 <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
                   <span className="flex items-center space-x-1">
-                    <Atom className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Catalog Page 5</span>
+                    <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Volatiles &amp; Crosspolymers</span>
                   </span>
-                  <span className="font-mono text-emerald-800 font-bold">{snsCount} Verified Specialties</span>
+                  <span className="font-mono text-blue-800 font-bold">{snsCount} Verified Grades</span>
                 </div>
 
-                {/* Interactive Action Buttons */}
-                <div className="pt-1 space-y-2">
-                  <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>Explore Silicone &amp; Sensory Fluids Portfolio</span>
+                {/* Interactive Action Button */}
+                <div className="pt-1">
+                  <div className="w-full py-2.5 px-4 rounded-xl bg-blue-50 group-hover:bg-[#072414] text-blue-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
+                    <span>Explore SNS Silcos Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onSelectSupplier('sns-silcos');
-                    }}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#FFFDF5] hover:bg-[#F3EFE0] border-2 border-emerald-300 hover:border-emerald-600 text-[#072414] font-black text-xs sm:text-[13px] tracking-wide flex items-center justify-center space-x-2 transition-all duration-200 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group/web cursor-pointer"
-                    title="Open dedicated SNS Silcos Partner Microsite"
-                  >
-                    <Globe className="w-3.5 h-3.5 text-emerald-800 shrink-0" />
-                    <span>Open SNS Silcos Microsite &rarr;</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-emerald-700 opacity-80 group-hover/web:opacity-100 group-hover/web:translate-x-0.5 transition-all shrink-0" />
-                  </button>
                 </div>
               </div>
             </motion.div>
 
 
             {/* -----------------------------------------------------------------------
-                3. FINE ORGANICS
+                3. FINE ORGANICS (Specialty Esters & Natural Ingredients)
                ----------------------------------------------------------------------- */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -331,12 +441,18 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.4, delay: 0.16 }}
               onClick={() => onSelectSupplier('fine-organics')}
-              className="group relative bg-white rounded-3xl border border-emerald-200/80 hover:border-emerald-500 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
+              className="group relative bg-white rounded-3xl border border-emerald-200/90 hover:border-emerald-500 shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
             >
-              {/* Clean Company Logo Showcase Header (No photo image, enlarged company logo) */}
-              <div className="relative h-48 sm:h-52 bg-gradient-to-b from-emerald-50/50 via-white to-emerald-50/20 border-b border-emerald-100/80 flex items-center justify-center p-6 overflow-hidden">
-                <div className="relative z-10 flex items-center justify-center w-full max-w-[240px] transform group-hover:scale-110 transition-transform duration-300">
-                  <PartnerLogoRenderer partnerId="fine-organics" height={70} className="drop-shadow-xs" />
+              {/* Clean Company Logo Showcase Header */}
+              <div className="relative h-44 sm:h-48 bg-gradient-to-b from-emerald-50/70 via-white to-emerald-50/30 border-b border-emerald-100 flex items-center justify-center p-5 overflow-hidden">
+                <div className="relative z-10 flex items-center justify-center w-full max-w-[220px] transform group-hover:scale-105 transition-transform duration-300">
+                  <PartnerLogoRenderer partnerId="fine-organics" height={68} className="drop-shadow-xs" />
+                </div>
+                <div className="absolute top-3 right-3">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-100/90 text-emerald-900 border border-emerald-300/80">
+                    <FlaskConical className="w-3 h-3 text-emerald-700" />
+                    <span>Specialty Esters</span>
+                  </span>
                 </div>
               </div>
 
@@ -344,34 +460,95 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
                   <span className="text-[11px] font-mono font-extrabold text-emerald-800 uppercase tracking-widest block mb-1">
-                    Specialty Esters &amp; Fluids
+                    Specialty Esters, Emulsifiers &amp; Waxes
                   </span>
                   <h4 className="text-xl sm:text-[22px] font-black text-gray-950 leading-tight">
                     FINE ORGANICS
                   </h4>
+                  <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal mt-2">
+                    High-performance FinaGreen bio-solubilizers, Finester glyceryl and sorbitan esters, and VBrass structuring waxes.
+                  </p>
                 </div>
 
-                <p className="text-xs sm:text-[13.5px] text-gray-600 leading-relaxed font-normal">
-                  Specialty additives and oleochemical-derived ingredients for a range of industrial and personal-care applications.
-                </p>
+                {/* Sourced Metrics Badge */}
+                <div className="p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 flex items-center justify-between text-xs font-mono">
+                  <span className="font-bold text-emerald-950 flex items-center space-x-1.5">
+                    <FlaskConical className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>48 Sourced Products · 4 Families</span>
+                  </span>
+                  <span className="text-[11px] text-emerald-800 font-semibold">Mindtech 2026 Page 23</span>
+                </div>
 
-                {/* Category Labels */}
-                <div className="space-y-1.5 pt-1">
-                  <span className="text-[11px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
-                    Product Families:
+                {/* PRODUCT INFORMATION & FLAGSHIP GRADES */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-extrabold text-gray-700 uppercase tracking-wider block">
+                      Key Catalogued Products &amp; Grades:
+                    </span>
+                    <span className="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                      Verified
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5 text-left">
+                    {/* Product 1: FinaGreen 1008 & 8100 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">FinaGreen 1008 &amp; 8100</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">Dosage: 1–20%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Polyglyceryl-10 Caprylate &amp; Coco-Caprylate · Green solubilizers &amp; light emollients
+                      </p>
+                    </div>
+
+                    {/* Product 2: Finester 1650 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">Finester 1650</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">Dosage: 2–8%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Glyceryl Stearate &amp; PEG-100 Stearate · Gold-standard self-emulsifying cream base
+                      </p>
+                    </div>
+
+                    {/* Product 3: VBrass Butter & Waxes */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">VBrass Butter &amp; Waxes</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">Dosage: 1–15%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Stearyl Erucate &amp; Stearyl Behenate · Plant conditioning butter &amp; stick rigidity
+                      </p>
+                    </div>
+
+                    {/* Product 4: Finamide CD 12 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-emerald-950">Finamide CD 12 / LD 12</span>
+                        <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-200">Dosage: 1–5%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Coco / Lauric Diethanolamide · Tight micro-foam booster &amp; viscosity builder
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Flagship Pills */}
+                <div className="space-y-1 pt-1">
+                  <span className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
+                    Other Finester Esters:
                   </span>
                   <div className="flex flex-wrap gap-1">
-                    {[
-                      'Emollient Esters',
-                      'Specialty Fluids',
-                      'Functional Ingredients',
-                      'Eco-friendly'
-                    ].map((label, idx) => (
+                    {['Finester 2240', 'Finester 2840', 'Finester CC 8010', 'Finester EP 6016', 'Finester 6000', 'Finester EG 1020'].map((item, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-950 border border-emerald-200/70"
+                        className="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-900 border border-emerald-200/70"
                       >
-                        {label}
+                        {item}
                       </span>
                     ))}
                   </div>
@@ -381,37 +558,24 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
                   <span className="flex items-center space-x-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Catalog Page 23</span>
+                    <span>Vegetable Oleochemical Esters</span>
                   </span>
-                  <span className="font-mono text-emerald-800 font-bold">4 Documented Families</span>
+                  <span className="font-mono text-emerald-800 font-bold">{fineCount} Verified Products</span>
                 </div>
 
-                {/* Interactive Action Buttons */}
-                <div className="pt-1 space-y-2">
+                {/* Interactive Action Button */}
+                <div className="pt-1">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>Explore Specialty Esters &amp; Additives Portfolio</span>
+                    <span>Explore Fine Organics Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
-
-                  <a
-                    href="https://www.fineorganics.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#FFFDF5] hover:bg-[#F3EFE0] border-2 border-emerald-300 hover:border-emerald-600 text-[#072414] font-black text-xs sm:text-[13px] tracking-wide flex items-center justify-center space-x-2 transition-all duration-200 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group/web cursor-pointer"
-                    title="Visit official Fine Organics website (fineorganics.com)"
-                  >
-                    <Globe className="w-3.5 h-3.5 text-emerald-800 shrink-0" />
-                    <span>Visit Official Website (fineorganics.com)</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-emerald-700 opacity-80 group-hover/web:opacity-100 group-hover/web:translate-x-0.5 group-hover/web:-translate-y-0.5 transition-all shrink-0" />
-                  </a>
                 </div>
               </div>
             </motion.div>
 
 
             {/* -----------------------------------------------------------------------
-                4. VVF LIMITED
+                4. VVF LIMITED (Conditioning Agents & Syndet Formulations)
                ----------------------------------------------------------------------- */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -419,12 +583,18 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.4, delay: 0.24 }}
               onClick={() => onSelectSupplier('vvf-limited')}
-              className="group relative bg-white rounded-3xl border border-teal-200/80 hover:border-teal-500 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
+              className="group relative bg-white rounded-3xl border border-teal-200/90 hover:border-teal-500 shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left"
             >
-              {/* Clean Company Logo Showcase Header (No photo image, enlarged company logo) */}
-              <div className="relative h-48 sm:h-52 bg-gradient-to-b from-teal-50/50 via-white to-teal-50/20 border-b border-teal-100/80 flex items-center justify-center p-6 overflow-hidden">
-                <div className="relative z-10 flex items-center justify-center w-full max-w-[240px] transform group-hover:scale-110 transition-transform duration-300">
-                  <PartnerLogoRenderer partnerId="vvf-limited" height={70} className="drop-shadow-xs" />
+              {/* Clean Company Logo Showcase Header */}
+              <div className="relative h-44 sm:h-48 bg-gradient-to-b from-teal-50/70 via-white to-teal-50/30 border-b border-teal-100 flex items-center justify-center p-5 overflow-hidden">
+                <div className="relative z-10 flex items-center justify-center w-full max-w-[220px] transform group-hover:scale-105 transition-transform duration-300">
+                  <PartnerLogoRenderer partnerId="vvf-limited" height={68} className="drop-shadow-xs" />
+                </div>
+                <div className="absolute top-3 right-3">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-teal-100/90 text-teal-900 border border-teal-300/80">
+                    <Droplets className="w-3 h-3 text-teal-700" />
+                    <span>Surfactants &amp; Syndets</span>
+                  </span>
                 </div>
               </div>
 
@@ -432,34 +602,95 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
                   <span className="text-[11px] font-mono font-extrabold text-teal-800 uppercase tracking-widest block mb-1">
-                    Surfactants &amp; Oleochemicals
+                    Conditioning Agents &amp; Syndet Cleansers
                   </span>
                   <h4 className="text-xl sm:text-[22px] font-black text-gray-950 leading-tight">
                     VVF LIMITED
                   </h4>
+                  <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal mt-2">
+                    Industry-leading VEGAROL cationic quats, Promisoft BTMS conditioning emulsifiers, and SCI syndet bases.
+                  </p>
                 </div>
 
-                <p className="text-xs sm:text-[13.5px] text-gray-600 leading-relaxed font-normal">
-                  Specialty oleochemicals and personal-care-related materials, including supported fatty acid, fatty alcohol and glycerine product families.
-                </p>
+                {/* Sourced Metrics Badge */}
+                <div className="p-2.5 rounded-xl bg-teal-50/80 border border-teal-200/80 flex items-center justify-between text-xs font-mono">
+                  <span className="font-bold text-teal-950 flex items-center space-x-1.5">
+                    <Droplets className="w-3.5 h-3.5 text-teal-700" />
+                    <span>7 Sourced Products · 100% Verified</span>
+                  </span>
+                  <span className="text-[11px] text-teal-800 font-semibold">Mindtech 2026 Page 14</span>
+                </div>
 
-                {/* Category Labels */}
-                <div className="space-y-1.5 pt-1">
-                  <span className="text-[11px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
-                    Product Families:
+                {/* PRODUCT INFORMATION & FLAGSHIP GRADES */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-extrabold text-gray-700 uppercase tracking-wider block">
+                      Key Catalogued Products &amp; Grades:
+                    </span>
+                    <span className="text-[10px] font-mono text-teal-700 font-bold bg-teal-100/70 px-1.5 py-0.5 rounded">
+                      Verified
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5 text-left">
+                    {/* Product 1: VEGAROL BT 80 & BT 70 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-teal-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-teal-950">VEGAROL BT 80 &amp; BT 70</span>
+                        <span className="text-[10px] font-mono font-semibold text-teal-800 bg-white px-1.5 py-0.2 rounded border border-teal-200">Dosage: 0.5–3%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Behentrimonium Chloride 80% / 70% in DPG · Anti-static detangling &amp; softness
+                      </p>
+                    </div>
+
+                    {/* Product 2: Promisoft BTMS 25/50 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-teal-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-teal-950">Promisoft BTMS 25/50</span>
+                        <span className="text-[10px] font-mono font-semibold text-teal-800 bg-white px-1.5 py-0.2 rounded border border-teal-200">Dosage: 1–8%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Behentrimonium Methosulfate &amp; Cetearyl Alcohol · Cationic conditioner base
+                      </p>
+                    </div>
+
+                    {/* Product 3: VEGAROL SCI 85 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-teal-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-teal-950">VEGAROL SCI 85</span>
+                        <span className="text-[10px] font-mono font-semibold text-teal-800 bg-white px-1.5 py-0.2 rounded border border-teal-200">Dosage: 2–35%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Sodium Cocoyl Isethionate (85% Noodle/Flake) · Mild syndet soap &amp; shampoo bars
+                      </p>
+                    </div>
+
+                    {/* Product 4: Promisoft G 20 & SN 553 */}
+                    <div className="p-2 rounded-lg bg-gray-50 hover:bg-teal-50/60 border border-gray-100 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-900 group-hover:text-teal-950">Promisoft G 20 / SN 553</span>
+                        <span className="text-[10px] font-mono font-semibold text-teal-800 bg-white px-1.5 py-0.2 rounded border border-teal-200">Dosage: 1–40%</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 line-clamp-1 mt-0.5">
+                        <strong className="text-gray-700">INCI:</strong> Octyldodecanol &amp; Syndet Cleansing Base · Branched emollient &amp; syndet base
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Flagship Pills */}
+                <div className="space-y-1 pt-1">
+                  <span className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-wider block">
+                    All VVF Catalogued Grades:
                   </span>
                   <div className="flex flex-wrap gap-1">
-                    {[
-                      'Surfactants',
-                      'Emollients',
-                      'Specialty Chemicals',
-                      'Oleochemicals'
-                    ].map((label, idx) => (
+                    {['VEGAROL BT 80', 'VEGAROL BT 70', 'VEGAROL CT 25/30', 'Promisoft BTMS 25/50', 'Promisoft G 20', 'VEGAROL SCI 85', 'Promisoft SN 553'].map((item, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-teal-50 text-teal-950 border border-teal-200/70"
+                        className="px-2 py-0.5 rounded text-[10px] font-medium bg-teal-50 text-teal-900 border border-teal-200/70"
                       >
-                        {label}
+                        {item}
                       </span>
                     ))}
                   </div>
@@ -469,30 +700,17 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
                   <span className="flex items-center space-x-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-teal-600" />
-                    <span>Catalog Page 23</span>
+                    <span>Cationic Conditioning &amp; Syndets</span>
                   </span>
-                  <span className="font-mono text-teal-800 font-bold">4 Documented Families</span>
+                  <span className="font-mono text-teal-800 font-bold">{vvfCount} Verified Grades</span>
                 </div>
 
-                {/* Interactive Action Buttons */}
-                <div className="pt-1 space-y-2">
+                {/* Interactive Action Button */}
+                <div className="pt-1">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-teal-50 group-hover:bg-[#072414] text-teal-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
-                    <span>Explore Surfactants &amp; Oleochemicals Portfolio</span>
+                    <span>Explore VVF Limited Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
-
-                  <a
-                    href="https://vvfltd.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#FFFDF5] hover:bg-[#F3EFE0] border-2 border-teal-300 hover:border-teal-600 text-[#072414] font-black text-xs sm:text-[13px] tracking-wide flex items-center justify-center space-x-2 transition-all duration-200 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group/web cursor-pointer"
-                    title="Visit official VVF Limited website (vvfltd.com)"
-                  >
-                    <Globe className="w-3.5 h-3.5 text-teal-800 shrink-0" />
-                    <span>Visit Official Website (vvfltd.com)</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-teal-700 opacity-80 group-hover/web:opacity-100 group-hover/web:translate-x-0.5 group-hover/web:-translate-y-0.5 transition-all shrink-0" />
-                  </a>
                 </div>
               </div>
             </motion.div>
@@ -528,11 +746,11 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                   </div>
                   <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-emerald-200">
                     <FlaskConical className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Specialty Esters (4 Fam.)</span>
+                    <span>Specialty Esters ({fineCount})</span>
                   </div>
                   <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-teal-200">
                     <Droplets className="w-3.5 h-3.5 text-teal-400" />
-                    <span>Oleochemicals (4 Fam.)</span>
+                    <span>Surfactants &amp; Syndets ({vvfCount})</span>
                   </div>
                   <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-amber-200">
                     <Layers className="w-3.5 h-3.5 text-amber-400" />

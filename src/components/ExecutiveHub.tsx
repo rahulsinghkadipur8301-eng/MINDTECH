@@ -26,7 +26,6 @@ import {
   Leaf,
   Layers,
   Search,
-  ExternalLink,
   ChevronRight
 } from 'lucide-react';
 
@@ -338,16 +337,20 @@ export const ExecutiveHub: React.FC<ExecutiveHubProps> = ({ onOpenInquiry }) => 
                   </div>
 
                   <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2">
-                    {partner.websiteUrl ? (
+                    {partner.internalRoute ? (
                       <a
-                        href={partner.websiteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={`#${partner.internalRoute.replace('/', '')}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
                         className="inline-flex items-center space-x-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors"
-                        title={`Visit ${partner.name} website`}
+                        title={`Explore dedicated ${partner.name} showcase`}
                       >
-                        <span>Visit Website</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>{partner.internalLabel || 'Explore Portfolio'}</span>
+                        <ArrowRight className="w-3 h-3 text-emerald-700" />
                       </a>
                     ) : (
                       <span className="text-xs text-gray-500 font-mono">Direct Sourcing Partner</span>
@@ -436,6 +439,19 @@ export const ExecutiveHub: React.FC<ExecutiveHubProps> = ({ onOpenInquiry }) => 
               {/* Right Column: Formulation Laboratory & QC Rigor (5 cols) */}
               <div className="lg:col-span-5 rounded-3xl bg-[#072414] text-white p-6 sm:p-8 shadow-xl border border-emerald-900/60 flex flex-col justify-between space-y-5 text-left">
                 <div className="space-y-4">
+                  <div className="relative aspect-16/9 rounded-2xl overflow-hidden border border-emerald-500/30 shadow-md">
+                    <img
+                      src="/facilities/mindtech-laboratory.webp"
+                      alt="Mindtech Analytical Testing & QA Laboratory"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                    <span className="absolute bottom-2 left-3 text-[10.5px] font-mono text-emerald-300 font-bold">
+                      Bawana Analytical Lab &amp; QC Suite
+                    </span>
+                  </div>
+
                   <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold uppercase">
                     <FlaskConical className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Analytical Rigor</span>

@@ -17,7 +17,8 @@ import {
   Tag,
   Percent,
   Droplets,
-  BookOpen
+  BookOpen,
+  Play
 } from 'lucide-react';
 
 interface ProductDetailModalProps {
@@ -34,6 +35,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onRequestQuote
 }) => {
   const [copiedLink, setCopiedLink] = React.useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = React.useState(false);
 
   if (!product) return null;
 
@@ -68,7 +70,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Badges: Supplier & Verified Catalog */}
               <div className="flex flex-wrap items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold uppercase tracking-wider border border-emerald-400/30">
-                  {supplier?.shortName || product.supplierName}
+                  {supplier?.shortName || product.subSupplier || product.supplierId}
                 </span>
 
                 <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-white/10 text-white text-[11px] font-mono border border-white/20">
@@ -133,6 +135,78 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 {product.mainUse}
               </p>
             </div>
+
+            {/* Official Scientific Video (if available, e.g. HAIRILINE®) */}
+            {product.videoUrl && (
+              <div className="bg-gradient-to-br from-[#041c10] to-[#072c18] p-4 sm:p-5 rounded-2xl border border-emerald-500/30 text-white space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-1.5 text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Official Scientific Video Presentation</span>
+                  </div>
+                  <a
+                    href={product.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] font-mono text-emerald-300 hover:text-white flex items-center space-x-1 transition-colors"
+                  >
+                    <span>Open YouTube</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-lg border border-emerald-500/20">
+                  {isVideoPlaying ? (
+                    <div className="relative w-full h-full">
+                      <iframe
+                        src="https://www.youtube-nocookie.com/embed/3aa3iMw0ahU?autoplay=1&rel=0&modestbranding=1"
+                        title={`${product.name} Scientific Video`}
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setIsVideoPlaying(false)}
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-black/80 hover:bg-black text-white text-xs font-mono flex items-center space-x-1 cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Close</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => setIsVideoPlaying(true)}
+                      className="relative w-full h-full cursor-pointer group/modalvideo"
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <img
+                        src="/videos/greentech-hairiline-video-cover.jpg"
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover/modalvideo:scale-105 transition-transform duration-500"
+                        loading="eager"
+                        onError={(e) => {
+                          const target = e.currentTarget as HTMLImageElement;
+                          if (!target.src.includes('sddefault.jpg')) {
+                            target.src = 'https://img.youtube.com/vi/3aa3iMw0ahU/sddefault.jpg';
+                          }
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-black/40 group-hover/modalvideo:bg-black/25 transition-colors flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-full bg-emerald-500 text-emerald-950 flex items-center justify-center shadow-lg group-hover/modalvideo:scale-110 transition-transform">
+                          <Play className="w-6 h-6 fill-current ml-0.5" />
+                        </div>
+                      </div>
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs text-white drop-shadow-md">
+                        <span className="font-bold">Greentech France R&amp;D Scientific Presentation</span>
+                        <span className="text-emerald-300 font-mono text-[11px] bg-black/60 px-2 py-0.5 rounded">Ready to Play</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Two-Column Grid: Applications & Dosage */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -268,3 +342,5 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     </AnimatePresence>
   );
 };
+
+export default ProductDetailModal;

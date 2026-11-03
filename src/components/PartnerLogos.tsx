@@ -5,58 +5,103 @@ interface PartnerLogoProps {
   height?: number | string;
 }
 
-// 1. FINE ORGANICS LOGO
+// 1. FINE ORGANICS LOGO - Using User-Uploaded Official PNG Image
 export const FineOrganicsLogo: React.FC<PartnerLogoProps> = ({ className = '', height = 48 }) => {
-  return (
-    <svg 
-      viewBox="0 0 240 110" 
-      style={{ height, width: 'auto' }}
-      className={`inline-block select-none ${className}`}
-      aria-label="Fine Organics Logo"
-    >
-      <defs>
-        <linearGradient id="fo-leaf-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#43A047" />
-          <stop offset="50%" stopColor="#4CAF50" />
-          <stop offset="100%" stopColor="#7CB342" />
-        </linearGradient>
-      </defs>
+  const [imageError, setImageError] = React.useState(false);
 
-      {/* Stylized Upper Leaf */}
-      <path 
-        d="M 18 72 C 32 44, 52 20, 84 8 C 80 24, 70 42, 48 56 C 36 64, 26 69, 18 72 Z" 
-        fill="url(#fo-leaf-grad)" 
-      />
-      
-      {/* Lower Leaf Wing */}
-      <path 
-        d="M 28 62 C 40 50, 56 46, 68 44 C 58 58, 44 68, 28 72 Z" 
-        fill="#388E3C" 
-      />
-      
-      {/* Leaf Vein Accents */}
-      <path 
-        d="M 22 68 Q 50 36 80 12" 
-        stroke="#ffffff" 
-        strokeWidth="1.5" 
-        strokeLinecap="round" 
-        fill="none" 
-        opacity="0.6" 
-      />
-
-      {/* Brand Text: FINE ORGANICS */}
-      <text 
-        x="28" 
-        y="96" 
-        fontFamily="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
-        fontSize="29" 
-        fontWeight="800" 
-        letterSpacing="0.5" 
-        fill="#1E40AF"
+  if (imageError) {
+    return (
+      <svg 
+        viewBox="0 0 290 75" 
+        style={{ height, width: 'auto' }}
+        className={`inline-block select-none ${className}`}
+        aria-label="Fine Organics Logo"
       >
-        FINE ORGANICS
-      </text>
-    </svg>
+        <defs>
+          <linearGradient id="fo-leaf-grad1" x1="0%" y1="100%" x2="80%" y2="0%">
+            <stop offset="0%" stopColor="#005A2B" />
+            <stop offset="60%" stopColor="#0A8748" />
+            <stop offset="100%" stopColor="#10B981" />
+          </linearGradient>
+          <linearGradient id="fo-leaf-grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0A783E" />
+            <stop offset="100%" stopColor="#34D399" />
+          </linearGradient>
+          <linearGradient id="fo-sub-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#059669" />
+            <stop offset="100%" stopColor="#10B981" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(6, 6)">
+          <path 
+            d="M 12 58 C 16 38, 28 18, 54 8 C 50 24, 40 40, 24 52 C 19 55, 15 57, 12 58 Z" 
+            fill="url(#fo-leaf-grad1)" 
+          />
+          <path 
+            d="M 22 54 C 29 42, 41 33, 56 26 C 46 39, 36 49, 22 54 Z" 
+            fill="url(#fo-leaf-grad2)" 
+          />
+          <circle cx="53" cy="8" r="3" fill="#10B981" />
+          <path 
+            d="M 8 62 C 14 62, 18 59, 22 55" 
+            stroke="#005A2B" 
+            strokeWidth="2.5" 
+            strokeLinecap="round" 
+            fill="none" 
+          />
+        </g>
+        <text 
+          x="74" 
+          y="42" 
+          fontFamily="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" 
+          fontSize="25" 
+          fontWeight="900" 
+          letterSpacing="1.2" 
+          fill="#044E28"
+        >
+          FINE ORGANICS
+        </text>
+        <text 
+          x="75" 
+          y="58" 
+          fontFamily="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" 
+          fontSize="8.5" 
+          fontWeight="800" 
+          letterSpacing="2.4" 
+          fill="#059669"
+        >
+          FINE ORGANIC INDUSTRIES LTD.
+        </text>
+        <line 
+          x1="75" 
+          y1="64" 
+          x2="280" 
+          y2="64" 
+          stroke="url(#fo-sub-grad)" 
+          strokeWidth="1.2" 
+          strokeOpacity="0.4"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <img
+      src="/logos/fine-organics.png"
+      alt="Fine Organics"
+      style={{ height, width: 'auto' }}
+      className={`inline-block object-contain mix-blend-multiply select-none transition-transform duration-300 ${className}`}
+      loading="eager"
+      onError={(e) => {
+        const target = e.currentTarget as HTMLImageElement;
+        if (!target.src.endsWith('/FINE%20ORGANICS.png') && !target.src.endsWith('/FINE ORGANICS.png')) {
+          target.src = '/FINE ORGANICS.png';
+        } else {
+          setImageError(true);
+        }
+      }}
+    />
   );
 };
 
@@ -67,7 +112,7 @@ export const VvfLimitedLogo: React.FC<PartnerLogoProps> = ({ className = '', hei
       src="/logo.gif"
       alt="VVF Limited - A Partner of Choice"
       style={{ height, width: 'auto' }}
-      className={`inline-block object-contain select-none transition-transform duration-300 ${className}`}
+      className={`inline-block object-contain mix-blend-multiply select-none transition-transform duration-300 ${className}`}
       loading="eager"
       onError={(e) => {
         // Fallback to svg in public/logos if needed
@@ -80,61 +125,98 @@ export const VvfLimitedLogo: React.FC<PartnerLogoProps> = ({ className = '', hei
   );
 };
 
-// 3. SNS SILCOS LOGO
+// 3. SNS SILCOS LOGO - Using User-Uploaded Official PNG Image
 export const SnsSilcosLogo: React.FC<PartnerLogoProps> = ({ className = '', height = 48 }) => {
-  return (
-    <svg 
-      viewBox="0 0 240 115" 
-      style={{ height, width: 'auto' }}
-      className={`inline-block select-none ${className}`}
-      aria-label="SNS Silcos Logo"
-    >
-      <defs>
-        <linearGradient id="sns-blue-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#0288D1" />
-          <stop offset="100%" stopColor="#0D47A1" />
-        </linearGradient>
-        <linearGradient id="sns-green-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#689F38" />
-          <stop offset="100%" stopColor="#8BC34A" />
-        </linearGradient>
-      </defs>
+  const [imageError, setImageError] = React.useState(false);
 
-      {/* Multi-Petal Lotus / Flower Emblem */}
-      {/* Left green petals */}
-      <path d="M 85 48 C 65 38, 70 24, 95 22 C 105 32, 100 45, 85 48 Z" fill="url(#sns-green-grad)" />
-      <path d="M 70 42 C 55 35, 62 26, 82 28 C 88 35, 82 42, 70 42 Z" fill="#9CCC65" />
-      
-      {/* Center & Right blue petals */}
-      <path d="M 115 48 C 105 25, 120 10, 128 8 C 135 15, 132 35, 115 48 Z" fill="#0D47A1" />
-      <path d="M 125 48 C 125 28, 142 16, 155 18 C 158 28, 148 42, 125 48 Z" fill="#0288D1" />
-      <path d="M 138 50 C 145 35, 162 28, 172 32 C 172 42, 158 50, 138 50 Z" fill="#03A9F4" />
-      <path d="M 148 52 C 158 44, 172 40, 180 44 C 178 50, 168 54, 148 52 Z" fill="#4FC3F7" />
-
-      {/* Bottom Wave Lines */}
-      <path 
-        d="M 60 50 C 95 62, 145 38, 180 50 C 150 56, 105 48, 60 50 Z" 
-        fill="#0288D1" 
-      />
-      <path 
-        d="M 75 58 C 105 66, 145 52, 172 58 C 145 64, 110 56, 75 58 Z" 
-        fill="#8BC34A" 
-      />
-
-      {/* Brand Text: SNS SILCOS */}
-      <text 
-        x="120" 
-        y="98" 
-        textAnchor="middle" 
-        fontFamily="'Times New Roman', Times, 'Cinzel', serif" 
-        fontSize="28" 
-        fontWeight="800" 
-        letterSpacing="2.5" 
-        fill="#0D47A1"
+  if (imageError) {
+    return (
+      <svg 
+        viewBox="0 0 290 75" 
+        style={{ height, width: 'auto' }}
+        className={`inline-block select-none ${className}`}
+        aria-label="SNS Silcos Logo"
       >
-        SNS SILCOS
-      </text>
-    </svg>
+        <defs>
+          <linearGradient id="sns-fluid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#38BDF8" />
+            <stop offset="40%" stopColor="#0284C7" />
+            <stop offset="100%" stopColor="#1E40AF" />
+          </linearGradient>
+          <linearGradient id="sns-orbit-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0284C7" />
+            <stop offset="100%" stopColor="#06B6D4" />
+          </linearGradient>
+          <linearGradient id="sns-sub-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0284C7" />
+            <stop offset="100%" stopColor="#38BDF8" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(6, 6)">
+          <path 
+            d="M 14 36 C 14 20, 26 10, 42 10 C 52 10, 59 15, 62 23 C 58 20, 52 17, 42 17 C 30 17, 21 25, 21 36 C 21 47, 30 55, 42 55 C 50 55, 56 52, 60 47 C 57 55, 49 62, 40 62 C 24 62, 14 52, 14 36 Z" 
+            fill="url(#sns-orbit-grad)" 
+          />
+          <path 
+            d="M 42 16 C 42 16, 56 34, 56 42 C 56 50, 50 56, 42 56 C 34 56, 28 50, 28 42 C 28 34, 42 16, 42 16 Z" 
+            fill="url(#sns-fluid-grad)" 
+          />
+          <ellipse cx="37" cy="38" rx="3.5" ry="6" fill="#ffffff" opacity="0.65" transform="rotate(-25 37 38)" />
+          <circle cx="62" cy="22" r="3" fill="#38BDF8" />
+          <circle cx="60" cy="48" r="2.5" fill="#0284C7" />
+        </g>
+        <text 
+          x="74" 
+          y="42" 
+          fontFamily="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" 
+          fontSize="25" 
+          fontWeight="900" 
+          letterSpacing="2.2" 
+          fill="#0B2545"
+        >
+          SNS <tspan fill="#0284C7">SILCOS</tspan>
+        </text>
+        <text 
+          x="75" 
+          y="58" 
+          fontFamily="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" 
+          fontSize="8" 
+          fontWeight="800" 
+          letterSpacing="2.2" 
+          fill="#0284C7"
+        >
+          SPECIALTY SILICONES &amp; SENSORY FLUIDS
+        </text>
+        <line 
+          x1="75" 
+          y1="64" 
+          x2="280" 
+          y2="64" 
+          stroke="url(#sns-sub-grad)" 
+          strokeWidth="1.2" 
+          strokeOpacity="0.4"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <img
+      src="/logos/sns-silcos.png"
+      alt="SNS Silcos"
+      style={{ height, width: 'auto' }}
+      className={`inline-block object-contain mix-blend-multiply select-none transition-transform duration-300 ${className}`}
+      loading="eager"
+      onError={(e) => {
+        const target = e.currentTarget as HTMLImageElement;
+        if (!target.src.endsWith('/SNS.png')) {
+          target.src = '/SNS.png';
+        } else {
+          setImageError(true);
+        }
+      }}
+    />
   );
 };
 
@@ -145,7 +227,7 @@ export const GreentechLogo: React.FC<PartnerLogoProps> = ({ className = '', heig
       src="/logo-greentech1.png"
       alt="Greentech Biotechnologies"
       style={{ height, width: 'auto' }}
-      className={`inline-block object-contain select-none transition-transform duration-300 ${className}`}
+      className={`inline-block object-contain mix-blend-multiply select-none transition-transform duration-300 ${className}`}
       loading="eager"
       onError={(e) => {
         // Fallback to svg in public/logos if needed

@@ -219,7 +219,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
               <li>
                 <a href="#contact" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Contact & Hub</span>
+                  <span>Contact &amp; Hub</span>
                 </a>
               </li>
             </ul>
@@ -288,14 +288,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full md:w-auto">
               {GLOBAL_PARTNERS.map((partner) => (
-                partner.websiteUrl ? (
+                partner.internalRoute ? (
                   <a
                     key={partner.id}
-                    href={partner.websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`#${partner.internalRoute.replace('/', '')}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
                     className="bg-white/95 hover:bg-white rounded-xl px-3 py-1.5 shadow-2xs border border-white/20 hover:border-emerald-400 hover:shadow-md hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer group"
-                    title={`Visit official ${partner.name} website (${partner.websiteUrl})`}
+                    title={`Explore dedicated ${partner.name} showcase`}
                   >
                     <PartnerLogoRenderer partnerId={partner.id} height={26} className="group-hover:scale-110 transition-transform duration-300" />
                   </a>

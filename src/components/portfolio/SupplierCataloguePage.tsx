@@ -11,6 +11,7 @@ import {
 } from '../../data/supplierProductsData';
 import { ProductCard } from './ProductCard';
 import { PartnerLogoRenderer } from '../PartnerLogos';
+import { GreentechMasterCatalogue } from './GreentechMasterCatalogue';
 import { 
   Search, 
   X, 
@@ -20,13 +21,11 @@ import {
   CheckCircle2, 
   SlidersHorizontal, 
   Send, 
-  ExternalLink,
   ShieldCheck,
   Building2,
   Sparkles,
   Layers,
-  ArrowRight,
-  Globe
+  ArrowRight
 } from 'lucide-react';
 
 interface SupplierCataloguePageProps {
@@ -128,6 +127,56 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
     });
   }, [supplierProducts, isAllProducts, selectedSupplierFilter, selectedBusinessLine, selectedCategory, searchQuery]);
 
+  // Dedicated Greentech 5-Brochure (136 pp.) Catalogue View
+  if (supplierId === 'greentech') {
+    return (
+      <div className="w-full max-w-full overflow-x-hidden bg-[#fbfdfc] min-h-screen py-6 sm:py-8 text-left">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 space-y-6">
+          {/* Breadcrumb Navigation */}
+          <nav className="flex items-center space-x-2 text-xs sm:text-sm font-semibold text-gray-500 overflow-x-auto whitespace-nowrap pb-1">
+            <button
+              onClick={onBackToOverview}
+              className="hover:text-emerald-800 transition-colors flex items-center space-x-1 cursor-pointer"
+            >
+              <span>Home</span>
+            </button>
+            <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+            <button
+              onClick={onBackToOverview}
+              className="hover:text-emerald-800 transition-colors cursor-pointer"
+            >
+              Global Product Portfolio
+            </button>
+            <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+            <span className="text-emerald-950 font-bold">
+              Greentech Biotechnologies (France)
+            </span>
+          </nav>
+
+          {/* Back Button Banner */}
+          <div className="flex items-center justify-between">
+            <button
+              onClick={onBackToOverview}
+              className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-emerald-900 bg-white hover:bg-emerald-50 px-4 py-2 rounded-full border border-gray-200/90 shadow-2xs transition-all cursor-pointer group"
+            >
+              <ArrowLeft className="w-4 h-4 text-emerald-700 group-hover:-translate-x-1 transition-transform" />
+              <span>Back to All Suppliers</span>
+            </button>
+
+            <span className="text-xs font-mono text-gray-500 hidden sm:inline-block">
+              136 Pages / 5 Technical Brochures Indexed
+            </span>
+          </div>
+
+          <GreentechMasterCatalogue
+            onBackToOverview={onBackToOverview}
+            onOpenInquiry={onOpenInquiry}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-full overflow-x-hidden bg-[#fbfdfc] min-h-screen py-6 sm:py-8 text-left">
       <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 space-y-6">
@@ -188,20 +237,6 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold tracking-wider uppercase border border-emerald-400/30">
                   {supplier.country}
                 </span>
-
-                {supplier.websiteUrl && (
-                  <a
-                    href={supplier.websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-2xl bg-[#FFFDF5] hover:bg-[#F3EFE0] text-[#072414] text-xs sm:text-sm font-black tracking-wide transition-all duration-200 border-2 border-emerald-300 hover:border-emerald-500 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group/web cursor-pointer"
-                    title={`Visit official ${supplier.name} website (${supplier.websiteUrl})`}
-                  >
-                    <Globe className="w-4 h-4 text-emerald-800 shrink-0" />
-                    <span>Visit Official Website</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-emerald-700 opacity-80 group-hover/web:opacity-100 group-hover/web:translate-x-0.5 group-hover/web:-translate-y-0.5 transition-all shrink-0" />
-                  </a>
-                )}
               </div>
 
               {/* Title & Tagline */}
@@ -277,7 +312,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
         </div>
 
         {/* 3. Conditional: VVF LIMITED / FINE ORGANICS DEDICATED DOCUMENTED FAMILIES VIEW */}
-        {isFamilyBasedSupplier ? (
+        {isFamilyBasedSupplier && (
           <div className="space-y-6 pt-4">
             
             {/* If legacy combined view is accessed, show sub-supplier tab selector */}
@@ -388,18 +423,19 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
             </div>
 
             {/* Note on Verification Integrity */}
-            <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-amber-950 text-xs flex items-start space-x-3">
-              <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 text-emerald-950 text-xs flex items-start space-x-3">
+              <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
               <div>
-                <strong className="font-bold">Catalog Transparency & Compliance: </strong>
-                In strict accordance with the Mindtech Biotechnology verified catalog, product families for VVF Limited and Fine Organics are represented by their documented categories. To request individual product grades, specification sheets, or bulk pricing, contact our commercial sales desk.
+                <strong className="font-bold">Catalog Transparency &amp; Direct Sourcing: </strong>
+                Explore all verified individual catalogued grades for {supplier.name} below. Each material is backed by manufacturer Certificate of Analysis (CoA) and Technical Data Sheets (TDS) dispatched directly from our central Bawana warehouse.
               </div>
             </div>
 
           </div>
-        ) : (
-          /* 4. GREENTECH & SNS SILCOS & GENERAL RANGE PRODUCT LISTING */
-          <div className="space-y-6 pt-2">
+        )}
+
+        {/* 4. GREENTECH, SNS SILCOS, FINE ORGANICS, VVF LIMITED & GENERAL RANGE PRODUCT LISTING */}
+        <div className="space-y-6 pt-2">
             
             {/* Search and Category Filter Bar */}
             <div className="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200/90 shadow-2xs space-y-4">
@@ -465,8 +501,8 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
                       <option value="All">All Suppliers (Full Range)</option>
                       <option value="greentech">Greentech France (53 Actives)</option>
                       <option value="sns-silcos">SNS Silcos (14 Specialties)</option>
-                      <option value="fine-organics">Fine Organics (4 Families)</option>
-                      <option value="vvf-limited">VVF Limited (4 Families)</option>
+                      <option value="fine-organics">Fine Organics (48 Specialty Esters)</option>
+                      <option value="vvf-limited">VVF Limited (7 Conditioning &amp; Syndets)</option>
                       <option value="general-range">Mindtech General Catalog (24 Items)</option>
                     </select>
                   </div>
@@ -507,26 +543,33 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
               )}
 
               {/* Category Filter Pills */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-1 scrollbar-none">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-                      selectedCategory === cat
-                        ? 'bg-[#072414] text-white shadow-xs'
-                        : 'bg-gray-100 text-gray-700 hover:bg-emerald-50 hover:text-emerald-950'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
+              {selectedSupplierFilter !== 'greentech' && (
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-1 scrollbar-none">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+                        selectedCategory === cat
+                          ? 'bg-[#072414] text-white shadow-xs'
+                          : 'bg-gray-100 text-gray-700 hover:bg-emerald-50 hover:text-emerald-950'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              )}
 
             </div>
 
-            {/* Product Cards Grid */}
-            {filteredProducts.length > 0 ? (
+            {/* Product Cards Grid or Greentech Master Experience */}
+            {selectedSupplierFilter === 'greentech' ? (
+              <GreentechMasterCatalogue
+                onBackToOverview={onBackToOverview}
+                onOpenInquiry={onOpenInquiry}
+              />
+            ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
                 {filteredProducts.map((product) => (
                   <ProductCard
@@ -560,7 +603,6 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
             )}
 
           </div>
-        )}
 
         {/* 5. Bottom Call to Action for Bulk Inquiries */}
         <div className="bg-gradient-to-r from-emerald-950 via-[#072414] to-teal-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-5 shadow-lg">
@@ -593,3 +635,5 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
     </div>
   );
 };
+
+export default SupplierCataloguePage;

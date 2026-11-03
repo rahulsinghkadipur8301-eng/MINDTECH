@@ -17,20 +17,11 @@ import { Footer } from './components/Footer';
 import { FadeInSection } from './components/FadeInSection';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ProductItem, ALL_PRODUCTS } from './data/supplierProductsData';
-
-// Code-split sub-pages and on-demand modals to minimize initial bundle size and maximize load speed
-const SupplierCataloguePage = React.lazy(() =>
-  import('./components/portfolio/SupplierCataloguePage').then(m => ({ default: m.SupplierCataloguePage }))
-);
-const SnsSilcosMicrosite = React.lazy(() =>
-  import('./components/portfolio/SnsSilcosMicrosite').then(m => ({ default: m.SnsSilcosMicrosite }))
-);
-const ProductDetailModal = React.lazy(() =>
-  import('./components/portfolio/ProductDetailModal').then(m => ({ default: m.ProductDetailModal }))
-);
-const IngredientExplorerModal = React.lazy(() =>
-  import('./components/IngredientExplorerModal').then(m => ({ default: m.IngredientExplorerModal }))
-);
+import { SupplierCataloguePage } from './components/portfolio/SupplierCataloguePage';
+import { SnsSilcosMicrosite } from './components/portfolio/SnsSilcosMicrosite';
+import { ProductDetailModal } from './components/portfolio/ProductDetailModal';
+import { IngredientExplorerModal } from './components/IngredientExplorerModal';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 export default function App() {
   const [inquiryCategory, setInquiryCategory] = useState<string | undefined>(undefined);
@@ -84,6 +75,21 @@ export default function App() {
         path.startsWith('/partners/sns-silcos')
       ) {
         setSelectedSupplierId('sns-silcos');
+        setSelectedBusinessLine(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      // Dedicated Greentech Master Catalogue Route
+      if (
+        hash === '#portfolio/greentech' ||
+        hash === '#/portfolio/greentech' ||
+        hash === '#greentech' ||
+        path === '/portfolio/greentech' ||
+        path.startsWith('/portfolio/greentech') ||
+        hash.startsWith('#ingredient/')
+      ) {
+        setSelectedSupplierId('greentech');
         setSelectedBusinessLine(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
@@ -233,14 +239,7 @@ export default function App() {
 
       {/* Main Page Content - Conditional between Dedicated Supplier Listing Page vs Full Corporate Showcase */}
       <main className="flex-grow w-full min-w-0 relative z-10">
-        <React.Suspense
-          fallback={
-            <div className="w-full min-h-[60vh] flex flex-col items-center justify-center py-20 text-emerald-800">
-              <div className="w-9 h-9 border-3 border-emerald-600 border-t-transparent rounded-full animate-spin mb-3" />
-              <span className="text-sm font-semibold tracking-wide">Loading Catalogue &amp; Products...</span>
-            </div>
-          }
-        >
+        <ErrorBoundary>
           {selectedSupplierId === 'sns-silcos' ? (
             /* Level 2A: Dedicated Premium SNS Silcos Partner Microsite */
             <SnsSilcosMicrosite
@@ -320,18 +319,18 @@ export default function App() {
               />
             </FadeInSection>
 
-            {/* 6. The Mindtech Edge - 6 Pillars in an Ultra-Sleek Bento Card Grid */}
+            {/* 5. The Mindtech Edge - Authentic Facilities & 6 Pillars in an Ultra-Sleek Showcase */}
             <FadeInSection direction="up" delay={50} threshold={0.08}>
               <WhyChooseUsSection onOpenInquiry={handleOpenInquiry} />
             </FadeInSection>
 
-            {/* 7. Central Facility Desk, Bawana Warehouse Hub & Sample Request Form */}
+            {/* 6. Central Facility Desk, Bawana Warehouse Hub & Sample Request Form */}
             <FadeInSection direction="up" delay={50} threshold={0.08}>
               <ContactSection initialSubject={inquiryCategory} />
             </FadeInSection>
           </>
         )}
-        </React.Suspense>
+        </ErrorBoundary>
       </main>
 
       {/* Corporate Multi-Column Molecular Footer */}
@@ -343,7 +342,7 @@ export default function App() {
       <ScrollToTop />
 
       {/* Interactive Ingredient & Formulation Explorer Modal & Product Detail Datasheet Modal */}
-      <React.Suspense fallback={null}>
+      <ErrorBoundary>
         {isExplorerOpen && (
           <IngredientExplorerModal
             isOpen={isExplorerOpen}
@@ -360,7 +359,7 @@ export default function App() {
             onRequestQuote={handleRequestQuote}
           />
         )}
-      </React.Suspense>
+      </ErrorBoundary>
     </div>
   );
 }

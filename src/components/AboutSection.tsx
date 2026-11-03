@@ -78,16 +78,17 @@ const ABOUT_PILLARS: AboutPillar[] = [
     id: 'quality-compliance',
     title: 'Quality You Can Rely On',
     subtitle: 'Rigorous Verification, Certificate of Analysis & Batch Consistency',
-    description: 'We place strong emphasis on ingredient quality, consistency and dependable supply to support smooth formulation and production processes. Every batch is verified with rigorous Certificate of Analysis (COA), Technical Data Sheets (TDS), and stringent quality verification protocols.',
+    description: 'We place strong emphasis on ingredient quality, consistency and dependable supply to support smooth formulation and production processes. Inside our dedicated analytical testing laboratory, every batch is verified with rigorous Certificate of Analysis (COA), Technical Data Sheets (TDS), and stringent quality verification protocols.',
     keyPoints: [
+      'Dedicated in-house testing laboratory with HPLC active assaying and purity verification',
       '100% batch traceability with verified COA & Technical Data Sheets',
       'Strict quality screening and consistent specifications across lots',
       'MSME registered enterprise with standardized supply chain controls'
     ],
-    tags: ['COA & TDS Verified', '100% Batch Traceable', 'Stringent Quality Standards'],
-    image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1400&q=85',
-    fallbackImage: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1400&q=85',
-    imageCaption: 'Rigorous quality verification, purity testing & batch compliance',
+    tags: ['In-House Testing Lab', 'COA & TDS Verified', '100% Batch Traceable'],
+    image: '/facilities/mindtech-laboratory.webp',
+    fallbackImage: '/facilities/mindtech-laboratory.jpg',
+    imageCaption: 'Mindtech Analytical Testing Laboratory · Bawana Hub, Delhi',
     icon: Award
   },
   {
@@ -95,16 +96,17 @@ const ABOUT_PILLARS: AboutPillar[] = [
     id: 'formulation-support',
     title: 'Application-Focused Approach',
     subtitle: 'Formulation Guidance, Sensory Tuning & Stability Troubleshooting',
-    description: 'We understand that every formulation has different requirements. Our team works with customers to identify suitable ingredient solutions for their specific applications, assisting with sensory optimization, stability troubleshooting, compatibility testing, and dosage guidance.',
+    description: 'We understand that every formulation has different requirements. In our executive collaboration and formulation space, our team works with customers to identify suitable ingredient solutions for their specific applications, assisting with sensory optimization, stability troubleshooting, compatibility testing, and dosage guidance.',
     keyPoints: [
       'Tailored ingredient selection matching target viscosity and skin-feel',
       'Troubleshooting emulsion stability, phase separation and pH balancing',
+      'Confidential client consultation and digital formulation dossier reviews',
       'Practical starting formulation prototypes and dosage guidelines'
     ],
-    tags: ['Formulation Guidance', 'Sensory Tuning', 'Dosage Matrix'],
-    image: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=1400&q=85',
-    fallbackImage: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1400&q=85',
-    imageCaption: 'Application testing, sensory profiling & prototype evaluation',
+    tags: ['Formulation Guidance', 'Sensory Tuning', 'Collaboration Hub'],
+    image: '/facilities/mindtech-meeting-collaboration.webp',
+    fallbackImage: '/facilities/mindtech-meeting-collaboration.jpg',
+    imageCaption: 'Executive Collaboration & Formulation Advisory Suite',
     icon: FlaskConical
   },
   {
@@ -112,16 +114,17 @@ const ABOUT_PILLARS: AboutPillar[] = [
     id: 'dependable-supply',
     title: 'Dependable Supply Partner',
     subtitle: 'Climate-Managed Warehousing & 24-48h Pan-India Dispatch',
-    description: 'Our import and distribution capabilities are focused on maintaining reliable availability and ensuring a smooth supply experience for our customers. Strategically located warehousing in Bawana, Delhi with ready buffer stock helps prevent production bottlenecks.',
+    description: 'Our import and distribution capabilities are focused on maintaining reliable availability and ensuring a smooth supply experience for our customers. Strategically located warehousing in Bawana, Delhi with deep buffer stock and UN-certified storage prevents production bottlenecks.',
     keyPoints: [
-      'Centralized warehouse infrastructure in Bawana Industrial Area, Delhi',
+      'Expansive warehouse infrastructure in Bawana Industrial Area, Delhi',
+      'Epoxy cleanroom floors, high-bay lighting and UN-certified drum palletization',
       'Buffer inventory management ensuring uninterrupted manufacturing supply',
       'Rapid 24 to 48 hour dispatch turnaround across major Indian cosmetics clusters'
     ],
     tags: ['Bawana Hub, Delhi', 'Buffer Stock', '24-48h Fast Dispatch'],
-    image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1400&q=85',
-    fallbackImage: 'https://images.unsplash.com/photo-1586528116493-a029325540fa?auto=format&fit=crop&w=1400&q=85',
-    imageCaption: 'Ready buffer inventory & temperature-managed storage in Delhi',
+    image: '/facilities/mindtech-warehouse-hub.webp',
+    fallbackImage: '/facilities/mindtech-warehouse-hub.jpg',
+    imageCaption: 'Mindtech Central Logistics & Stock Hub · Bawana Industrial Area',
     icon: Truck
   },
   {
@@ -129,16 +132,17 @@ const ABOUT_PILLARS: AboutPillar[] = [
     id: 'long-term-partnerships',
     title: 'Long-Term Partnerships',
     subtitle: 'Transparent Collaboration from Lab Bench to Commercial Scale',
-    description: 'We believe in building lasting relationships through transparent communication, professional service and a commitment to customer satisfaction from initial bench-scale formulation to commercial batch manufacturing.',
+    description: 'We believe in building lasting relationships through transparent communication, professional service and a commitment to customer satisfaction. Our corporate headquarters coordinates with French, Korean, and domestic principals under strict ISO standards.',
     keyPoints: [
-      'Collaborative support tailored to indie brands, formulators and large manufacturers',
+      'Professional corporate office with dedicated client coordination desks',
       'Transparent lead times, proactive market updates and consistent pricing',
+      'Collaborative support tailored to indie brands, formulators and large manufacturers',
       'Dedicated commercial and technical representatives for every partner'
     ],
-    tags: ['Transparent Service', 'Lab-to-Plant Scale', 'Dedicated Commercial Desk'],
-    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1400&q=85',
-    fallbackImage: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=1400&q=85',
-    imageCaption: 'Enduring client relationships & collaborative cosmetic formulation',
+    tags: ['Corporate Headquarters', 'ISO Governance', 'Dedicated Client Desk'],
+    image: '/facilities/mindtech-corporate-office.webp',
+    fallbackImage: '/facilities/mindtech-corporate-office.jpg',
+    imageCaption: 'Mindtech Corporate Headquarters & Client Operations Desk',
     icon: Handshake
   }
 ];

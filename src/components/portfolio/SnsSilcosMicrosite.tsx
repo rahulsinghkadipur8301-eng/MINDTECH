@@ -1348,3 +1348,5 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
     </div>
   );
 };
+
+export default SnsSilcosMicrosite;

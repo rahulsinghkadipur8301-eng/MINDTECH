@@ -4,14 +4,12 @@ import { GLOBAL_PARTNERS } from '../data/companyData';
 import { PartnerLogoRenderer } from './PartnerLogos';
 import { 
   Globe2, 
-  Globe,
   ShieldCheck, 
   CheckCircle2, 
   ArrowRight,
   Award,
   Sparkles,
-  Layers,
-  ExternalLink
+  Layers
 } from 'lucide-react';
 
 interface GlobalPartnersProps {
@@ -59,21 +57,8 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
               <div className="p-4.5 sm:p-5.5 border-b border-gray-100 bg-gradient-to-br from-gray-50/80 via-white to-emerald-50/20">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   
-                  {/* Brand Logo Presentation Box - Clickable if websiteUrl or internalRoute exists */}
-                  {partner.websiteUrl ? (
-                    <a
-                      href={partner.websiteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white px-5 py-3 rounded-2xl border border-gray-200/80 shadow-2xs inline-flex items-center justify-center min-h-[68px] hover:border-emerald-500/70 hover:shadow-lg hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 group/logo relative cursor-pointer"
-                      title={`Visit official ${partner.name} website (${partner.websiteUrl})`}
-                    >
-                      <PartnerLogoRenderer partnerId={partner.id} height={54} className="group-hover/logo:scale-110 transition-transform duration-300" />
-                      <span className="absolute top-2 right-2 text-emerald-600 opacity-60 group-hover/logo:opacity-100 group-hover/logo:translate-x-0.5 group-hover/logo:-translate-y-0.5 transition-all">
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </span>
-                    </a>
-                  ) : partner.internalRoute ? (
+                  {/* Brand Logo Presentation Box - Clickable if internalRoute exists */}
+                  {partner.internalRoute ? (
                     <a
                       href={`#${partner.internalRoute.replace('/', '')}`}
                       onClick={(e) => {
@@ -82,7 +67,7 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
                       className="bg-white px-5 py-3 rounded-2xl border border-emerald-200/80 shadow-2xs inline-flex items-center justify-center min-h-[68px] hover:border-emerald-500 hover:shadow-lg hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 group/logo relative cursor-pointer"
-                      title={`Explore dedicated ${partner.name} showcase microsite`}
+                      title={`Explore dedicated ${partner.name} showcase`}
                     >
                       <PartnerLogoRenderer partnerId={partner.id} height={54} className="group-hover/logo:scale-110 transition-transform duration-300" />
                       <span className="absolute top-2 right-2 text-emerald-700 opacity-80 group-hover/logo:opacity-100 group-hover/logo:translate-x-0.5 group-hover/logo:-translate-y-0.5 transition-all">
@@ -110,18 +95,7 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                 {/* Partner Name & Tagline */}
                 <div className="mt-3">
                   <div className="flex items-center justify-between gap-2">
-                    {partner.websiteUrl ? (
-                      <a
-                        href={partner.websiteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-1.5 text-xl font-extrabold text-[#072414] tracking-tight hover:text-emerald-700 transition-colors group/title"
-                        title={`Visit ${partner.name} website`}
-                      >
-                        <span>{partner.name}</span>
-                        <ExternalLink className="w-4 h-4 text-emerald-600 opacity-70 group-hover/title:opacity-100 group-hover/title:translate-x-0.5 group-hover/title:-translate-y-0.5 transition-all" />
-                      </a>
-                    ) : partner.internalRoute ? (
+                    {partner.internalRoute ? (
                       <a
                         href={`#${partner.internalRoute.replace('/', '')}`}
                         onClick={(e) => {
@@ -130,7 +104,7 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                           window.scrollTo({ top: 0, behavior: 'smooth' });
                         }}
                         className="inline-flex items-center space-x-1.5 text-xl font-extrabold text-[#072414] tracking-tight hover:text-emerald-700 transition-colors group/title cursor-pointer"
-                        title={`Open ${partner.name} dedicated microsite`}
+                        title={`Open ${partner.name} dedicated showcase`}
                       >
                         <span>{partner.name}</span>
                         <Sparkles className="w-4 h-4 text-emerald-600 opacity-70 group-hover/title:opacity-100 transition-all" />
@@ -139,20 +113,6 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                       <h3 className="text-xl font-extrabold text-[#072414] tracking-tight">
                         {partner.name}
                       </h3>
-                    )}
-
-                    {partner.websiteLabel && partner.websiteUrl && (
-                      <a
-                        href={partner.websiteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs font-black text-[#072414] bg-[#FFFDF5] hover:bg-[#F3EFE0] px-3 py-1.5 rounded-xl border-2 border-emerald-300 hover:border-emerald-500 shadow-xs hover:shadow-md transition-all inline-flex items-center space-x-1.5 group/link cursor-pointer hover:-translate-y-0.5 shrink-0"
-                        title={`Visit official ${partner.name} website (${partner.websiteLabel})`}
-                      >
-                        <Globe className="w-3.5 h-3.5 text-emerald-800 shrink-0" />
-                        <span>{partner.websiteLabel}</span>
-                        <ExternalLink className="w-3.5 h-3.5 text-emerald-700 opacity-80 group-hover/link:opacity-100 group-hover/link:translate-x-0.5 transition-all shrink-0" />
-                      </a>
                     )}
 
                     {partner.internalRoute && (
@@ -167,7 +127,7 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                         title={`Explore dedicated ${partner.name} showcase`}
                       >
                         <Sparkles className="w-3.5 h-3.5 text-emerald-300 shrink-0" />
-                        <span>{partner.internalLabel || 'Explore Microsite'}</span>
+                        <span>{partner.internalLabel || 'Explore Portfolio'}</span>
                         <ArrowRight className="w-3.5 h-3.5 text-emerald-200 group-hover/link:translate-x-0.5 transition-transform shrink-0" />
                       </a>
                     )}
@@ -219,18 +179,22 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                   </div>
                 </div>
 
-                {/* Bottom Action Area with Website Redirect */}
+                {/* Bottom Action Area */}
                 <div className="pt-2.5 border-t border-gray-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
-                  {partner.websiteUrl ? (
+                  {partner.internalRoute ? (
                     <a
-                      href={partner.websiteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={`#${partner.internalRoute.replace('/', '')}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
                       className="inline-flex items-center justify-center space-x-2 text-[13.5px] font-bold text-white bg-emerald-800 hover:bg-emerald-900 px-4 py-2 rounded-xl shadow-xs hover:shadow-md transition-all group/btn cursor-pointer"
-                      title={`Visit ${partner.name} website`}
+                      title={`Explore dedicated ${partner.name} showcase`}
                     >
-                      <span>Visit Website</span>
-                      <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
+                      <span>{partner.internalLabel || 'Explore Portfolio'}</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
                     </a>
                   ) : (
                     <span className="text-[12px] text-gray-400 font-medium py-1">

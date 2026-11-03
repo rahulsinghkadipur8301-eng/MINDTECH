@@ -596,3 +596,5 @@ export const IngredientExplorerModal: React.FC<IngredientExplorerModalProps> = (
     </AnimatePresence>
   );
 };
+
+export default IngredientExplorerModal;

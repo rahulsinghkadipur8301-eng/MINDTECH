@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 export interface LightboxImageItem {
-  id: string;
+  id?: string;
   src: string;
   title: string;
   category?: string;
@@ -30,8 +30,9 @@ interface ImageLightboxProps {
   isOpen: boolean;
   onClose: () => void;
   images: LightboxImageItem[];
-  currentIndex: number;
-  onNavigate: (newIndex: number) => void;
+  currentIndex?: number;
+  initialIndex?: number;
+  onNavigate?: (newIndex: number) => void;
   onOpenInquiry?: (categoryOrTitle?: string) => void;
 }
 
@@ -40,29 +41,45 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
   onClose,
   images,
   currentIndex,
+  initialIndex = 0,
   onNavigate,
   onOpenInquiry
 }) => {
+  const [internalIndex, setInternalIndex] = useState<number>(initialIndex);
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [showThumbnails, setShowThumbnails] = useState<boolean>(true);
 
-  const currentItem = images[currentIndex] || images[0];
+  useEffect(() => {
+    if (initialIndex !== undefined) {
+      setInternalIndex(initialIndex);
+    }
+  }, [initialIndex, isOpen]);
+
+  const activeIndex = currentIndex !== undefined ? currentIndex : internalIndex;
+  const currentItem = images[activeIndex] || images[0];
+
+  const handleNavigate = (newIdx: number) => {
+    setInternalIndex(newIdx);
+    if (onNavigate) {
+      onNavigate(newIdx);
+    }
+  };
 
   // Reset zoom on image change
   useEffect(() => {
     setZoomLevel(1);
-  }, [currentIndex, isOpen]);
+  }, [activeIndex, isOpen]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (!isOpen) return;
+      if (!isOpen || images.length === 0) return;
       if (e.key === 'Escape') {
         onClose();
       } else if (e.key === 'ArrowRight') {
-        onNavigate((currentIndex + 1) % images.length);
+        handleNavigate((activeIndex + 1) % images.length);
       } else if (e.key === 'ArrowLeft') {
-        onNavigate((currentIndex - 1 + images.length) % images.length);
+        handleNavigate((activeIndex - 1 + images.length) % images.length);
       } else if (e.key === '+' || e.key === '=') {
         setZoomLevel((prev) => Math.min(prev + 0.3, 2.5));
       } else if (e.key === '-') {
@@ -71,7 +88,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
         setZoomLevel(1);
       }
     },
-    [isOpen, currentIndex, images.length, onNavigate, onClose]
+    [isOpen, activeIndex, images.length, onClose]
   );
 
   useEffect(() => {
@@ -90,11 +107,11 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
   if (!isOpen || !currentItem) return null;
 
   const handleNext = () => {
-    onNavigate((currentIndex + 1) % images.length);
+    handleNavigate((activeIndex + 1) % images.length);
   };
 
   const handlePrev = () => {
-    onNavigate((currentIndex - 1 + images.length) % images.length);
+    handleNavigate((activeIndex - 1 + images.length) % images.length);
   };
 
   const toggleZoom = () => {
@@ -126,7 +143,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
                   </span>
                 )}
                 <span className="text-xs text-gray-400 font-mono">
-                  {currentIndex + 1} / {images.length}
+                  {activeIndex + 1} / {images.length}
                 </span>
               </div>
               <h3 className="text-base sm:text-lg font-bold text-white tracking-tight truncate max-w-xs sm:max-w-md md:max-w-lg mt-0.5">
@@ -222,7 +239,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
           {/* High Resolution Image */}
           <div className="relative max-w-full max-h-[75vh] flex items-center justify-center overflow-auto p-2">
             <motion.img
-              key={currentItem.id}
+              key={currentItem.id || currentItem.src || activeIndex}
               src={currentItem.src}
               alt={currentItem.title}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -260,10 +277,10 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
               <div className="flex items-center space-x-2 overflow-x-auto py-1 max-w-full no-scrollbar">
                 {images.map((img, idx) => (
                   <button
-                    key={img.id}
-                    onClick={() => onNavigate(idx)}
+                    key={img.id || img.src || idx}
+                    onClick={() => handleNavigate(idx)}
                     className={`relative w-14 h-11 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
-                      currentIndex === idx
+                      activeIndex === idx
                         ? 'border-emerald-400 ring-2 ring-emerald-400/50 scale-105 opacity-100'
                         : 'border-white/20 opacity-50 hover:opacity-90'
                     }`}

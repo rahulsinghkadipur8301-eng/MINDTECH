@@ -11,9 +11,7 @@ import {
   Sparkles, 
   Droplets,
   Layers,
-  ChevronRight,
-  ExternalLink,
-  Globe
+  ChevronRight
 } from 'lucide-react';
 
 interface SupplierPortfolioSectionProps {
@@ -135,25 +133,12 @@ export const SupplierPortfolioSection: React.FC<SupplierPortfolioSectionProps> =
                 <span className="font-mono text-emerald-800 font-bold">90+ Actives</span>
               </div>
 
-              {/* Interactive Action Buttons */}
-              <div className="pt-1 space-y-2">
+              {/* Interactive Action Button */}
+              <div className="pt-1">
                 <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
                   <span>Explore Greentech Products</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
-
-                <a
-                  href="https://www.greentech.fr/en/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="w-full py-2.5 px-4 rounded-xl bg-[#FFFDF5] hover:bg-[#F3EFE0] border-2 border-emerald-300 hover:border-emerald-600 text-[#072414] font-black text-xs sm:text-[13px] tracking-wide flex items-center justify-center space-x-2 transition-all duration-200 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group/web cursor-pointer"
-                  title="Visit official Greentech website (https://www.greentech.fr/en/)"
-                >
-                  <Globe className="w-3.5 h-3.5 text-emerald-800 shrink-0" />
-                  <span>Visit Official Website (greentech.fr)</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-emerald-700 opacity-80 group-hover/web:opacity-100 group-hover/web:translate-x-0.5 group-hover/web:-translate-y-0.5 transition-all shrink-0" />
-                </a>
               </div>
 
             </div>
