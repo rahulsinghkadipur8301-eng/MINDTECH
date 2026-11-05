@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="200" viewBox="0 0 280 200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f9ff"/>
+      <stop offset="50%" stop-color="#e0f2fe"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="barGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Canvas Background matching Greentech Aspect -->
+  <rect width="280" height="200" fill="url(#bgGrad)" stroke="#e2e8f0" stroke-width="1.5" rx="6"/>
+
+  <!-- Top Decorative Identity Stripe -->
+  <rect x="0" y="0" width="280" height="4" fill="url(#barGrad)"/>
+
+  <!-- Partner Badge Header -->
+  <rect x="12" y="14" width="94" height="18" rx="9" fill="#ffffff" stroke="#0284c7" stroke-width="1"/>
+  <text x="59" y="26.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" text-anchor="middle" letter-spacing="0.5">SNS SILCOS</text>
+
+  <!-- Certified Grade Tag -->
+  <rect x="204" y="14" width="64" height="18" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="236" y="26.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="7.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing="0.3">100% CoA</text>
+
+  <!-- Central Scientific Illustration -->
+  <g transform="translate(0, -6)">
+    <circle cx="140" cy="85" r="32" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" opacity="0.9"/>
+       <path d="M125 85 C125 75 140 68 140 68 C140 68 155 75 155 85 C155 94 147 100 140 100 C133 100 125 94 125 85 Z" fill="#0284c7"/>
+       <circle cx="140" cy="74" r="3.5" fill="#ffffff"/>
+       <line x1="108" y1="85" x2="172" y2="85" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+  </g>
+
+  <!-- Product Code / Name Display -->
+  <text x="140" y="132" font-family="'Outfit', -apple-system, BlinkMacSystemFont, sans-serif" font-size="14.5" font-weight="800" fill="#0c4a6e" text-anchor="middle" letter-spacing="0.5">SNS SCB 21</text>
+
+  <!-- INCI Name Description -->
+  <text x="140" y="148" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9" font-weight="600" fill="#475569" text-anchor="middle">Silicone Polyether / Resin</text>
+
+  <!-- Bottom Benefit & Dosage Pill -->
+  <rect x="12" y="166" width="256" height="22" rx="11" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="22" y="180.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="8.5" font-weight="700" fill="#0284c7">Resin Solution</text>
+  <text x="258" y="180.5" font-family="ui-monospace, monospace" font-size="8.5" font-weight="700" fill="#64748b" text-anchor="end">Dose: 1–12%</text>
+</svg>

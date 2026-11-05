@@ -14,7 +14,7 @@ export const GreentechVideoSpotlight: React.FC<GreentechVideoSpotlightProps> = (
   hairilineIngredient
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [thumbSrc, setThumbSrc] = useState('https://img.youtube.com/vi/3aa3iMw0ahU/hqdefault.jpg');
+  const [thumbSrc, setThumbSrc] = useState('/videos/greentech-hairiline-thumb-16x9.jpg');
   const videoId = '3aa3iMw0ahU';
   const youtubeUrl = 'https://youtube.com/watch?v=3aa3iMw0ahU&feature=shared';
   const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;

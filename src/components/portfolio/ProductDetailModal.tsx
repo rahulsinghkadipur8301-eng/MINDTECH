@@ -105,24 +105,87 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           {/* Modal Body - Scrollable */}
           <div className="p-5 sm:p-7 space-y-6 overflow-y-auto">
             
-            {/* INCI and Category Highlight Box */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-emerald-50/60 border border-emerald-100">
-              <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-900 font-bold block mb-0.5">
-                  INCI Name / Chemical Identity
-                </span>
-                <p className="text-sm font-semibold text-gray-900 font-mono">
-                  {product.inci}
-                </p>
+            {/* Product Image & Quick Specification Showcase */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+              {/* Product Photo */}
+              <div className="md:col-span-5 relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-auto min-h-[180px] bg-gradient-to-br from-[#072414] to-[#041c10] shadow-md border border-emerald-100 flex items-center justify-center">
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover object-center"
+                  />
+                ) : (
+                  <FlaskConical className="w-12 h-12 text-emerald-400 opacity-60" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs font-mono pointer-events-none">
+                  <span className="px-2 py-0.5 rounded bg-black/60 backdrop-blur-md border border-white/20 text-[10px] text-emerald-300">
+                    {product.physicalForm || product.category}
+                  </span>
+                  {product.dosage && (
+                    <span className="px-2 py-0.5 rounded bg-emerald-600/90 text-white font-mono text-[10px] font-bold">
+                      {product.dosage}
+                    </span>
+                  )}
+                </div>
               </div>
 
-              <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-900 font-bold block mb-0.5">
-                  Portfolio Category
-                </span>
-                <p className="text-sm font-bold text-emerald-950">
-                  {product.category}
-                </p>
+              {/* Quick Specs Grid */}
+              <div className="md:col-span-7 flex flex-col justify-between space-y-3 p-4 rounded-2xl bg-emerald-50/60 border border-emerald-100/90 text-xs">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-900 font-bold block mb-0.5">
+                    INCI Name / Chemical Identity
+                  </span>
+                  <p className="text-sm font-bold text-gray-900 font-mono">
+                    {product.inci}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 pt-2 border-t border-emerald-200/50">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-semibold block">
+                      Catalog Source
+                    </span>
+                    <span className="font-bold text-emerald-950">
+                      {product.catalogOrigin || '2026 Mindtech Catalogue'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-semibold block">
+                      Recommended Dosage
+                    </span>
+                    <span className="font-bold text-emerald-900 font-mono">
+                      {product.dosage || '1 - 5%'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 pt-2 border-t border-emerald-200/50">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-semibold block">
+                      Formulation Phase
+                    </span>
+                    <span className="font-semibold text-gray-800">
+                      {product.solubility || 'Water soluble'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 font-semibold block">
+                      Physical Appearance
+                    </span>
+                    <span className="font-semibold text-gray-800">
+                      {product.physicalForm || 'Cosmetic Grade Liquid'}
+                    </span>
+                  </div>
+                </div>
+
+                {product.sourceDoc && (
+                  <div className="pt-2 border-t border-emerald-200/50 font-mono text-[11px] text-emerald-900/80">
+                    <span className="text-gray-500 font-sans">Verified Citation: </span>
+                    <strong>{product.sourceDoc}</strong>
+                  </div>
+                )}
               </div>
             </div>
 

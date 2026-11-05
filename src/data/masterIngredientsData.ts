@@ -1,3 +1,4 @@
+import { getProductSpecificImage } from './productImages';
 import { MasterIngredient, ConcernCategory } from '../types/ingredient';
 
 export const CONCERN_CATEGORIES: ConcernCategory[] = [
@@ -19,7 +20,7 @@ export const CONCERN_CATEGORIES: ConcernCategory[] = [
   { id: 'functional', label: 'Functional Cleansers', iconName: 'FlaskRound', description: 'PEG-free, oil-derived surfactants & natural formulation aids' }
 ];
 
-export const MASTER_INGREDIENTS: MasterIngredient[] = [
+const RAW_MASTER_INGREDIENTS: MasterIngredient[] = [
   // =========================================================================
   // 1. FOUR KEY BENCHMARK ACCEPTANCE TEST ITEMS (PROMPT SPECIFIED)
   // =========================================================================
@@ -2495,6 +2496,11 @@ export const MASTER_INGREDIENTS: MasterIngredient[] = [
     publicApproved: true
   }
 ];
+
+export const MASTER_INGREDIENTS: MasterIngredient[] = RAW_MASTER_INGREDIENTS.map(item => ({
+  ...item,
+  image: getProductSpecificImage(item.id)
+}));
 
 export function getIngredientsByConcern(concernId: string): MasterIngredient[] {
   if (!concernId || concernId === 'all') return MASTER_INGREDIENTS;

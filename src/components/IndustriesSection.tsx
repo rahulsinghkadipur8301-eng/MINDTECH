@@ -581,7 +581,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
             </span>
             <span className="hidden sm:inline-block text-gray-400">|</span>
             <span className="text-gray-600">
-              24–48h Dispatch from Bawana Hub, Delhi
+              Prompt Dispatch from Bawana Hub, Delhi
             </span>
           </div>
         </div>

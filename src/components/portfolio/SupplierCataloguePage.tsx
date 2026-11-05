@@ -12,6 +12,8 @@ import {
 import { ProductCard } from './ProductCard';
 import { PartnerLogoRenderer } from '../PartnerLogos';
 import { GreentechMasterCatalogue } from './GreentechMasterCatalogue';
+import { GreentechExactReplicaCatalogue } from './GreentechExactReplicaCatalogue';
+import { UniversalPartnerReplicaCatalogue } from './UniversalPartnerReplicaCatalogue';
 import { 
   Search, 
   X, 
@@ -60,6 +62,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
   // Search and Multi-Dimensional Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSupplierFilter, setSelectedSupplierFilter] = useState<string>('All');
+  const [selectedCatalogOrigin, setSelectedCatalogOrigin] = useState<string>('All');
   const [selectedBusinessLine, setSelectedBusinessLine] = useState<string>(initialBusinessLine || 'All Business Lines');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
@@ -98,7 +101,14 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
         }
       }
 
-      // 2. Business Line filter
+      // 2. Catalog Origin filter (Blended view)
+      if (selectedCatalogOrigin !== 'All') {
+        if (product.catalogOrigin !== selectedCatalogOrigin) {
+          return false;
+        }
+      }
+
+      // 3. Business Line filter
       if (selectedBusinessLine !== 'All Business Lines') {
         const lines = getProductBusinessLines(product);
         if (!lines.includes(selectedBusinessLine)) {
@@ -106,12 +116,12 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
         }
       }
 
-      // 3. Category filter
+      // 4. Category filter
       if (selectedCategory !== 'All' && product.category !== selectedCategory) {
         return false;
       }
 
-      // 4. Search query
+      // 5. Search query
       if (!searchQuery.trim()) return true;
 
       const q = searchQuery.toLowerCase();
@@ -122,10 +132,12 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
       const applicationMatch = product.application.toLowerCase().includes(q);
       const useMatch = product.mainUse.toLowerCase().includes(q);
       const supplierMatch = product.supplierId.toLowerCase().includes(q);
+      const formMatch = product.physicalForm?.toLowerCase().includes(q) ?? false;
+      const originMatch = product.catalogOrigin?.toLowerCase().includes(q) ?? false;
 
-      return nameMatch || codeMatch || inciMatch || categoryMatch || applicationMatch || useMatch || supplierMatch;
+      return nameMatch || codeMatch || inciMatch || categoryMatch || applicationMatch || useMatch || supplierMatch || formMatch || originMatch;
     });
-  }, [supplierProducts, isAllProducts, selectedSupplierFilter, selectedBusinessLine, selectedCategory, searchQuery]);
+  }, [supplierProducts, isAllProducts, selectedSupplierFilter, selectedCatalogOrigin, selectedBusinessLine, selectedCategory, searchQuery]);
 
   // Dedicated Greentech 5-Brochure (136 pp.) Catalogue View
   if (supplierId === 'greentech') {
@@ -311,128 +323,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
 
         </div>
 
-        {/* 3. Conditional: VVF LIMITED / FINE ORGANICS DEDICATED DOCUMENTED FAMILIES VIEW */}
-        {isFamilyBasedSupplier && (
-          <div className="space-y-6 pt-4">
-            
-            {/* If legacy combined view is accessed, show sub-supplier tab selector */}
-            {isVvfFineOrganics && (
-              <div className="bg-white p-2 rounded-2xl border border-gray-200/90 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div className="flex items-center space-x-2 w-full sm:w-auto">
-                  <button
-                    type="button"
-                    onClick={() => setActiveSubSupplier('VVF Limited')}
-                    className={`flex-1 sm:flex-initial px-6 py-3 rounded-xl font-extrabold text-sm transition-all cursor-pointer flex items-center justify-center space-x-2.5 ${
-                      activeSubSupplier === 'VVF Limited'
-                        ? 'bg-blue-900 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    <PartnerLogoRenderer partnerId="vvf-limited" height={24} />
-                    <span>VVF LIMITED PORTFOLIO</span>
-                  </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setActiveSubSupplier('Fine Organics')}
-                    className={`flex-1 sm:flex-initial px-6 py-3 rounded-xl font-extrabold text-sm transition-all cursor-pointer flex items-center justify-center space-x-2.5 ${
-                      activeSubSupplier === 'Fine Organics'
-                        ? 'bg-emerald-900 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    <PartnerLogoRenderer partnerId="fine-organics" height={24} />
-                    <span>FINE ORGANICS PORTFOLIO</span>
-                  </button>
-                </div>
-
-                <span className="text-xs text-gray-500 font-medium px-2">
-                  Showing documented categories from Page 23 of Mindtech Catalog
-                </span>
-              </div>
-            )}
-
-            {/* Documented Categories for Selected Supplier */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-              {(isFineOrganics
-                ? FINE_ORGANICS_PORTFOLIO_CATEGORIES
-                : isVvfLimited
-                  ? VVF_PORTFOLIO_CATEGORIES
-                  : activeSubSupplier === 'Fine Organics'
-                    ? FINE_ORGANICS_PORTFOLIO_CATEGORIES
-                    : VVF_PORTFOLIO_CATEGORIES
-              ).map((cat, idx) => (
-                <div
-                  key={cat.name}
-                  className="bg-white rounded-2xl border border-gray-200/90 p-5 sm:p-6 shadow-2xs hover:shadow-lg transition-all flex flex-col justify-between space-y-4 text-left"
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-900 border border-emerald-200">
-                        {activeSubSupplier} Category 0{idx + 1}
-                      </span>
-                      <span className="text-xs text-gray-400 font-mono">Verified Page 23</span>
-                    </div>
-
-                    <h3 className="text-xl font-extrabold text-[#072414]">
-                      {cat.name}
-                    </h3>
-
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {cat.description}
-                    </p>
-
-                    {/* Key Attributes */}
-                    <div className="pt-2 space-y-1.5">
-                      <span className="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider block">
-                        Key Performance Attributes:
-                      </span>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-gray-700">
-                        {cat.keyAttributes.map((attr, aIdx) => (
-                          <div key={aIdx} className="flex items-center space-x-1.5">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                            <span>{attr}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Target Applications */}
-                    <div className="p-3 bg-gray-50 rounded-xl text-xs text-gray-700 border border-gray-100">
-                      <strong className="text-gray-900">Typical Formulations: </strong>
-                      {cat.applications}
-                    </div>
-                  </div>
-
-                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-                    <span className="text-xs font-medium text-emerald-800">
-                      Standardized Specification Sheets Available
-                    </span>
-
-                    <button
-                      type="button"
-                      onClick={() => onOpenInquiry(`Inquiry - ${activeSubSupplier} (${cat.name})`)}
-                      className="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-[#072414] hover:bg-emerald-900 px-4 py-2 rounded-full transition-colors cursor-pointer"
-                    >
-                      <span>Request Category TDS & Samples</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Note on Verification Integrity */}
-            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 text-emerald-950 text-xs flex items-start space-x-3">
-              <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-              <div>
-                <strong className="font-bold">Catalog Transparency &amp; Direct Sourcing: </strong>
-                Explore all verified individual catalogued grades for {supplier.name} below. Each material is backed by manufacturer Certificate of Analysis (CoA) and Technical Data Sheets (TDS) dispatched directly from our central Bawana warehouse.
-              </div>
-            </div>
-
-          </div>
-        )}
 
         {/* 4. GREENTECH, SNS SILCOS, FINE ORGANICS, VVF LIMITED & GENERAL RANGE PRODUCT LISTING */}
         <div className="space-y-6 pt-2">
@@ -485,7 +376,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
 
               {/* Multi-Dimensional Selectors in All-Products Mode */}
               {isAllProducts && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2 border-t border-gray-100">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-gray-100">
                   <div className="space-y-1 text-left">
                     <label className="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-500 block">
                       Filter by Supplier:
@@ -498,12 +389,28 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
                       }}
                       className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-semibold text-gray-800 focus:ring-2 focus:ring-emerald-600 focus:outline-hidden"
                     >
-                      <option value="All">All Suppliers (Full Range)</option>
-                      <option value="greentech">Greentech France (53 Actives)</option>
-                      <option value="sns-silcos">SNS Silcos (14 Specialties)</option>
+                      <option value="All">All Principals (180 Products)</option>
+                      <option value="greentech">Greentech France (87 Bio-Actives &amp; Oils)</option>
+                      <option value="sns-silcos">SNS Silcos (14 Silicones)</option>
                       <option value="fine-organics">Fine Organics (48 Specialty Esters)</option>
                       <option value="vvf-limited">VVF Limited (7 Conditioning &amp; Syndets)</option>
-                      <option value="general-range">Mindtech General Catalog (24 Items)</option>
+                      <option value="general-range">Mindtech General Catalog (24 Actives)</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1 text-left">
+                    <label className="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-500 block">
+                      Catalog Source:
+                    </label>
+                    <select
+                      value={selectedCatalogOrigin}
+                      onChange={(e) => setSelectedCatalogOrigin(e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-semibold text-gray-800 focus:ring-2 focus:ring-emerald-600 focus:outline-hidden"
+                    >
+                      <option value="All">All Sources (180 Total)</option>
+                      <option value="2026 Mindtech Catalogue">2026 Mindtech Catalogue (121)</option>
+                      <option value="Dual-Sourced / Verified">Dual-Sourced &amp; Cross-Verified (25)</option>
+                      <option value="Historical Greentech Dossier">Historical Greentech Dossiers (34)</option>
                     </select>
                   </div>
 
@@ -530,6 +437,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
                       type="button"
                       onClick={() => {
                         setSelectedSupplierFilter('All');
+                        setSelectedCatalogOrigin('All');
                         setSelectedBusinessLine('All Business Lines');
                         setSelectedCategory('All');
                         setSearchQuery('');
@@ -563,12 +471,20 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
 
             </div>
 
-            {/* Product Cards Grid or Greentech Master Experience */}
-            {selectedSupplierFilter === 'greentech' ? (
-              <GreentechMasterCatalogue
-                onBackToOverview={onBackToOverview}
-                onOpenInquiry={onOpenInquiry}
-              />
+            {/* Product Cards Grid: Use Universal Partner Replica Catalogue */}
+            {['greentech', 'sns-silcos', 'fine-organics', 'vvf-limited'].includes(selectedSupplierFilter !== 'All' ? selectedSupplierFilter : supplierId) ? (
+              <div className="bg-white rounded-3xl border border-gray-200/90 shadow-sm p-4 sm:p-6 lg:p-8">
+                <UniversalPartnerReplicaCatalogue
+                  initialPartnerId={
+                    (['greentech', 'sns-silcos', 'fine-organics', 'vvf-limited'].includes(selectedSupplierFilter !== 'All' ? selectedSupplierFilter : supplierId)
+                      ? (selectedSupplierFilter !== 'All' ? selectedSupplierFilter : supplierId)
+                      : 'greentech') as any
+                  }
+                  showPartnerTabs={isAllProducts}
+                  onBackToHome={onBackToOverview}
+                  onOpenInquiry={onOpenInquiry}
+                />
+              </div>
             ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
                 {filteredProducts.map((product) => (
@@ -611,7 +527,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
               Need a Custom Batch, Formulation Guidance or Certificate of Analysis?
             </h3>
             <p className="text-emerald-200/90 text-xs sm:text-sm max-w-2xl">
-              Our central Bawana logistics warehouse maintains buffer stocks for rapid 24–48h dispatch across India. Request a personalized technical consultation with our formulation chemists.
+              Our central Bawana logistics warehouse maintains buffer stocks for dependable nationwide dispatch across India. Request a personalized technical consultation with our formulation chemists.
             </p>
           </div>
 

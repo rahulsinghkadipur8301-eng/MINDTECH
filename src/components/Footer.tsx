@@ -205,9 +205,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
                 </a>
               </li>
               <li>
-                <a href="#industries" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="#portfolio" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Application Sectors</span>
+                  <span>Product Portfolio</span>
                 </a>
               </li>
               <li>

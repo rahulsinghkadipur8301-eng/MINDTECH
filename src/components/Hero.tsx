@@ -8,7 +8,8 @@ import {
   FlaskConical,
   Building2,
   Clock,
-  FileCheck
+  FileCheck,
+  Truck
 } from 'lucide-react';
 
 interface HeroProps {
@@ -131,8 +132,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry, onOpenExplorer }) => 
                 <span>Batch-Specific COA &amp; TDS</span>
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/90 text-emerald-900 border border-emerald-200/90 text-[12px] sm:text-[13px] font-semibold">
-                <Clock className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-                <span>24–48h Dispatch TAT</span>
+                <Truck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <span>Pan-India Logistics</span>
               </span>
             </div>
 
@@ -147,10 +148,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry, onOpenExplorer }) => 
               </div>
 
               <div className="flex items-center space-x-2 text-gray-700">
-                <Clock className="w-4 h-4 text-emerald-700 shrink-0" />
+                <Truck className="w-4 h-4 text-emerald-700 shrink-0" />
                 <div>
-                  <span className="font-bold text-[#072414] block">24-48 Hours</span>
-                  <span className="text-[13px] text-gray-500">Dispatch TAT</span>
+                  <span className="font-bold text-[#072414] block">Buffer Stock</span>
+                  <span className="text-[13px] text-gray-500">Pan-India Freight</span>
                 </div>
               </div>
 
@@ -190,7 +191,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry, onOpenExplorer }) => 
               </div>
               <div className="bg-white rounded-2xl p-2.5 border border-gray-200 shadow-2xs">
                 <span className="text-[12px] text-emerald-800 font-bold uppercase block">Dispatch</span>
-                <span className="font-bold text-[#072414] text-[14px]">24-48 Hours</span>
+                <span className="font-bold text-[#072414] text-[14px]">Prompt Pan-India</span>
               </div>
             </div>
 

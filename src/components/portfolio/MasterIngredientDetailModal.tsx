@@ -222,6 +222,28 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
           <div className="p-5 sm:p-7 overflow-y-auto space-y-6 flex-1 text-gray-700">
             {activeTab === 'overview' && (
               <div className="space-y-5">
+                {/* Product Image & Key Visual Banner */}
+                {ingredient.image && (
+                  <div className="relative rounded-2xl overflow-hidden aspect-[16/9] sm:aspect-[21/9] bg-gradient-to-br from-[#072414] to-[#041c10] shadow-md border border-emerald-100">
+                    <img
+                      src={ingredient.image}
+                      alt={ingredient.name}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs font-mono pointer-events-none">
+                      <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md border border-white/20 text-emerald-300 font-bold">
+                        {ingredient.botanicalName || ingredient.productFamily || 'Specialty Cosmetic Active'}
+                      </span>
+                      {ingredient.useLevel && (
+                        <span className="px-2.5 py-1 rounded bg-emerald-700/90 text-white font-bold">
+                          Dosage: {ingredient.useLevel}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 mb-1">
                     What It Does

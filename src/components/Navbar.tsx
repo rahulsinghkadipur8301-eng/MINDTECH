@@ -241,18 +241,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             <span className="absolute bottom-0 left-2 right-2 h-[2.5px] bg-[#107c41] rounded-full scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-200 ease-out origin-center shadow-[0_1px_6px_rgba(16,124,65,0.35)]" />
           </motion.a>
 
-          {/* 4. BUSINESS LINES */}
-          <motion.a
-            href="#industries"
-            onClick={(e) => handleNavLinkClick('#industries', e)}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ duration: 0.16, ease: 'easeOut' }}
-            className="group/btn relative px-2.5 py-1.5 lg:px-3 lg:py-2 xl:px-3.5 xl:py-2 2xl:px-4.5 2xl:py-2.5 rounded-lg text-[#202A3A] hover:text-[#107c41] hover:bg-emerald-50/70 text-[13.5px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] font-bold uppercase tracking-[0.015em] transition-colors duration-200 whitespace-nowrap cursor-pointer select-none inline-flex items-center"
-          >
-            <span>BUSINESS LINES</span>
-            <span className="absolute bottom-0 left-2 right-2 h-[2.5px] bg-[#107c41] rounded-full scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-200 ease-out origin-center shadow-[0_1px_6px_rgba(16,124,65,0.35)]" />
-          </motion.a>
 
           {/* 5. GLOBAL PARTNERS */}
           <motion.a
@@ -419,15 +407,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                     <ArrowRight className="w-4 h-4 text-gray-400" />
                   </motion.button>
 
-                  {/* 4. BUSINESS LINES */}
-                  <motion.button
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => handleMobileNavClick('#industries')}
-                    className="w-full py-3 flex items-center justify-between text-left hover:text-[#107c41] transition-colors uppercase cursor-pointer"
-                  >
-                    <span>BUSINESS LINES</span>
-                    <ArrowRight className="w-4 h-4 text-gray-400" />
-                  </motion.button>
 
                   {/* 5. GLOBAL PARTNERS */}
                   <motion.button

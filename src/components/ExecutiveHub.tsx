@@ -495,7 +495,7 @@ export const ExecutiveHub: React.FC<ExecutiveHubProps> = ({ onOpenInquiry }) => 
             </motion.div>
           )}
 
-          {/* 4. The Mindtech Advantage (6 Pillars) Tab */}
+          {/* 4. The Mindtech Advantage (Pillars) Tab */}
           {activeTab === 'advantage' && (
             <motion.div
               key="advantage"
@@ -503,11 +503,11 @@ export const ExecutiveHub: React.FC<ExecutiveHubProps> = ({ onOpenInquiry }) => 
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
               {WHY_CHOOSE_US_PILLARS.map((pillar) => (
                 <div
-                  key={pillar.number}
+                  key={pillar.title}
                   className="rounded-3xl bg-white border border-gray-200/90 p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 text-left group"
                 >
                   <div className="space-y-3">
@@ -515,8 +515,8 @@ export const ExecutiveHub: React.FC<ExecutiveHubProps> = ({ onOpenInquiry }) => 
                       <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center group-hover:bg-emerald-800 group-hover:text-white transition-colors">
                         {getPillarIcon(pillar.icon)}
                       </div>
-                      <span className="text-xl font-black text-gray-300 font-mono group-hover:text-emerald-600 transition-colors">
-                        {pillar.number}
+                      <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200">
+                        Mindtech Advantage
                       </span>
                     </div>
 

@@ -164,7 +164,7 @@ export const QualityAssuranceVectorIcon: React.FC<PillarIconProps> = ({ classNam
 /**
  * Pillar 03: Central Logistics & Stock Hub (Bawana Warehouse) Vector Icon
  * Depicts a climate-controlled high-bay warehouse depot with inventory pallets,
- * climate snowflake/cool seal, and 24-48 hr fast dispatch signal.
+ * climate snowflake/cool seal, and prompt pan-India dispatch signal.
  */
 export const BawanaLogisticsVectorIcon: React.FC<PillarIconProps> = ({ className = '', size = 52 }) => {
   return (

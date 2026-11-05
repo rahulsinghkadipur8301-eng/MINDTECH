@@ -73,16 +73,16 @@ const AUTHENTIC_FACILITIES: FacilityItem[] = [
     id: 'warehouse',
     kicker: 'SUPPLY CHAIN & INVENTORY BUFFER',
     name: 'Central Warehouse & Stock Hub',
-    locationTag: 'Bawana Industrial City · 24–48h Dispatch',
+    locationTag: 'Bawana Industrial City · Central Stockholding',
     headline: 'Extensive climate-managed facility maintaining continuous buffer inventory for Indian formulators.',
     description: 'Strategically located in the Bawana Industrial Area, New Delhi, our expansive warehousing hub features cleanroom epoxy flooring, high-bay LED lighting, UN-certified chemical drum racking, and dedicated loading bays to guarantee uninterrupted manufacturing runs.',
     capabilities: [
-      '24–48 hour fast dispatch across major Indian cosmetics clusters',
+      'Prompt, temperature-safe dispatch across major Indian cosmetics clusters',
       'Temperature-managed zones for sensitive bio-actives and ferments',
       'UN-certified spill-proof chemical drum palletization',
       'Deep buffer stock across 250+ specialty cosmetic ingredients'
     ],
-    specs: 'Bawana Industrial Area · 24-48h Dispatch SLA · UN Drums',
+    specs: 'Bawana Industrial Area · Pan-India Logistics · UN Drums',
     image: '/facilities/mindtech-warehouse-hub.webp',
     fallbackImage: '/facilities/mindtech-warehouse-hub.jpg',
     actionText: 'Inquire Stock Availability'
@@ -109,68 +109,50 @@ const AUTHENTIC_FACILITIES: FacilityItem[] = [
 
 interface CorePillar {
   id: string;
-  number: string;
   title: string;
   tagline: string;
   description: string;
   highlight: string;
   metric: string;
+  image: string;
 }
 
 const CORE_PILLARS: CorePillar[] = [
   {
-    id: 'global-sourcing',
-    number: '01',
-    title: 'Direct International Alliances',
-    tagline: 'Tier-1 Global Manufacturer Partnerships',
-    description: 'Direct distribution alliances with Greentech France, SNS Silcos, Fine Organics, and VVF Limited ensure unadulterated cosmetic raw materials with zero intermediary markups.',
-    highlight: '100% Factory Direct Supply',
-    metric: 'Tier-1 Direct'
-  },
-  {
-    id: 'quality-assurance',
-    number: '02',
-    title: 'Rigorous Analytical Quality',
-    tagline: 'Batch Verification & HPLC Testing',
-    description: 'Every consignment undergoes thorough physicochemical verification, active assay testing, and strict COA compliance inside our dedicated Bawana laboratory.',
-    highlight: 'CoA & TDS provided with every batch',
-    metric: 'Zero Defect Policy'
-  },
-  {
     id: 'bawana-inventory',
-    number: '03',
     title: 'Centralized NCR Buffer Stock',
     tagline: 'Bawana Industrial City, New Delhi',
-    description: 'Our primary warehouse maintains deep buffer inventory across 250+ active ingredients and specialty silicones for dependable 24–48 hour dispatch.',
+    description: 'Our primary warehouse maintains deep buffer inventory across 250+ active ingredients and specialty silicones for dependable nationwide dispatch.',
     highlight: 'Readily available buffer inventory in NCR',
-    metric: '24–48h Dispatch'
+    metric: 'Bawana Central Hub',
+    image: '/facilities/mindtech-warehouse-hub.webp'
   },
   {
     id: 'formulation-support',
-    number: '04',
     title: 'Cosmetic Chemist R&D Support',
     tagline: 'Bench Sampling & Solubility Guidance',
     description: 'Our cosmetic chemists assist clients with optimum phase incorporation, HLB balancing, sensory optimization, and complimentary bench prototype kits.',
     highlight: 'Free bench sample kit availability',
-    metric: 'Chemist Support'
+    metric: 'Chemist Support',
+    image: '/facilities/mindtech-laboratory.webp'
   },
   {
     id: 'regulatory-msme',
-    number: '05',
     title: 'Government MSME Credibility',
     tagline: 'Full Regulatory Compliance & Invoicing',
     description: 'Registered MSME enterprise offering GST invoicing, REACH statements, cruelty-free certifications, and complete documentation compliance.',
     highlight: 'Transparent compliance and tax invoicing',
-    metric: 'Govt. MSME Reg.'
+    metric: 'Govt. MSME Reg.',
+    image: '/facilities/gov-msme-compliance.png'
   },
   {
     id: 'nationwide-reach',
-    number: '06',
     title: 'Agile Nationwide Distribution',
     tagline: 'Climate-Safe Multi-Modal Freight',
     description: 'Reliable multi-carrier logistics network ensuring leak-proof, temperature-safe transit of liquid silicones, bio-actives, and specialty esters across India.',
     highlight: 'Spill-proof UN-certified packaging on every route',
-    metric: 'Pan-India Reach'
+    metric: 'Pan-India Reach',
+    image: '/facilities/pan-india-distribution.png'
   }
 ];
 
@@ -360,7 +342,7 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
         </div>
 
         {/* =========================================================================
-            3. SIX PILLARS OF THE MINDTECH ADVANTAGE
+            3. PILLARS OF THE MINDTECH ADVANTAGE
            ========================================================================= */}
         <div className="space-y-8 pt-8 border-t border-gray-200/80">
           <div>
@@ -368,14 +350,14 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
               PARTNERSHIP ASSURANCE &amp; COMPETITIVE EDGE
             </span>
             <h3 className="text-2xl sm:text-3xl font-black text-[#072414] tracking-tight mt-1 font-['Outfit']">
-              The Six Pillars of the Mindtech Advantage
+              The Pillars of the Mindtech Advantage
             </h3>
             <p className="text-sm sm:text-base text-gray-600 mt-1.5 max-w-3xl leading-relaxed">
               From raw material bench trial prototypes to full-scale commercial manufacturing runs, our operations are structured around scientific rigor, transparent supply lines, and rapid execution.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {CORE_PILLARS.map((pillar, index) => (
               <motion.div
                 key={pillar.id}
@@ -383,27 +365,38 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="bg-white rounded-2xl p-6 border border-gray-200/90 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4 group text-left"
+                className="bg-white rounded-2xl p-5 sm:p-6 border border-gray-200/90 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4 group text-left"
               >
                 <div className="space-y-3">
-                  {/* Top Bar with Custom Icon & Metric */}
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-50 via-teal-50 to-white border border-emerald-200 shadow-2xs flex items-center justify-center p-1.5 group-hover:scale-110 group-hover:border-emerald-500 transition-all duration-300">
-                      <PillarVectorIconRenderer pillarId={pillar.id} size={36} />
-                    </div>
-
-                    <div className="text-right">
-                      <span className="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
-                        PILLAR {pillar.number}
-                      </span>
-                      <span className="text-[11px] font-bold text-gray-500 block mt-1">
+                  {/* Real Tagname-Related Image Thumbnail */}
+                  <div className="relative aspect-16/10 rounded-xl overflow-hidden border border-gray-100 shadow-2xs">
+                    <img
+                      src={pillar.image}
+                      alt={pillar.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white text-[11px] font-mono pointer-events-none">
+                      <span className="px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-emerald-300 font-bold text-[10px]">
                         {pillar.metric}
                       </span>
                     </div>
                   </div>
 
+                  {/* Icon & Category Badge */}
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-50 via-teal-50 to-white border border-emerald-200 shadow-2xs flex items-center justify-center p-1.5 group-hover:scale-110 group-hover:border-emerald-500 transition-all duration-300">
+                      <PillarVectorIconRenderer pillarId={pillar.id} size={30} />
+                    </div>
+
+                    <span className="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
+                      Operational Pillar
+                    </span>
+                  </div>
+
                   <div>
-                    <h4 className="text-[17px] font-extrabold text-[#072414] leading-snug group-hover:text-emerald-800 transition-colors">
+                    <h4 className="text-[16px] sm:text-[17px] font-extrabold text-[#072414] leading-snug group-hover:text-emerald-800 transition-colors">
                       {pillar.title}
                     </h4>
                     <p className="text-[11.5px] font-semibold text-emerald-700 mt-0.5">
@@ -419,13 +412,13 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
                 <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
                   <div className="flex items-center space-x-1.5 text-emerald-950 font-medium">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-                    <span className="truncate text-[11.5px]">{pillar.highlight}</span>
+                    <span className="truncate text-[11px]">{pillar.highlight}</span>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => onOpenInquiry(`Pillar Inquiry - ${pillar.title}`)}
-                    className="font-bold text-emerald-800 hover:text-emerald-950 flex items-center space-x-1 cursor-pointer shrink-0 ml-2"
+                    className="font-bold text-emerald-800 hover:text-emerald-950 flex items-center space-x-1 cursor-pointer shrink-0 ml-1.5"
                   >
                     <span>Inquire</span>
                     <ArrowRight className="w-3 h-3" />

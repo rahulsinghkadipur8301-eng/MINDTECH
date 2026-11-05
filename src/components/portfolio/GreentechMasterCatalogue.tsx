@@ -8,6 +8,7 @@ import { MasterIngredientDetailModal } from './MasterIngredientDetailModal';
 import { SampleEnquiryModal } from './SampleEnquiryModal';
 import { SourceMappingModal } from './SourceMappingModal';
 import { GreentechVideoSpotlight } from './GreentechVideoSpotlight';
+import { GreentechExactReplicaCatalogue } from './GreentechExactReplicaCatalogue';
 import { 
   Search, 
   X, 
@@ -42,6 +43,7 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
   const [selectedForm, setSelectedForm] = useState('All');
   const [selectedSolubility, setSelectedSolubility] = useState('All');
   const [selectedSort, setSelectedSort] = useState<'a-z' | 'z-a'>('a-z');
+  const [viewMode, setViewMode] = useState<'replica' | 'matrix'>('replica');
 
   // Modal States
   const [selectedIngredient, setSelectedIngredient] = useState<MasterIngredient | null>(null);
@@ -264,15 +266,26 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
         hairilineIngredient={hairilineIngredient}
       />
 
-      {/* =========================================================================
-          2. CONCERN ICON RAIL (GREENTECH-INSPIRED 10+ CATEGORY CAROUSEL)
-         ========================================================================= */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500 flex items-center space-x-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-            <span>Filter by Target Cosmetic &amp; Biological Concern:</span>
-          </span>
+      {/* Authentic Greentech Product Showcase (Exact Replica) */}
+
+      {viewMode === 'replica' ? (
+        <div className="bg-white rounded-3xl border border-gray-200/90 shadow-md p-2 sm:p-4 lg:p-6">
+          <GreentechExactReplicaCatalogue
+            onBackToHome={onBackToOverview}
+            onOpenInquiry={onOpenInquiry}
+          />
+        </div>
+      ) : (
+        <>
+          {/* =========================================================================
+              2. CONCERN ICON RAIL (GREENTECH-INSPIRED 10+ CATEGORY CAROUSEL)
+             ========================================================================= */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500 flex items-center space-x-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Filter by Target Cosmetic &amp; Biological Concern:</span>
+              </span>
           <span className="text-xs text-gray-400 font-mono hidden sm:inline-block">
             Swipe or use arrows to scroll concerns
           </span>
@@ -482,6 +495,8 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
           </button>
         </div>
       </div>
+      </>
+      )}
 
       {/* =========================================================================
           7. MODALS

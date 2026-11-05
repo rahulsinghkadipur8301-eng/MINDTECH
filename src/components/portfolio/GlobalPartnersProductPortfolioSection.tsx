@@ -719,97 +719,90 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
         </div>
 
 
+
         {/* =========================================================================
-            C. ICONIC CATALOGUE LAUNCHER (ICON & SHIFT TO NEXT PAGE)
-               Instead of cluttering the homepage with a massive 90-card list,
-               this high-impact portal uses icons for each category and shifts
-               all product discovery onto the dedicated catalogue page.
+            D. COMPLETE MULTI-SUPPLIER TECHNICAL PORTFOLIO LAUNCHPAD
            ========================================================================= */}
-        <div className="pt-2">
-          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#062916] via-[#0b4324] to-[#041a0d] p-6 sm:p-8 lg:p-10 shadow-xl border border-emerald-500/25 text-white">
-            {/* Subtle background glow */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="pt-6 sm:pt-8" id="complete-multi-supplier-portfolio">
+          
+          {/* Header Card with Category Badges & Direct Launch Action */}
+          <div className="bg-gradient-to-br from-white via-emerald-50/20 to-white rounded-3xl border border-gray-200/90 shadow-md p-6 sm:p-8 space-y-6 text-left">
+            
+            {/* Category Badges Row */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold font-mono">
+                <Leaf className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Bio-Actives ({greentechCount})</span>
+              </span>
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold font-mono">
+                <Atom className="w-3.5 h-3.5 text-blue-600" />
+                <span>Silicones ({snsCount})</span>
+              </span>
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-teal-50 text-teal-900 border border-teal-200 text-xs font-bold font-mono">
+                <FlaskConical className="w-3.5 h-3.5 text-teal-600" />
+                <span>Specialty Esters ({fineCount})</span>
+              </span>
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold font-mono">
+                <Droplets className="w-3.5 h-3.5 text-amber-600" />
+                <span>Surfactants &amp; Syndets ({vvfCount})</span>
+              </span>
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-gray-100 text-gray-800 border border-gray-200 text-xs font-bold font-mono">
+                <Layers className="w-3.5 h-3.5 text-gray-600" />
+                <span>General Range ({generalCount})</span>
+              </span>
+            </div>
 
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-              
-              {/* Left Column: Icons & Explanatory Text */}
-              <div className="space-y-4 max-w-3xl text-left">
-                {/* Category Icon Badges */}
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-emerald-200">
-                    <Leaf className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Bio-Actives ({greentechCount})</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-blue-200">
-                    <Atom className="w-3.5 h-3.5 text-blue-400" />
-                    <span>Silicones ({snsCount})</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-emerald-200">
-                    <FlaskConical className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Specialty Esters ({fineCount})</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-teal-200">
-                    <Droplets className="w-3.5 h-3.5 text-teal-400" />
-                    <span>Surfactants &amp; Syndets ({vvfCount})</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-amber-200">
-                    <Layers className="w-3.5 h-3.5 text-amber-400" />
-                    <span>General Range ({generalCount})</span>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-300">
-                    INTERACTIVE TECHNICAL CATALOGUE &amp; SPECIFICATIONS
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-                    Explore All {totalVerifiedCount}+ Chemical &amp; Cosmetic Ingredients
-                  </h3>
-                  <p className="text-emerald-100/90 text-sm sm:text-base leading-relaxed">
-                    Full technical datasheets, INCI names, product codes, recommended dosage ranges, formulation applications, and sample request workflows are organized in a dedicated full-screen catalogue interface.
-                  </p>
-                </div>
-
-                {/* Verified Specs Bar */}
-                <div className="pt-1 flex flex-wrap gap-4 text-xs font-mono text-emerald-300/90">
-                  <span className="flex items-center space-x-1">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    <span>100% CoA &amp; TDS Traceability</span>
-                  </span>
-                  <span className="flex items-center space-x-1">
-                    <Sparkles className="w-4 h-4 text-emerald-400" />
-                    <span>Real-Time Multi-Dimensional Filter</span>
-                  </span>
-                  <span className="flex items-center space-x-1">
-                    <Package className="w-4 h-4 text-emerald-400" />
-                    <span>Fast Sample Dispatch</span>
-                  </span>
-                </div>
+            {/* Title, Description & Action Button Row */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-2 max-w-3xl">
+                <span className="text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-800 block">
+                  COMPLETE MULTI-SUPPLIER TECHNICAL PORTFOLIO
+                </span>
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#072414] tracking-tight">
+                  Explore All {totalVerifiedCount}+ Verified Cosmetic &amp; Specialty Ingredients
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                  Access technical datasheets, INCI names, product codes, recommended dosage ranges, formulation applications, and instant bench sample requisitions across all international manufacturing partners.
+                </p>
               </div>
 
-              {/* Right Column: Prominent Launcher Button */}
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto shrink-0">
+              {/* Primary Interactive CTA Buttons */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
                 <button
+                  type="button"
                   onClick={() => onSelectSupplier('all-products')}
-                  className="px-8 py-4 rounded-2xl bg-white hover:bg-emerald-50 text-[#072414] font-black text-sm uppercase tracking-wider transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center space-x-3 cursor-pointer group"
+                  className="px-6 py-3.5 rounded-xl bg-[#072414] hover:bg-emerald-900 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-lg cursor-pointer"
                 >
-                  <Package className="w-5 h-5 text-emerald-800" />
-                  <span>Launch Interactive Product Catalogue</span>
-                  <ArrowRight className="w-5 h-5 text-emerald-800 group-hover:translate-x-1.5 transition-transform" />
+                  <span>Launch Full Technical Dossiers</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
-
                 <button
-                  onClick={() => onSelectSupplier('general-range')}
-                  className="px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all border border-white/20 flex items-center justify-center space-x-2 cursor-pointer"
+                  type="button"
+                  onClick={() => onOpenInquiry('Multi-Supplier Ingredient Requisition')}
+                  className="px-6 py-3 rounded-xl bg-white hover:bg-gray-50 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-2 cursor-pointer"
                 >
-                  <Layers className="w-4 h-4 text-emerald-300" />
-                  <span>Mindtech General Range ({generalCount} Items)</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <span>Request Bench Samples</span>
                 </button>
               </div>
+            </div>
 
+            {/* Quality & Traceability Trust Highlights */}
+            <div className="pt-3 border-t border-gray-100 flex flex-wrap gap-4 sm:gap-6 text-xs font-mono text-emerald-900">
+              <span className="flex items-center space-x-1.5 font-bold">
+                <ShieldCheck className="w-4 h-4 text-emerald-700" />
+                <span>100% CoA &amp; TDS Traceability</span>
+              </span>
+              <span className="flex items-center space-x-1.5 font-bold">
+                <Sparkles className="w-4 h-4 text-emerald-700" />
+                <span>Multi-Dimensional Search &amp; Filter</span>
+              </span>
+              <span className="flex items-center space-x-1.5 font-bold">
+                <Package className="w-4 h-4 text-emerald-700" />
+                <span>Direct WhatsApp Requisition to Ajay Patel</span>
+              </span>
             </div>
           </div>
+
         </div>
 
       </div>

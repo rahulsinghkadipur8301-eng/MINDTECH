@@ -223,45 +223,27 @@ export const GLOBAL_PARTNERS: GlobalPartner[] = [
   }
 ];
 
-// The 6 Strategic Pillars of Mindtech Advantage
+// Strategic Pillars of Mindtech Advantage
 export const WHY_CHOOSE_US_PILLARS = [
   {
-    number: "01",
-    title: "GLOBAL SOURCING, LOCAL SUPPORT",
-    description: "We connect customers with quality ingredients sourced through trusted global supply channels, backed by responsive local support.",
-    detail: "Direct partnerships with international manufacturers allow Indian formulators to access global ingredient innovations with prompt domestic technical and logistics assistance.",
-    icon: "Globe"
-  },
-  {
-    number: "02",
-    title: "PREMIUM & DIVERSE INGREDIENT PORTFOLIO",
-    description: "From specialty silicones and natural actives to conditioning ingredients, specialty esters and functional raw materials, our portfolio is curated for a wide range of personal care applications.",
-    detail: "Comprehensive one-stop raw material portfolio covering skincare, haircare, color cosmetics, sun-care and bath & body formulations.",
-    icon: "Boxes"
-  },
-  {
-    number: "03",
     title: "QUALITY YOU CAN RELY ON",
     description: "We place strong emphasis on ingredient quality, consistency and dependable supply to support smooth formulation and production processes.",
     detail: "Every batch is verified with rigorous Certificate of Analysis (COA), Technical Data Sheets (TDS), and stringent quality verification protocols.",
     icon: "Award"
   },
   {
-    number: "04",
     title: "APPLICATION-FOCUSED APPROACH",
     description: "We understand that every formulation has different requirements. Our team works with customers to identify suitable ingredient solutions for their specific applications.",
     detail: "Our experienced application specialists assist with sensory optimization, stability troubleshooting, compatibility testing, and dosage guidance.",
     icon: "FlaskConical"
   },
   {
-    number: "05",
     title: "DEPENDABLE SUPPLY PARTNER",
     description: "Our import and distribution capabilities are focused on maintaining reliable availability and ensuring a smooth supply experience for our customers.",
     detail: "Strategically located warehousing in New Delhi with robust buffer inventory management to prevent production bottlenecks for our brand partners.",
     icon: "Truck"
   },
   {
-    number: "06",
     title: "LONG-TERM PARTNERSHIPS",
     description: "We believe in building lasting relationships through transparent communication, professional service and a commitment to customer satisfaction.",
     detail: "We treat ingredient supply as a collaborative partnership, supporting our clients from initial bench-scale lab formulation to commercial batch manufacturing.",

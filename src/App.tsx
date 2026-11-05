@@ -10,7 +10,6 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
 import { GlobalPartnersProductPortfolioSection } from './components/portfolio/GlobalPartnersProductPortfolioSection';
-import { IndustriesSection } from './components/IndustriesSection';
 import { WhyChooseUsSection } from './components/WhyChooseUsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -268,7 +267,7 @@ export default function App() {
               onOpenExplorer={() => setIsExplorerOpen(true)}
             />
 
-            {/* 2. Corporate Profile, Vision & Mission, 6 Pillars with Automated Animation */}
+            {/* 2. Corporate Profile, Vision & Mission, Operational Pillars with Automated Animation */}
             <FadeInSection direction="up" delay={50} threshold={0.08}>
               <AboutSection onOpenInquiry={handleOpenInquiry} />
             </FadeInSection>
@@ -310,16 +309,8 @@ export default function App() {
               </div>
             )}
 
-            {/* 4. Application Sectors & Specialty Ingredients - Horizontal Slider */}
-            <FadeInSection direction="up" delay={50} threshold={0.08}>
-              <IndustriesSection 
-                onOpenInquiry={handleOpenInquiry} 
-                onOpenExplorer={() => setIsExplorerOpen(true)}
-                onExploreBusinessLine={handleExploreBusinessLine}
-              />
-            </FadeInSection>
 
-            {/* 5. The Mindtech Edge - Authentic Facilities & 6 Pillars in an Ultra-Sleek Showcase */}
+            {/* 5. The Mindtech Edge - Authentic Facilities & Core Operational Pillars */}
             <FadeInSection direction="up" delay={50} threshold={0.08}>
               <WhyChooseUsSection onOpenInquiry={handleOpenInquiry} />
             </FadeInSection>

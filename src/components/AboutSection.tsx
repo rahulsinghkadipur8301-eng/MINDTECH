@@ -25,7 +25,6 @@ import {
 } from 'lucide-react';
 
 interface AboutPillar {
-  number: string;
   id: string;
   title: string;
   subtitle: string;
@@ -40,41 +39,6 @@ interface AboutPillar {
 
 const ABOUT_PILLARS: AboutPillar[] = [
   {
-    number: '01',
-    id: 'global-sourcing',
-    title: 'Global Sourcing, Local Support',
-    subtitle: 'Connecting Global Innovation with Domestic Technical Reach',
-    description: 'We connect customers with quality ingredients sourced through trusted global supply channels, backed by responsive local support. Direct partnerships with international manufacturers allow Indian formulators to access global ingredient innovations with prompt domestic technical and logistics assistance.',
-    keyPoints: [
-      'Direct partnerships with leading international chemical manufacturers',
-      'Prompt domestic technical and formulation assistance in India',
-      'Streamlined customs clearance and regulatory import documentation'
-    ],
-    tags: ['Direct Factory Imports', 'Local Technical Desk', 'Pan-India Support'],
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85',
-    fallbackImage: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1400&q=85',
-    imageCaption: 'Global supply channels & centralized Bawana distribution hub',
-    icon: Globe2
-  },
-  {
-    number: '02',
-    id: 'diverse-portfolio',
-    title: 'Premium & Diverse Ingredient Portfolio',
-    subtitle: 'Comprehensive Raw Materials for Skincare, Haircare, Sun & Color',
-    description: 'From specialty silicones and natural actives to conditioning ingredients, specialty esters and functional raw materials, our portfolio is curated for a wide range of personal care applications across skincare, haircare, color cosmetics, sun-care and bath & body formulations.',
-    keyPoints: [
-      'Specialty silicones, crosslinked elastomer gels & MQ resin film formers',
-      'High-potency skin brighteners (Alpha Arbutin, Kojic Dipalmitate, EAA)',
-      'Clinically validated bio-ferments, plant extracts & mild surfactants'
-    ],
-    tags: ['Specialty Silicones', 'Bio-Actives & Ferments', 'Specialty Esters'],
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1400&q=85',
-    fallbackImage: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1400&q=85',
-    imageCaption: 'Curated high-performance cosmetic ingredients & formulation actives',
-    icon: Boxes
-  },
-  {
-    number: '03',
     id: 'quality-compliance',
     title: 'Quality You Can Rely On',
     subtitle: 'Rigorous Verification, Certificate of Analysis & Batch Consistency',
@@ -88,11 +52,10 @@ const ABOUT_PILLARS: AboutPillar[] = [
     tags: ['In-House Testing Lab', 'COA & TDS Verified', '100% Batch Traceable'],
     image: '/facilities/mindtech-laboratory.webp',
     fallbackImage: '/facilities/mindtech-laboratory.jpg',
-    imageCaption: 'Mindtech Analytical Testing Laboratory · Bawana Hub, Delhi',
+    imageCaption: 'Analytical Testing Laboratory · HPLC Active Assaying & Batch Verification',
     icon: Award
   },
   {
-    number: '04',
     id: 'formulation-support',
     title: 'Application-Focused Approach',
     subtitle: 'Formulation Guidance, Sensory Tuning & Stability Troubleshooting',
@@ -106,29 +69,27 @@ const ABOUT_PILLARS: AboutPillar[] = [
     tags: ['Formulation Guidance', 'Sensory Tuning', 'Collaboration Hub'],
     image: '/facilities/mindtech-meeting-collaboration.webp',
     fallbackImage: '/facilities/mindtech-meeting-collaboration.jpg',
-    imageCaption: 'Executive Collaboration & Formulation Advisory Suite',
+    imageCaption: 'Application Development Desk · Cosmetic Prototype Trials & Sensory Optimization',
     icon: FlaskConical
   },
   {
-    number: '05',
     id: 'dependable-supply',
     title: 'Dependable Supply Partner',
-    subtitle: 'Climate-Managed Warehousing & 24-48h Pan-India Dispatch',
+    subtitle: 'Climate-Managed Warehousing & Centralized Pan-India Logistics',
     description: 'Our import and distribution capabilities are focused on maintaining reliable availability and ensuring a smooth supply experience for our customers. Strategically located warehousing in Bawana, Delhi with deep buffer stock and UN-certified storage prevents production bottlenecks.',
     keyPoints: [
       'Expansive warehouse infrastructure in Bawana Industrial Area, Delhi',
       'Epoxy cleanroom floors, high-bay lighting and UN-certified drum palletization',
       'Buffer inventory management ensuring uninterrupted manufacturing supply',
-      'Rapid 24 to 48 hour dispatch turnaround across major Indian cosmetics clusters'
+      'Prompt and dependable dispatch turnaround across major Indian cosmetics clusters'
     ],
-    tags: ['Bawana Hub, Delhi', 'Buffer Stock', '24-48h Fast Dispatch'],
+    tags: ['Bawana Hub, Delhi', 'Buffer Stock', 'Prompt Pan-India Logistics'],
     image: '/facilities/mindtech-warehouse-hub.webp',
     fallbackImage: '/facilities/mindtech-warehouse-hub.jpg',
-    imageCaption: 'Mindtech Central Logistics & Stock Hub · Bawana Industrial Area',
+    imageCaption: 'Central Logistics & Buffer Stock Hub · Bawana Industrial City, Delhi',
     icon: Truck
   },
   {
-    number: '06',
     id: 'long-term-partnerships',
     title: 'Long-Term Partnerships',
     subtitle: 'Transparent Collaboration from Lab Bench to Commercial Scale',
@@ -142,7 +103,7 @@ const ABOUT_PILLARS: AboutPillar[] = [
     tags: ['Corporate Headquarters', 'ISO Governance', 'Dedicated Client Desk'],
     image: '/facilities/mindtech-corporate-office.webp',
     fallbackImage: '/facilities/mindtech-corporate-office.jpg',
-    imageCaption: 'Mindtech Corporate Headquarters & Client Operations Desk',
+    imageCaption: 'Corporate Governance & Strategic Principal Liaison · New Delhi HQ',
     icon: Handshake
   }
 ];
@@ -178,8 +139,8 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
         onClose={() => setLightboxOpen(false)}
         images={ABOUT_PILLARS.map(p => ({ 
           src: p.image, 
-          title: `${p.number}. ${p.title}`, 
-          category: `Mindtech Biotechnology • Pillar ${p.number}`, 
+          title: p.title, 
+          category: 'Mindtech Biotechnology • Core Operational Pillar', 
           description: p.description 
         }))}
         initialIndex={activeIndex}
@@ -351,7 +312,7 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                     </div>
                     <div className="flex items-start space-x-2.5">
                       <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-                      <span><strong>Buffer Stock & 24–48h Dispatch:</strong> Strategically managed NCR inventory in Bawana, preventing manufacturing bottlenecks.</span>
+                      <span><strong>Buffer Stock & Prompt Dispatch:</strong> Strategically managed NCR inventory in Bawana, preventing manufacturing bottlenecks.</span>
                     </div>
                     <div className="flex items-start space-x-2.5">
                       <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
@@ -402,21 +363,21 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                 }}
                 className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs sm:text-[13px] font-bold shadow-xs transition-colors cursor-pointer"
               >
-                <span>View 6 Operational Pillars</span>
+                <span>View Core Operational Pillars</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </motion.div>
         </div>
 
-        {/* 6 Value Pillars Section Header */}
+        {/* Value Pillars Section Header */}
         <div className="flex items-center justify-between mb-3 pt-2">
           <div>
             <span className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider block">
               EXECUTION EXCELLENCE
             </span>
             <h3 className="text-xl sm:text-2xl font-black text-[#072414] tracking-tight">
-              6 Core Operational Pillars of Mindtech
+              Core Operational Pillars of Mindtech
             </h3>
           </div>
         </div>
@@ -454,11 +415,11 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                 {/* Dark Vignette Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10 pointer-events-none" />
 
-                {/* Top Number & Tag Badge */}
+                {/* Top Tag Badge */}
                 <div className="relative z-10 p-5 sm:p-6 flex items-center justify-between">
                   <div className="flex items-center space-x-2.5">
                     <span className="px-4 py-2 rounded-full bg-black/80 backdrop-blur-md text-emerald-300 border border-emerald-400/40 text-xs sm:text-sm font-black font-mono shadow-md">
-                      PILLAR {activePillar.number}
+                      Operational Pillar
                     </span>
                     <span className="hidden sm:inline-block px-3.5 py-2 rounded-full bg-emerald-950/90 backdrop-blur-md text-white border border-emerald-600/40 text-xs font-bold shadow-md">
                       Mindtech Advantage
@@ -494,12 +455,12 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
             {/* Right: Active Card Detailed Narrative & Progress Timeline (5 cols) */}
             <div className="lg:col-span-5 space-y-4 text-left">
               
-              {/* Pillar Number & Category Header */}
+              {/* Pillar Header */}
               <div className="flex items-center justify-between pb-2.5 border-b border-gray-100">
                 <div className="flex items-center space-x-3">
-                  <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-800">
-                    {activePillar.number}
-                  </span>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-100/90 border border-emerald-300/80 flex items-center justify-center text-emerald-900 shadow-2xs">
+                    <activePillar.icon className="w-5 h-5 text-emerald-800" />
+                  </div>
                   <div>
                     <span className="text-[12px] font-extrabold uppercase tracking-widest text-emerald-900 block">
                       Core Company Value
@@ -597,7 +558,7 @@ export const AboutSection: React.FC<{ onOpenInquiry: (topic?: string) => void }>
                         className={`h-2 rounded-full transition-all cursor-pointer ${
                           activeIndex === i ? 'w-6 bg-emerald-700' : 'w-2 bg-gray-300 hover:bg-gray-400'
                         }`}
-                        aria-label={`Go to slide ${i + 1}`}
+                        aria-label={`Go to ${ABOUT_PILLARS[i]?.title}`}
                       />
                     ))}
                   </div>

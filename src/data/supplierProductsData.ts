@@ -1,3 +1,5 @@
+import { getProductSpecificImage } from './productImages';
+
 export type SupplierId = 'greentech' | 'sns-silcos' | 'fine-organics' | 'vvf-limited' | 'vvf-fine-organics' | 'general-range' | 'all-products';
 
 export interface SupplierInfo {
@@ -32,6 +34,14 @@ export interface ProductItem {
   pdfPage: number;
   image?: string;
   videoUrl?: string;
+  // Blended Technical Dossier & Catalogue Metadata
+  catalogOrigin?: '2026 Mindtech Catalogue' | 'Historical Greentech Dossier' | 'Dual-Sourced / Verified';
+  physicalForm?: string;
+  solubility?: string;
+  sourceDoc?: string;
+  casNo?: string;
+  botanicalSource?: string;
+  mechanism?: string;
 }
 
 export const BUSINESS_LINES = [
@@ -210,7 +220,7 @@ export const SUPPLIER_PROFILES: Record<string, SupplierInfo> = {
     keyStrengths: [
       '100% CoA & TDS verified batch quality',
       'Direct central warehouse buffer in Bawana, Delhi',
-      'Fast 24-48h dispatch across India',
+      'Prompt nationwide dispatch across India',
       'Complete regulatory documentation'
     ]
   },
@@ -234,7 +244,7 @@ export const SUPPLIER_PROFILES: Record<string, SupplierInfo> = {
       'Comprehensive 90+ documented ingredients',
       '100% CoA, TDS & MSDS compliance',
       'Direct distribution from Bawana Hub',
-      'Prompt 24-48h dispatch across India'
+      'Dependable nationwide dispatch across India'
     ]
   }
 };
@@ -293,7 +303,7 @@ export const FINE_ORGANICS_PORTFOLIO_CATEGORIES = [
   }
 ];
 
-export const ALL_PRODUCTS: ProductItem[] = [
+const RAW_SUPPLIER_PRODUCTS: ProductItem[] = [
   // =========================================================================
   // 1. SNS SILCOS SPECIALTY SILICONES (Catalogue Page 5)
   // =========================================================================
@@ -2754,3 +2764,949 @@ export const ALL_PRODUCTS: ProductItem[] = [
   }
 ];
 
+
+
+export const HISTORICAL_GREENTECH_PRODUCTS: ProductItem[] = [
+  {
+    "id": "murumuru-butter",
+    "slug": "murumuru-butter",
+    "name": "MURUMURU BUTTER",
+    "code": "GT-MURUMURU_B",
+    "supplierId": "greentech",
+    "category": "Plant Butters",
+    "inci": "Astrocaryum Murumuru Seed Butter",
+    "mainUse": "Solid plant butter rich in lauric and myristic fatty acids providing profound cuticle repair and curl definition.",
+    "application": "Hair Care, Curly & Frizzy Hair Nutrition, Deep Conditioning Hair Masks, Rich Body Balms",
+    "dosage": "1–10% in hair conditioning; up to 100% in anhydrous balms",
+    "keyBenefits": [
+      "Significant improvement in curly/frizzy hair combability and strand lubrication",
+      "Restores intercellular lipid cement of damaged hair cuticles"
+    ],
+    "formulatorBenefits": [
+      "Incorporates directly into the lipid cement of hair cuticles, restoring low-friction slip, sealing split ends, and controlling high-humidity frizz."
+    ],
+    "suggestions": "Ethically sourced from Wild-harvested seeds from the Amazon basin rainforest. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 25,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Solid butter (melting point ~33°C)",
+    "solubility": "Lipophilic / Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.25",
+    "botanicalSource": "Astrocaryum murumuru"
+  },
+  {
+    "id": "biotilys",
+    "slug": "biotilys",
+    "name": "BIOTILYS®",
+    "code": "GT-BIOTILYS",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Lactobacillus Ferment Lysate",
+    "mainUse": "Skin barrier defensive postbiotic active optimizing cutaneous immune response and stratum corneum hydration.",
+    "application": "Barrier Repair Creams, Microbiome Skincare, Defensive Moisturizers",
+    "dosage": "1–2%",
+    "keyBenefits": [
+      "Accelerates stratum corneum recovery and boosts antimicrobial peptides",
+      "Reduces TEWL and restores hydration in stressed skin within 14 days"
+    ],
+    "formulatorBenefits": [
+      "Stimulates human beta-defensin-2 (hBD-2), promotes tight junction claudin-1 synthesis, and maintains optimum stratum corneum lipid organization."
+    ],
+    "suggestions": "Ethically sourced from Biotechnological culture and gentle thermal lysis of Lactobacillus pentosus. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 8,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Catalogue India_compressed.pdf p.8",
+    "botanicalSource": "Lactobacillus pentosus ferment lysate"
+  },
+  {
+    "id": "liftiss",
+    "slug": "liftiss",
+    "name": "LIFTISS®",
+    "code": "GT-LIFTISS",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Water, Adansonia Digitata Fruit Extract",
+    "mainUse": "Instant smoothing and mechanical tensor effect reducing expression wrinkles within 5 minutes.",
+    "application": "Instant Tensor Serums, Flash Smoothing Ampoules, Pre-Makeup Primers, Express Lifting Creams",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Instant visual smoothing of expression wrinkles within 5 minutes",
+      "Immediate mechanical tensor effect confirmed by 85% of panelists"
+    ],
+    "formulatorBenefits": [
+      "Forms a cohesive 3D biopolymer film on skin surface that exerts mechanical retraction upon drying while retaining surface water."
+    ],
+    "suggestions": "Ethically sourced from Adansonia digitata (Baobab) fruit pulp from Senegal. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 14,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Catalogue India_compressed.pdf p.14",
+    "botanicalSource": "Adansonia digitata"
+  },
+  {
+    "id": "cosmelene-hawthorn",
+    "slug": "cosmelene-hawthorn",
+    "name": "COSMELENE® HAWTHORN",
+    "code": "GT-COSMELENE_",
+    "supplierId": "greentech",
+    "category": "Botanical Extracts",
+    "inci": "Water, Butylene Glycol, Crataegus Monogyna Flower Extract",
+    "mainUse": "Flavonoid-rich Crataegus extract improving vascular tone and calming facial flushing.",
+    "application": "Couperose & Redness, Microcirculation Toners, Sensitive Skin Serums",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Strengthens vascular tone and calms facial couperose redness"
+    ],
+    "formulatorBenefits": [
+      "Strengthens microvascular walls, reduces capillary permeability, and prevents redness and edema."
+    ],
+    "suggestions": "Ethically sourced from Crataegus monogyna (Hawthorn) flowering tops. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 18,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Catalogue India_compressed.pdf p.18",
+    "botanicalSource": "Crataegus monogyna"
+  },
+  {
+    "id": "hair-lustre-karkade",
+    "slug": "hair-lustre-karkade",
+    "name": "HAIR LUSTRE KARKADE",
+    "code": "GT-HAIR_LUSTR",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Water, Butylene Glycol, Hibiscus Sabdariffa Flower Extract",
+    "mainUse": "Natural hibiscus flower acid active smoothing hair scales and delivering radiant gloss and softness.",
+    "application": "Gloss Shampoos, Shine Hair Mists, Lustre Conditioners, Color Illuminating Sprays",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Smooths cuticle scales and magnifies hair shine and light reflection"
+    ],
+    "formulatorBenefits": [
+      "Lowers cuticle surface pH, tightly closing overlapping keratin scales, and dramatically enhances specular light reflection."
+    ],
+    "suggestions": "Ethically sourced from Hibiscus sabdariffa chalices. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 24,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Catalogue India_compressed.pdf p.24",
+    "botanicalSource": "Hibiscus sabdariffa"
+  },
+  {
+    "id": "hair-strength-egx-292",
+    "slug": "hair-strength-egx-292",
+    "name": "HAIR STRENGTH COMPLEX EGX 292",
+    "code": "GT-HAIR_STREN",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Water, Butylene Glycol, Botanical Multi-Extract Complex (refer to TDS)",
+    "mainUse": "Synergistic botanical complex regulating oily scalp sebum and strengthening weak hair roots.",
+    "application": "Purifying Scalp Shampoos, Oily Scalp Tonics, Hair Follicle Fortifiers",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Decongests hair follicles and purifies oily scalp"
+    ],
+    "formulatorBenefits": [
+      "Inhibits follicular 5α-reductase, decongests sebum plugs, and stimulates micro-capillary nutrient flow."
+    ],
+    "suggestions": "Ethically sourced from Multi-botanical synergy of Burdock, Watercress, Ivy, Rosemary, Arnica, and Pine. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 25,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Catalogue India_compressed.pdf p.25",
+    "botanicalSource": "Arctium lappa, Nasturtium officinale, Hedera helix, Rosmarinus officinalis"
+  },
+  {
+    "id": "zoryalys",
+    "slug": "zoryalys",
+    "name": "ZORYALYS®",
+    "code": "GT-ZORYALYS",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Water, Propanediol, Botanical Protection Complex (refer to TDS)",
+    "mainUse": "Shield against UV, pollution, and color fading, preserving keratin structure and color brilliance.",
+    "application": "Colour Protection Shampoos, Anti-Pollution Hair Sprays, UV Shield Hair Serums",
+    "dosage": "0.5–2%",
+    "keyBenefits": [
+      "Preserves hair color brilliance against UV radiation and wash fading",
+      "Reduces adhesion of airborne pollution micro-particles to hair strands"
+    ],
+    "formulatorBenefits": [
+      "Quenches UV-induced singlet oxygen, blocks carbon particles from adhering to the hair cuticle, and prevents keratin protein carbonylation."
+    ],
+    "suggestions": "Ethically sourced from Synergy of Pracaxi oil, Ginger root, and Magnolia bark extracts. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 27,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water/lipo dispersible depending on variant",
+    "sourceDoc": "Catalogue India_compressed.pdf p.27",
+    "botanicalSource": "Pentaclethra macroloba, Zingiber officinale, Magnolia grandiflora"
+  },
+  {
+    "id": "lipactive-inca-inchi",
+    "slug": "lipactive-inca-inchi",
+    "name": "LIPACTIVE INCA INCHI®",
+    "code": "GT-LIPACTIVE_",
+    "supplierId": "greentech",
+    "category": "Lipophilic Bio-Actives",
+    "inci": "Plukenetia Volubilis Seed Oil",
+    "mainUse": "Extraordinary virgin plant oil boasting the highest known botanical concentration of Omega-3 (>45%).",
+    "application": "Dry Hair Repair Oils, Sensitized Scalp Serums, Intensive Conditioning Masks",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Restores the cuticle 18-MEA lipid layer on damaged, chemically treated hair"
+    ],
+    "formulatorBenefits": [
+      "Replenishes 18-MEA cuticle lipid layer and seals broken disulfide lipid junctions in bleached hair."
+    ],
+    "suggestions": "Ethically sourced from Plukenetia volubilis (Inca Inchi) seeds wild-harvested in Peru. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 8,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Lipophilic / Oil-soluble",
+    "sourceDoc": "Plaquette Hair Care 2021_V02-PRINT.pdf p.8",
+    "botanicalSource": "Plukenetia volubilis"
+  },
+  {
+    "id": "lipactive-baobab",
+    "slug": "lipactive-baobab",
+    "name": "LIPACTIVE BAOBAB",
+    "code": "GT-LIPACTIVE_",
+    "supplierId": "greentech",
+    "category": "Lipophilic Bio-Actives",
+    "inci": "Adansonia Digitata Seed Oil",
+    "mainUse": "Nutrient-rich baobab oil rich in palmitic, oleic, and linoleic acids restoring hair flexibility and shine.",
+    "application": "Hair Nutrition, Dry Scalp Treatments, Nail Strengthening Oils",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Increases hair strand elasticity and reduces combing breakage"
+    ],
+    "formulatorBenefits": [
+      "Penetrates hair fiber and seals lipid envelope around keratin strands."
+    ],
+    "suggestions": "Ethically sourced from Adansonia digitata seeds from Senegal. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 9,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Hair Care 2021_V02-PRINT.pdf p.9",
+    "botanicalSource": "Adansonia digitata"
+  },
+  {
+    "id": "lipactive-apricot",
+    "slug": "lipactive-apricot",
+    "name": "LIPACTIVE APRICOT",
+    "code": "GT-LIPACTIVE_",
+    "supplierId": "greentech",
+    "category": "Lipophilic Bio-Actives",
+    "inci": "Prunus Armeniaca (Apricot) Kernel Oil",
+    "mainUse": "Oleic-rich apricot kernel lipactive imparting silky glide, softness, and radiant sheen to hair.",
+    "application": "Hair Softness, Illuminating Hair Oils, Sensory Shampoos",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Imparts lightweight silky slip and hair softness without heaviness"
+    ],
+    "formulatorBenefits": [
+      "Lubricates hair shaft, reduces inter-fiber friction, and enhances specular reflection."
+    ],
+    "suggestions": "Ethically sourced from Prunus armeniaca kernels. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 10,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Hair Care 2021_V02-PRINT.pdf p.10",
+    "botanicalSource": "Prunus armeniaca"
+  },
+  {
+    "id": "glialys-21",
+    "slug": "glialys-21",
+    "name": "GLIALYS 21",
+    "code": "GT-GLIALYS_21",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Water, Hydrolyzed Wheat Gluten",
+    "mainUse": "Hydrolyzed wheat gluten protein complex repairing hair cuticles and boosting tensile resistance.",
+    "application": "Cuticle Bonding Masks, Leave-In Hair Repair Milks, Anti-Breakage Conditioners",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Bonds damaged hair cuticles and restores mechanical strength"
+    ],
+    "formulatorBenefits": [
+      "Penetrates damaged hair cuticles and forms cystine-like crosslinks that bond lifted scales back to the hair cortex."
+    ],
+    "suggestions": "Ethically sourced from Triticum aestivum (Wheat) gluten. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 12,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Plaquette Hair Care 2021_V02-PRINT.pdf p.12",
+    "botanicalSource": "Triticum aestivum"
+  },
+  {
+    "id": "hydrolyzed-pea-proteins",
+    "slug": "hydrolyzed-pea-proteins",
+    "name": "HYDROLYZED PEA PROTEINS",
+    "code": "GT-HYDROLYZED",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Water, Hydrolyzed Pea Protein",
+    "mainUse": "Sustainable vegan pea protein hydrolysate delivering deep hair hydration and fiber resilience.",
+    "application": "Vegan Keratin Hair Treatments, Volumizing Shampoos, Anti-Ageing Hair Serums",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Vegan alternative to keratin boosting hair hydration and tensile strength"
+    ],
+    "formulatorBenefits": [
+      "Adsorbs onto hair cuticle surface and penetrates into cortex to reinforce hydrogen bonding networks."
+    ],
+    "suggestions": "Ethically sourced from Pisum sativum (Green Pea) seeds. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 13,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Plaquette Hair Care 2021_V02-PRINT.pdf p.13",
+    "botanicalSource": "Pisum sativum"
+  },
+  {
+    "id": "lactophyt",
+    "slug": "lactophyt",
+    "name": "LACTOPHYT®",
+    "code": "GT-LACTOPHYT",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Propanediol, Water, Humulus Lupulus Extract",
+    "mainUse": "Microbiota-modulating natural active selectively eliminating odor-causing bacteria without blocking perspiration.",
+    "application": "Microbiome Deodorants, Body Odour Control Lotions, Underarm Care Serums",
+    "dosage": "1–2%",
+    "keyBenefits": [
+      "Selectively stops odor-causing Corynebacterium while preserving benign microflora",
+      "24-hour clinical reduction in underarm malodor without aluminum salts"
+    ],
+    "formulatorBenefits": [
+      "Specifically inhibits Corynebacterium striatum and Corynebacterium jeikeium bacteria responsible for enzymatic transformation of sweat into malodor, without aluminum salts."
+    ],
+    "suggestions": "Ethically sourced from Humulus lupulus (Hops) and botanical extracts. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 7,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Plaquette Microbiote-PRINT.pdf p.7",
+    "botanicalSource": "Humulus lupulus"
+  },
+  {
+    "id": "silypur-oc",
+    "slug": "silypur-oc",
+    "name": "SILYPUR OC",
+    "code": "GT-SILYPUR_OC",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Water, Glycerin, Silybum Marianum Seed Extract",
+    "mainUse": "Targeted oral-care botanical purifying active reducing dental plaque and gingival discomfort.",
+    "application": "Oral Care, Purifying Toothpastes, Mouthwashes, Gum Health Gels",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Reduces dental plaque biofilm formation and protects gingival tissues"
+    ],
+    "formulatorBenefits": [
+      "Inhibits Streptococcus mutans glucosyltransferase enzymes responsible for plaque biofilm adhesion; soothes gingival inflammatory pathways."
+    ],
+    "suggestions": "Ethically sourced from Silybum marianum (Milk Thistle) seeds. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 37,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Plaquette actifs Greentech 2024-PRINT.pdf p.37",
+    "botanicalSource": "Silybum marianum"
+  },
+  {
+    "id": "aquasiloils-eco",
+    "slug": "aquasiloils-eco",
+    "name": "AQUASILOILS® (ECO)",
+    "code": "GT-AQUASILOIL",
+    "supplierId": "greentech",
+    "category": "Bio-Active Specialties",
+    "inci": "Functionalized Vegetable Oil Polyglyceryl Esters (variant-specific: e.g. Argan Oil Polyglyceryl-6 Esters)",
+    "mainUse": "PEG-free, 100% plant-oil derived water-soluble functional cleansers and solubilizers.",
+    "application": "Micellar Waters, Oil-to-Milk Cleansers, Clear Shampoos, PEG-Free Solubilizers",
+    "dosage": "1–10%",
+    "keyBenefits": [
+      "100% water-soluble vegetable oil functional cleanser with PEG-free profile",
+      "Non-irritating to eyes and sensitive mucosa"
+    ],
+    "formulatorBenefits": [
+      "Forms crystal-clear aqueous micellar solutions that solubilize essential oils, lipid actives, and gently dissolve sebum and makeup without foam collapse."
+    ],
+    "suggestions": "Ethically sourced from Natural plant oils functionalized via eco-friendly green chemistry. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 24,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "100% Water-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.24",
+    "botanicalSource": "Functionalized vegetable oil triglycerides"
+  },
+  {
+    "id": "argan-oil",
+    "slug": "argan-oil",
+    "name": "ARGAN OIL (VIRGIN / ORGANIC)",
+    "code": "GT-ARGAN_OIL",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Argania Spinosa Kernel Oil",
+    "mainUse": "Precious Moroccan kernel oil rich in oleic & linoleic acids for intensive hair softness and anti-frizz.",
+    "application": "Hair Nutrition, Curly / Frizzy Hair, Nourishing Face Creams, Anti-Ageing Body Oils",
+    "dosage": "1–10% in hair formulations; up to 100% in anhydrous oils",
+    "keyBenefits": [
+      "Increases hair smoothness, reduces frizz, and enhances curl definition"
+    ],
+    "formulatorBenefits": [
+      "Replenishes lost intercellular lipids within the hair cortex and restores stratum corneum barrier flexibility."
+    ],
+    "suggestions": "Ethically sourced from Argania spinosa kernels wild-harvested by Berber women’s cooperatives in Morocco. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 12,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid vegetable oil",
+    "solubility": "Lipophilic / Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.12",
+    "botanicalSource": "Argania spinosa"
+  },
+  {
+    "id": "jojoba-oil",
+    "slug": "jojoba-oil",
+    "name": "JOJOBA OIL (GOLDEN / WATER-CLEAR)",
+    "code": "GT-JOJOBA_OIL",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Simmondsia Chinensis (Jojoba) Seed Oil",
+    "mainUse": "Liquid wax ester mirroring human sebum with a dry, non-greasy velvet touch for all skin types.",
+    "application": "Sebum Control, Dry Touch Hair Serums, Acne-Prone Skin Care, Makeup Removal Oils",
+    "dosage": "1–20% in emulsions; up to 100% in facial oils",
+    "keyBenefits": [
+      "Mimics natural human sebum to balance skin oiliness with a dry silky touch"
+    ],
+    "formulatorBenefits": [
+      "Dissolves sebum plugs, restores optimal lipid barrier integrity without comedogenicity, and stabilizes formula oxidation."
+    ],
+    "suggestions": "Ethically sourced from Simmondsia chinensis seeds cultivated in arid desert climates. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 19,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid wax ester (solidifies below 10°C)",
+    "solubility": "Lipophilic / Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.19",
+    "botanicalSource": "Simmondsia chinensis"
+  },
+  {
+    "id": "broccoli-oil",
+    "slug": "broccoli-oil",
+    "name": "BROCCOLI SEED OIL",
+    "code": "GT-BROCCOLI_O",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Brassica Oleracea Italica (Broccoli) Seed Oil",
+    "mainUse": "Natural plant silicone replacement rich in erucic acid imparting high gloss and combability.",
+    "application": "Silicone Alternative, Frizz Control Serums, Hair Gloss Elixirs",
+    "dosage": "1–10%",
+    "keyBenefits": [
+      "Natural plant replacement for silicones delivering high gloss and detangling"
+    ],
+    "formulatorBenefits": [
+      "Forms a low-friction microscopic lubricating film on hair cuticles, eliminating static flyaways and smoothing coarse hair."
+    ],
+    "suggestions": "Ethically sourced from Brassica oleracea italica seeds. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 13,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.13",
+    "botanicalSource": "Brassica oleracea italica"
+  },
+  {
+    "id": "castor-oil",
+    "slug": "castor-oil",
+    "name": "CASTOR OIL (VIRGIN / FIRST PRESS)",
+    "code": "GT-CASTOR_OIL",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Ricinus Communis (Castor) Seed Oil",
+    "mainUse": "Viscous ricinoleic-rich oil fortifying hair keratin, enhancing eyelash growth, and providing high cushion.",
+    "application": "Hair Fortification, Eyelash & Eyebrow Serums, Lipsticks & Color Cosmetics",
+    "dosage": "1–50% in lipsticks and hair fortifiers",
+    "keyBenefits": [
+      "Fortifies hair fibers, lashes and nails, boosting shine and breakage resistance"
+    ],
+    "formulatorBenefits": [
+      "Forms a high-adhesion lipid cushion that coats hair cuticles and provides high refractive index gloss to color cosmetics."
+    ],
+    "suggestions": "Ethically sourced from Ricinus communis seeds. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 15,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "High-viscosity liquid oil",
+    "solubility": "Oil-soluble / Alcohol-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.15",
+    "botanicalSource": "Ricinus communis"
+  },
+  {
+    "id": "camelina-oil",
+    "slug": "camelina-oil",
+    "name": "ORGANIC CAMELINA OIL FROM FRANCE",
+    "code": "GT-CAMELINA_O",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Camelina Sativa Seed Oil",
+    "mainUse": "French organic oil rich in Omega-3 (>35%) calming skin redness and restoring lipid barrier flexibility.",
+    "application": "Sensitive Skin Care, Anti-Inflammatory Balms, Atopic Scalp Treatments, Dry Hair Nutrition",
+    "dosage": "1–10% in skin and hair care; up to 100% in face oils",
+    "keyBenefits": [
+      "Rich in Omega-3 to soothe cutaneous inflammation and restore lipid cement"
+    ],
+    "formulatorBenefits": [
+      "Restores anti-inflammatory prostaglandin balance in skin lipids, suppresses TEWL, and accelerates barrier lipid repair."
+    ],
+    "suggestions": "Ethically sourced from Camelina sativa seeds cultivated in France under fair organic contracts. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 14,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.14",
+    "botanicalSource": "Camelina sativa"
+  },
+  {
+    "id": "shea-butter",
+    "slug": "shea-butter",
+    "name": "SHEA BUTTER (NILOTICA & PARTHENOCARPIC)",
+    "code": "GT-SHEA_BUTTE",
+    "supplierId": "greentech",
+    "category": "Plant Butters",
+    "inci": "Butyrospermum Parkii (Shea) Butter",
+    "mainUse": "Rich unctuous plant butter loaded with stearic-oleic lipids and unsaponifiables for barrier comfort.",
+    "application": "Rich Body Creams, Lip Repair Balms, Curly Hair Conditioning, Dry Skin Comfort",
+    "dosage": "1–20% in emulsions; up to 100% in solid balms",
+    "keyBenefits": [
+      "High unsaponifiable content provides long-lasting barrier cushion and soothing comfort"
+    ],
+    "formulatorBenefits": [
+      "Forms a breathable lipid barrier on the epidermis, replenishes stratum corneum ceramides, and shields against cold-weather barrier cracking."
+    ],
+    "suggestions": "Ethically sourced from Butyrospermum parkii nuts ethically wild-harvested in West Africa (Burkina Faso). Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 25,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Solid butter (melting point ~34–38°C)",
+    "solubility": "Lipophilic / Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.25",
+    "botanicalSource": "Butyrospermum parkii (Vitellaria paradoxa)"
+  },
+  {
+    "id": "cocoa-butter",
+    "slug": "cocoa-butter",
+    "name": "COCOA BUTTER",
+    "code": "GT-COCOA_BUTT",
+    "supplierId": "greentech",
+    "category": "Plant Butters",
+    "inci": "Theobroma Cacao (Cocoa) Seed Butter",
+    "mainUse": "Solid aromatic plant butter with precise body-temperature melting curve for velvety structural texture.",
+    "application": "Solid Body Balms, Lip Balms, Emulsion Consistency Enhancers",
+    "dosage": "1–30%",
+    "keyBenefits": [
+      "Crisp body-temperature melting transition delivering luxurious velvety barrier comfort"
+    ],
+    "formulatorBenefits": [
+      "Provides crystal structure stabilization and moisture occlusion to prevent water loss."
+    ],
+    "suggestions": "Ethically sourced from Theobroma cacao beans. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 25,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Hard solid butter (melting point ~34–36°C)",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.25",
+    "botanicalSource": "Theobroma cacao"
+  },
+  {
+    "id": "mango-butter",
+    "slug": "mango-butter",
+    "name": "MANGO BUTTER",
+    "code": "GT-MANGO_BUTT",
+    "supplierId": "greentech",
+    "category": "Plant Butters",
+    "inci": "Mangifera Indica (Mango) Seed Butter",
+    "mainUse": "Soft, creamy plant butter rich in oleic and stearic acids imparting smooth glide and elasticity.",
+    "application": "Hair Conditioners, Body Cremes, After-Sun Balms",
+    "dosage": "1–20%",
+    "keyBenefits": [
+      "Softens dry hair and skin with smooth non-grainy melting profile"
+    ],
+    "formulatorBenefits": [
+      "Lubricates stratum corneum and hair cuticles, softening brittle keratin without greasy drag."
+    ],
+    "suggestions": "Ethically sourced from Mangifera indica kernels. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 25,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Soft solid butter (melting point ~30–35°C)",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.25",
+    "botanicalSource": "Mangifera indica"
+  },
+  {
+    "id": "solarine-iv",
+    "slug": "solarine-iv",
+    "name": "SOLARINE® IV",
+    "code": "GT-SOLARINE_I",
+    "supplierId": "greentech",
+    "category": "Lipophilic Bio-Actives",
+    "inci": "Vegetable Oil, Botanical Active Lipids (refer to TDS)",
+    "mainUse": "Specialty oily active derived from botanical lipophilic unsaponifiables for cellular UV protection and repair.",
+    "application": "Sun Care Oils, Post-Sun Repair Serums, Photoprotective Balms",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Protects cell membranes against UV-induced lipid peroxidation"
+    ],
+    "formulatorBenefits": [
+      "Quenches UV-induced singlet oxygen and preserves membrane lipid integrity."
+    ],
+    "suggestions": "Ethically sourced from Selected botanical oil lipophilic fraction. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 6,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.6",
+    "botanicalSource": "Botanical unsaponifiables in plant oil"
+  },
+  {
+    "id": "tamanol-lipactive",
+    "slug": "tamanol-lipactive",
+    "name": "TAMANOL LIPACTIVE",
+    "code": "GT-TAMANOL_LI",
+    "supplierId": "greentech",
+    "category": "Lipophilic Bio-Actives",
+    "inci": "Calophyllum Inophyllum Seed Oil",
+    "mainUse": "Calophyllum inophyllum seed lipactive accelerating tissue repair and soothing sensitized skin.",
+    "application": "Skin Regeneration, Scar & Blemish Balms, Soothing Atopic Oils",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Accelerates skin regeneration and soothes sensitized inflamed tissue"
+    ],
+    "formulatorBenefits": [
+      "Stimulates keratinocyte and fibroblast migration to close dermal wounds; inhibits inflammatory COX-2."
+    ],
+    "suggestions": "Ethically sourced from Calophyllum inophyllum nuts wild-harvested in Madagascar. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 7,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Greenish viscous oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.7",
+    "botanicalSource": "Calophyllum inophyllum"
+  },
+  {
+    "id": "rosehip-oil",
+    "slug": "rosehip-oil",
+    "name": "ROSEHIP SEED OIL (ORGANIC)",
+    "code": "GT-ROSEHIP_OI",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Rosa Canina Seed Oil",
+    "mainUse": "Cold-pressed Rosa canina/rubiginosa oil rich in pro-vitamin A and Omega-3/6 for scar and wrinkle regeneration.",
+    "application": "Anti-Ageing Face Oils, Scar Repair Balms, Stretch Mark Creams",
+    "dosage": "1–20%; up to 100% in facial oils",
+    "keyBenefits": [
+      "Stimulates cellular renewal and smooths superficial wrinkles and scars"
+    ],
+    "formulatorBenefits": [
+      "Promotes epidermal regeneration and cellular turnover through natural carotenoid and fatty acid pathways."
+    ],
+    "suggestions": "Ethically sourced from Rosa canina / rubiginosa seeds. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 20,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.20",
+    "botanicalSource": "Rosa canina / Rosa rubiginosa"
+  },
+  {
+    "id": "sweet-almond-oil",
+    "slug": "sweet-almond-oil",
+    "name": "SWEET ALMOND OIL",
+    "code": "GT-SWEET_ALMO",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Prunus Amygdalus Dulcis (Sweet Almond) Oil",
+    "mainUse": "Classic soothing emollient oil rich in oleic acid and squalene for delicate baby and sensitive skin.",
+    "application": "Baby Care, Sensitive Skin Creams, Body Massage Oils, Gentle Cleansing Lotions",
+    "dosage": "1–50%; up to 100% in body oils",
+    "keyBenefits": [
+      "Hypoallergenic soothing emollient calms sensitive skin and baby skin barrier"
+    ],
+    "formulatorBenefits": [
+      "Softens keratin plaques, soothes pruritus, and prevents transepidermal water loss."
+    ],
+    "suggestions": "Ethically sourced from Prunus amygdalus dulcis kernels. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 21,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.21",
+    "botanicalSource": "Prunus amygdalus dulcis"
+  },
+  {
+    "id": "macadamia-oil",
+    "slug": "macadamia-oil",
+    "name": "MACADAMIA OIL",
+    "code": "GT-MACADAMIA_",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Macadamia Integrifolia Seed Oil",
+    "mainUse": "Palmitoleic acid (Omega-7) rich plant oil restoring depleted sebum in mature skin with rapid absorption.",
+    "application": "Mature Skin Creams, Hair Nutrition, Fast Absorbing Body Oils",
+    "dosage": "1–20%; up to 100% in dry body oils",
+    "keyBenefits": [
+      "High Omega-7 content replenishes mature skin sebum with rapid dry-touch absorption"
+    ],
+    "formulatorBenefits": [
+      "Restores depleted sebum omega-7 levels, accelerates micro-circulation, and reinforces barrier lipids."
+    ],
+    "suggestions": "Ethically sourced from Macadamia integrifolia nuts. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 19,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.19",
+    "botanicalSource": "Macadamia integrifolia"
+  },
+  {
+    "id": "avocado-oil",
+    "slug": "avocado-oil",
+    "name": "AVOCADO OIL",
+    "code": "GT-AVOCADO_OI",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Persea Gratissima (Avocado) Oil",
+    "mainUse": "Unctuous green oil rich in oleic acid, phytosterols, and vitamins A, D, and E for deep tissue regeneration.",
+    "application": "Dry Skin Nourishment, Eczema Comfort Balms, Hair Conditioning",
+    "dosage": "1–25%; up to 100% in body balms",
+    "keyBenefits": [
+      "Sterolins penetrate deeply to regenerate dry, cracked skin and stimulate collagen"
+    ],
+    "formulatorBenefits": [
+      "Stimulates collagen metabolism in connective tissue and softens hardened stratum corneum plaques."
+    ],
+    "suggestions": "Ethically sourced from Persea gratissima fruit pulp. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 12,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Greenish liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.12",
+    "botanicalSource": "Persea gratissima"
+  },
+  {
+    "id": "black-cumin-oil",
+    "slug": "black-cumin-oil",
+    "name": "BLACK CUMIN (NIGELLA) OIL",
+    "code": "GT-BLACK_CUMI",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Nigella Sativa Seed Oil",
+    "mainUse": "Thymoquinone-rich Nigella sativa oil providing potent antibacterial and anti-blemish soothing action.",
+    "application": "Acne-Prone Skin Care, Purifying Scalp Serums, Anti-Inflammatory Balms",
+    "dosage": "1–10%",
+    "keyBenefits": [
+      "Naturally clears acne blemishes and calms inflamed follicles with natural thymoquinone"
+    ],
+    "formulatorBenefits": [
+      "Inhibits Cutibacterium acnes growth, downregulates leukotriene B4, and soothes inflammatory blemishes."
+    ],
+    "suggestions": "Ethically sourced from Nigella sativa seeds. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 13,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Aromatic amber liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.13",
+    "botanicalSource": "Nigella sativa"
+  },
+  {
+    "id": "buriti-oil",
+    "slug": "buriti-oil",
+    "name": "BURITI OIL",
+    "code": "GT-BURITI_OIL",
+    "supplierId": "greentech",
+    "category": "Pure Vegetable Oils",
+    "inci": "Mauritia Flexuosa Fruit Oil",
+    "mainUse": "World’s richest natural source of beta-carotene giving radiant golden glow and solar antioxidant defense.",
+    "application": "Sun Care & Tanning Oils, Antioxidant Glow Serums, Post-Sun Repair Balms",
+    "dosage": "0.5–5% in face creams; up to 10% in tanning oils",
+    "keyBenefits": [
+      "World-record beta-carotene content shields against UV free radicals and imparts natural glow"
+    ],
+    "formulatorBenefits": [
+      "Quenches UV-induced singlet oxygen and free radicals; imparts natural warm carotenoid pigment to skin."
+    ],
+    "suggestions": "Ethically sourced from Mauritia flexuosa fruit pulp from the Brazilian Amazon. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 13,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Deep ruby-red liquid oil",
+    "solubility": "Oil-soluble",
+    "sourceDoc": "Plaquette Vegetable Oils Greentech 2022-PRINT.pdf p.13",
+    "botanicalSource": "Mauritia flexuosa"
+  },
+  {
+    "id": "org-yuzu-france",
+    "slug": "org-yuzu-france",
+    "name": "ORGANIC YUZU FROM FRANCE",
+    "code": "GT-ORG_YUZU_F",
+    "supplierId": "greentech",
+    "category": "Botanical Extracts",
+    "inci": "Water, Glycerin, Citrus Junos Fruit Extract, Zinc PCA",
+    "mainUse": "Organic French-grown Yuzu extract combined with Zinc PCA for sebum regulation and citrus radiance.",
+    "application": "Oily Skin Balancing, Radiance Day Fluids, Pore Tightening Toners",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Tightens enlarged pores and regulates sebum with guaranteed French organic origin"
+    ],
+    "formulatorBenefits": [
+      "Zinc PCA combined with yuzu flavonoids regulates sebaceous gland activity and reduces surface bacterial proliferation."
+    ],
+    "suggestions": "Ethically sourced from Citrus junos (Yuzu) organically grown in Occitanie, France. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 41,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Plaquette actifs Greentech 2024-PRINT.pdf p.41",
+    "botanicalSource": "Citrus junos"
+  },
+  {
+    "id": "org-bamboo-sap",
+    "slug": "org-bamboo-sap",
+    "name": "ORGANIC BAMBOO SAP FROM FRANCE",
+    "code": "GT-ORG_BAMBOO",
+    "supplierId": "greentech",
+    "category": "Botanical Extracts",
+    "inci": "Phyllostachys Viridiglaucescens Stem Sap",
+    "mainUse": "Pure organic French bamboo sap rich in bio-silicon and amino acids for cutaneous remineralization.",
+    "application": "Remineralizing Lotions, Cellular Hydration Essences, Anti-Pollution Mists",
+    "dosage": "1–10%; can replace water in formulation",
+    "keyBenefits": [
+      "Pure bio-silica spring sap remineralizes skin and shields against pollution"
+    ],
+    "formulatorBenefits": [
+      "Supplies bio-available organic silicon directly to keratinocytes, reinforcing cell cohesion and hydration reserves."
+    ],
+    "suggestions": "Ethically sourced from Phyllostachys viridiglaucescens sap harvested in the Cevennes, France. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 42,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Clear aqueous liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Plaquette actifs Greentech 2024-PRINT.pdf p.42",
+    "botanicalSource": "Phyllostachys viridiglaucescens"
+  },
+  {
+    "id": "org-lotus-flowers",
+    "slug": "org-lotus-flowers",
+    "name": "ORGANIC LOTUS FLOWERS FROM VIETNAM",
+    "code": "GT-ORG_LOTUS_",
+    "supplierId": "greentech",
+    "category": "Botanical Extracts",
+    "inci": "Water, Glycerin, Nelumbo Nucifera Flower Extract",
+    "mainUse": "Fair-trade Vietnamese white lotus flower active soothing skin and neutralizing oxidative exposome damage.",
+    "application": "Soothing Radiance Serums, Anti-Pollution Creams, Zen Wellness Cosmetics",
+    "dosage": "1–5%",
+    "keyBenefits": [
+      "Soothes stressed skin and neutralizes exposome free radicals with ethical fair-trade sourcing"
+    ],
+    "formulatorBenefits": [
+      "Potent scavenging of nitric oxide and hydroxyl radicals, downregulates inflammation mediators, and protects dermal fibroblasts."
+    ],
+    "suggestions": "Ethically sourced from Nelumbo nucifera (Sacred Lotus) flowers cultivated in the Mekong Delta, Vietnam. Verified in Greentech Technical Dossier.",
+    "verifiedInPdf": true,
+    "pdfPage": 44,
+    "catalogOrigin": "Historical Greentech Dossier",
+    "physicalForm": "Liquid",
+    "solubility": "Water-soluble",
+    "sourceDoc": "Plaquette actifs Greentech 2024-PRINT.pdf p.44",
+    "botanicalSource": "Nelumbo nucifera"
+  }
+];
+
+const DUAL_SOURCED_IDS = new Set([
+  'acnilys', 'hairiline', 'timelys', 'hebelys', 'reverskin', 'circalys', 'clerilys', 'expozen', 'flower-acids',
+  'myralys', 'soliberine', 'cosmelene-centella', 'cosmelene-ginseng', 'cosmelene-terminalia',
+  'cosmelene-neptune-kelp', 'cosmelene-horsetail', 'arcolys', 'dandrilys', 'tilicine',
+  'holobiosys', 'golden-microalgae', 'greensil', 'jericine', 'silidine-sn', 'cbd-isolate'
+]);
+
+function inferPhysicalForm(p: ProductItem): string {
+  if (p.physicalForm) return p.physicalForm;
+  const txt = (p.name + ' ' + (p.inci || '') + ' ' + (p.category || '') + ' ' + (p.mainUse || '')).toLowerCase();
+  if (txt.includes('butter')) return 'Plant Butter / Rich Paste';
+  if (txt.includes('powder') || txt.includes('crystalline') || txt.includes('crystals')) return 'Fine White Crystalline Powder';
+  if (txt.includes('fluid') || txt.includes('dimethicone') || txt.includes('silicone')) return 'Clear Silky Fluid';
+  if (txt.includes('oil')) return 'Virgin Liquid Botanical Oil';
+  if (txt.includes('wax') || txt.includes('flakes') || txt.includes('pellets')) return 'Cosmetic Waxes / Pastilles';
+  if (txt.includes('gel')) return 'Clear Viscous Gel';
+  return 'Liquid Solution';
+}
+
+function inferSolubility(p: ProductItem): string {
+  if (p.solubility) return p.solubility;
+  const txt = (p.name + ' ' + (p.inci || '') + ' ' + (p.category || '') + ' ' + (p.supplierId || '')).toLowerCase();
+  if (txt.includes('silicone') || p.supplierId === 'sns-silcos') return 'Silicone & Isododecane soluble';
+  if (txt.includes('oil') || txt.includes('butter') || txt.includes('ester') || txt.includes('stearate') || txt.includes('palmitate') || p.supplierId === 'fine-organics') return 'Oil soluble / Lipophilic';
+  if (txt.includes('extract') || txt.includes('bioactive') || txt.includes('ferment') || txt.includes('hydrolyzed') || p.supplierId === 'greentech') return 'Water soluble';
+  if (txt.includes('surfactant') || txt.includes('glucoside')) return 'Water soluble / Surfactant phase';
+  return 'Dispersible';
+}
+
+export const ALL_PRODUCTS: ProductItem[] = [
+  ...RAW_SUPPLIER_PRODUCTS.map(p => {
+    const isDual = DUAL_SOURCED_IDS.has(p.id);
+    const origin: 'Dual-Sourced / Verified' | '2026 Mindtech Catalogue' = isDual ? 'Dual-Sourced / Verified' : '2026 Mindtech Catalogue';
+    return {
+      ...p,
+      image: p.image || getProductSpecificImage(p.id),
+      catalogOrigin: origin,
+      sourceDoc: isDual 
+        ? 'Mindtech 2026 Catalogue p.' + p.pdfPage + ' & Historical Greentech Dossier'
+        : 'Mindtech 2026 Master Catalogue p.' + p.pdfPage,
+      physicalForm: inferPhysicalForm(p),
+      solubility: inferSolubility(p)
+    };
+  }),
+  ...HISTORICAL_GREENTECH_PRODUCTS.map(p => ({
+    ...p,
+    image: p.image || getProductSpecificImage(p.id),
+    physicalForm: inferPhysicalForm(p),
+    solubility: inferSolubility(p)
+  }))
+];
