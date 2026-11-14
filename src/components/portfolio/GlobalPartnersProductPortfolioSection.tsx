@@ -18,7 +18,6 @@ import {
   ChevronRight,
   Package,
   Droplets,
-  X,
   Play
 } from 'lucide-react';
 
@@ -28,13 +27,11 @@ interface GlobalPartnersProductPortfolioSectionProps {
   onRequestSample: (product: ProductItem) => void;
   onRequestQuote: (product: ProductItem) => void;
   onOpenInquiry: (topic?: string) => void;
-  onRemoveSection?: () => void;
 }
 
 export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProductPortfolioSectionProps> = ({
   onSelectSupplier,
-  onOpenInquiry,
-  onRemoveSection
+  onOpenInquiry
 }) => {
   // Supplier product counts calculated strictly from verified dataset
   const greentechCount = useMemo(() => ALL_PRODUCTS.filter(p => p.supplierId === 'greentech').length, []);
@@ -107,19 +104,6 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               <span>Request a Sample</span>
               <ChevronRight className="w-4 h-4 text-emerald-700" />
             </button>
-
-            {/* Quick Remove / Hide Section Button */}
-            {onRemoveSection && (
-              <button
-                onClick={onRemoveSection}
-                title="Remove this section from homepage"
-                aria-label="Remove this section from homepage"
-                className="inline-flex items-center space-x-1.5 text-xs text-gray-400 hover:text-red-700 hover:bg-red-50 px-3 py-2.5 rounded-full border border-transparent hover:border-red-200 transition-all cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-                <span className="hidden sm:inline">Remove Section</span>
-              </button>
-            )}
           </div>
         </div>
 

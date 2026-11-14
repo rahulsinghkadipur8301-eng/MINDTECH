@@ -320,8 +320,8 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
                   </div>
 
                   {/* Card Bottom Meta Bar & Direct Action */}
-                  <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                    <span className="font-mono text-gray-500 text-[11px] truncate">
+                  <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs min-w-0">
+                    <span className="font-mono text-gray-500 text-[11px] truncate min-w-0 flex-1">
                       {facility.specs}
                     </span>
 
@@ -345,86 +345,89 @@ export const WhyChooseUsSection: React.FC<{ onOpenInquiry: (topic?: string) => v
             3. PILLARS OF THE MINDTECH ADVANTAGE
            ========================================================================= */}
         <div className="space-y-8 pt-8 border-t border-gray-200/80">
-          <div>
+          <div className="space-y-2 max-w-3xl">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 block">
               PARTNERSHIP ASSURANCE &amp; COMPETITIVE EDGE
             </span>
-            <h3 className="text-2xl sm:text-3xl font-black text-[#072414] tracking-tight mt-1 font-['Outfit']">
+            <h3 className="text-2xl sm:text-3xl font-black text-[#072414] tracking-tight font-['Outfit']">
               The Pillars of the Mindtech Advantage
             </h3>
-            <p className="text-sm sm:text-base text-gray-600 mt-1.5 max-w-3xl leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
               From raw material bench trial prototypes to full-scale commercial manufacturing runs, our operations are structured around scientific rigor, transparent supply lines, and rapid execution.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 sm:gap-6 items-stretch">
             {CORE_PILLARS.map((pillar, index) => (
-              <motion.div
+              <motion.article
                 key={pillar.id}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="bg-white rounded-2xl p-5 sm:p-6 border border-gray-200/90 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4 group text-left"
+                className="bg-white rounded-2xl p-5 border border-gray-200/90 shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between gap-4 group text-left overflow-hidden min-w-0 h-full"
               >
-                <div className="space-y-3">
+                <div className="space-y-3.5 min-w-0">
                   {/* Real Tagname-Related Image Thumbnail */}
-                  <div className="relative aspect-16/10 rounded-xl overflow-hidden border border-gray-100 shadow-2xs">
+                  <div className="relative aspect-16/10 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xs">
                     <img
                       src={pillar.image}
-                      alt={pillar.title}
+                      alt={`${pillar.title} — ${pillar.tagline}`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white text-[11px] font-mono pointer-events-none">
-                      <span className="px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-emerald-300 font-bold text-[10px]">
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-[11px] font-mono pointer-events-none">
+                      <span className="px-2.5 py-0.5 rounded-md bg-black/65 backdrop-blur-md text-emerald-300 font-bold text-[10px] border border-emerald-400/20">
                         {pillar.metric}
                       </span>
                     </div>
                   </div>
 
                   {/* Icon & Category Badge */}
-                  <div className="flex items-center justify-between pt-1">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-50 via-teal-50 to-white border border-emerald-200 shadow-2xs flex items-center justify-center p-1.5 group-hover:scale-110 group-hover:border-emerald-500 transition-all duration-300">
-                      <PillarVectorIconRenderer pillarId={pillar.id} size={30} />
+                  <div className="flex items-center justify-between gap-2 pt-0.5 min-w-0">
+                    <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-emerald-50 via-teal-50 to-white border border-emerald-200 shadow-2xs flex items-center justify-center p-1.5 group-hover:scale-105 group-hover:border-emerald-500 transition-all duration-300">
+                      <PillarVectorIconRenderer pillarId={pillar.id} size={28} />
                     </div>
 
-                    <span className="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
+                    <span className="text-[10.5px] font-mono font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap">
                       Operational Pillar
                     </span>
                   </div>
 
-                  <div>
-                    <h4 className="text-[16px] sm:text-[17px] font-extrabold text-[#072414] leading-snug group-hover:text-emerald-800 transition-colors">
+                  {/* Title & Tagline */}
+                  <div className="space-y-1 min-w-0">
+                    <h4 className="text-base sm:text-[17px] font-extrabold text-[#072414] leading-snug group-hover:text-emerald-800 transition-colors break-words">
                       {pillar.title}
                     </h4>
-                    <p className="text-[11.5px] font-semibold text-emerald-700 mt-0.5">
+                    <p className="text-xs font-semibold text-emerald-700 leading-snug break-words">
                       {pillar.tagline}
                     </p>
                   </div>
 
-                  <p className="text-xs text-gray-600 leading-relaxed font-normal">
+                  {/* Description */}
+                  <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed font-normal">
                     {pillar.description}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                  <div className="flex items-center space-x-1.5 text-emerald-950 font-medium">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-                    <span className="truncate text-[11px]">{pillar.highlight}</span>
+                {/* Structured Card Footer: Contained Highlight + Full-Width Action Button */}
+                <div className="pt-3 border-t border-gray-100 space-y-3 mt-auto min-w-0">
+                  <div className="flex items-start space-x-2 bg-emerald-50/70 border border-emerald-100 rounded-xl px-3 py-2 text-emerald-950 min-w-0">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0 mt-0.5" />
+                    <span className="text-[11.5px] font-medium leading-snug break-words">{pillar.highlight}</span>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => onOpenInquiry(`Pillar Inquiry - ${pillar.title}`)}
-                    className="font-bold text-emerald-800 hover:text-emerald-950 flex items-center space-x-1 cursor-pointer shrink-0 ml-1.5"
+                    className="w-full py-2.5 px-3.5 rounded-xl bg-emerald-50 hover:bg-[#072414] group-hover:bg-[#072414] text-emerald-950 hover:text-white group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between cursor-pointer shadow-2xs"
                   >
                     <span>Inquire</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform shrink-0" />
                   </button>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </div>

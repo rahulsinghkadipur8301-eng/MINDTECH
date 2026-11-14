@@ -30,7 +30,6 @@ export default function App() {
   const [selectedSupplierId, setSelectedSupplierId] = useState<'greentech' | 'sns-silcos' | 'fine-organics' | 'vvf-limited' | 'vvf-fine-organics' | 'general-range' | 'all-products' | null>(null);
   const [selectedBusinessLine, setSelectedBusinessLine] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
-  const [isPartnersSectionVisible, setIsPartnersSectionVisible] = useState(true);
 
   // Synchronize URL hash and path with view state for browser back/forward and direct linking
   useEffect(() => {
@@ -273,41 +272,15 @@ export default function App() {
             </FadeInSection>
 
             {/* 3. OUR GLOBAL PARTNERS & PRODUCT PORTFOLIO - Unified Showcase */}
-            {isPartnersSectionVisible ? (
-              <FadeInSection direction="up" delay={50} threshold={0.08}>
-                <GlobalPartnersProductPortfolioSection
-                  onSelectSupplier={handleSelectSupplier}
-                  onSelectProduct={handleSelectProduct}
-                  onRequestSample={handleRequestSample}
-                  onRequestQuote={handleRequestQuote}
-                  onOpenInquiry={handleOpenInquiry}
-                  onRemoveSection={() => setIsPartnersSectionVisible(false)}
-                />
-              </FadeInSection>
-            ) : (
-              <div className="py-6 sm:py-8 bg-emerald-50/70 border-y border-emerald-200/80 px-4 text-center">
-                <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm">
-                  <div className="flex items-center space-x-2 text-[#072414] font-medium">
-                    <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block" />
-                    <span>Global Partners &amp; Product Portfolio section is currently removed from homepage view.</span>
-                  </div>
-                  <div className="flex items-center space-x-2.5">
-                    <button
-                      onClick={() => setIsPartnersSectionVisible(true)}
-                      className="px-4 py-1.5 rounded-full bg-white hover:bg-emerald-50 text-emerald-950 font-bold border border-emerald-300 transition-colors shadow-2xs cursor-pointer text-xs"
-                    >
-                      Restore Section
-                    </button>
-                    <button
-                      onClick={() => handleSelectSupplier('all-products')}
-                      className="px-4 py-1.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white font-bold transition-colors shadow-2xs cursor-pointer text-xs"
-                    >
-                      Open Full Product Catalogue &rarr;
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
+            <FadeInSection direction="up" delay={50} threshold={0.08}>
+              <GlobalPartnersProductPortfolioSection
+                onSelectSupplier={handleSelectSupplier}
+                onSelectProduct={handleSelectProduct}
+                onRequestSample={handleRequestSample}
+                onRequestQuote={handleRequestQuote}
+                onOpenInquiry={handleOpenInquiry}
+              />
+            </FadeInSection>
 
 
             {/* 5. The Mindtech Edge - Authentic Facilities & Core Operational Pillars */}
