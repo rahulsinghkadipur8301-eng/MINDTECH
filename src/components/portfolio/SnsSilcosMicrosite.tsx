@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -27,7 +27,8 @@ import {
   Check,
   Building2,
   Table,
-  LayoutGrid
+  LayoutGrid,
+  Receipt
 } from 'lucide-react';
 import { PartnerLogoRenderer, SnsSilcosLogo } from '../PartnerLogos';
 import { ALL_PRODUCTS, ProductItem } from '../../data/supplierProductsData';
@@ -370,14 +371,21 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
                 </div>
               </div>
 
-              {/* Sample / Inquiry Action in Snapshot */}
-              <div className="pt-2 border-t border-white/10">
+              {/* Sample / Quotation Action in Snapshot */}
+              <div className="pt-2 border-t border-white/10 grid grid-cols-2 gap-2">
                 <button
-                  onClick={() => onOpenInquiry('SNS Silcos Technical Support & Sample Request')}
-                  className="w-full py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 cursor-pointer shadow-xs"
+                  onClick={() => onOpenInquiry('Certified Sample (100g) Request: SNS Silcos Silicone Grades')}
+                  className="py-2 px-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-[11px] uppercase tracking-wider transition-colors flex items-center justify-center space-x-1 cursor-pointer shadow-xs"
                 >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Request Samples &amp; Quotes</span>
+                  <Send className="w-3 h-3" />
+                  <span>Sample (100g)</span>
+                </button>
+                <button
+                  onClick={() => onOpenInquiry('Commercial Price Quotation Request: SNS Silcos Silicone Grades')}
+                  className="py-2 px-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-black text-[11px] uppercase tracking-wider border border-white/25 transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                >
+                  <Receipt className="w-3 h-3 text-emerald-300" />
+                  <span>Request Quote</span>
                 </button>
               </div>
             </div>
@@ -582,13 +590,18 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
                           </button>
                         </div>
 
-                        <div className="flex items-center justify-between text-[11px] text-gray-500 pt-1">
-                          <span className="font-mono text-[10px]">Catalog Page {product.pdfPage}</span>
+                        <div className="flex items-center justify-between gap-2 text-[11px] text-gray-500 pt-1">
                           <button
                             onClick={() => onRequestSample(product)}
                             className="text-emerald-800 hover:text-emerald-950 font-bold underline cursor-pointer"
                           >
-                            Order Single Sample &rarr;
+                            Sample (100g)
+                          </button>
+                          <button
+                            onClick={() => onRequestQuote(product)}
+                            className="text-[#072414] hover:text-emerald-800 font-bold underline cursor-pointer"
+                          >
+                            Request Quote &rarr;
                           </button>
                         </div>
                       </div>
@@ -635,16 +648,22 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
                         <td className="py-3.5 px-4 text-gray-600 max-w-sm line-clamp-2">
                           {p.application}
                         </td>
-                        <td className="py-3.5 px-4 text-right space-x-2 whitespace-nowrap">
+                        <td className="py-3.5 px-4 text-right space-x-1.5 whitespace-nowrap">
                           <button
                             onClick={() => onSelectProduct(p)}
-                            className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-[#072414] text-gray-900 hover:text-white font-bold text-[11px] transition-colors cursor-pointer"
+                            className="px-2.5 py-1.5 rounded-lg bg-gray-100 hover:bg-[#072414] text-gray-900 hover:text-white font-bold text-[11px] transition-colors cursor-pointer"
                           >
                             Details
                           </button>
                           <button
+                            onClick={() => onRequestQuote(p)}
+                            className="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-950 border border-emerald-200 font-bold text-[11px] transition-colors cursor-pointer"
+                          >
+                            Quote
+                          </button>
+                          <button
                             onClick={() => toggleSampleGrade(p.code || p.name)}
-                            className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                            className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                               isInSampleList
                                 ? 'bg-emerald-600 text-white'
                                 : 'bg-emerald-100 text-emerald-950 hover:bg-emerald-200'
@@ -788,13 +807,22 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
                   </div>
                 </div>
 
-                <button
-                  onClick={() => onOpenInquiry(`Formulation Support Request for: ${currentBlueprint.title}`)}
-                  className="w-full py-3 px-4 rounded-xl bg-[#072414] hover:bg-[#0c4f26] text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-xs flex items-center justify-center space-x-2 cursor-pointer"
-                >
-                  <FlaskConical className="w-4 h-4 text-emerald-400" />
-                  <span>Request Full Bench Method &amp; Samples</span>
-                </button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    onClick={() => onOpenInquiry(`Certified Sample (100g) & Method Request for: ${currentBlueprint.title}`)}
+                    className="py-3 px-4 rounded-xl bg-[#072414] hover:bg-[#0c4f26] text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-xs flex items-center justify-center space-x-1.5 cursor-pointer"
+                  >
+                    <FlaskConical className="w-4 h-4 text-emerald-400" />
+                    <span>Sample (100g) &amp; Method</span>
+                  </button>
+                  <button
+                    onClick={() => onOpenInquiry(`Commercial Price Quotation Request for: ${currentBlueprint.title}`)}
+                    className="py-3 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-extrabold text-xs uppercase tracking-wider border border-emerald-300 transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                  >
+                    <Receipt className="w-4 h-4 text-emerald-700" />
+                    <span>Request Quotation</span>
+                  </button>
+                </div>
               </div>
 
               {/* Right Column: Compounding Phase Breakdown Table */}

@@ -17,12 +17,14 @@ interface MasterIngredientCardProps {
   ingredient: MasterIngredient;
   onSelectIngredient: (ingredient: MasterIngredient) => void;
   onRequestSample?: (ingredient: MasterIngredient) => void;
+  onRequestQuote?: (ingredient: MasterIngredient) => void;
 }
 
 export const MasterIngredientCard: React.FC<MasterIngredientCardProps> = ({
   ingredient,
   onSelectIngredient,
-  onRequestSample
+  onRequestSample,
+  onRequestQuote
 }) => {
   const [imageError, setImageError] = useState(false);
 
@@ -91,6 +93,35 @@ export const MasterIngredientCard: React.FC<MasterIngredientCardProps> = ({
       <h3 className="mt-2.5 text-center text-xs sm:text-[13px] font-bold text-gray-900 tracking-wide uppercase font-['Outfit'] leading-snug group-hover:text-[#70a83b] transition-colors max-w-full">
         {ingredient.name}
       </h3>
+
+      {(onRequestSample || onRequestQuote) && (
+        <div className="mt-1.5 flex items-center justify-center gap-1.5 w-full">
+          {onRequestSample && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRequestSample(ingredient);
+              }}
+              className="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-[#072414] text-emerald-900 hover:text-white text-[10px] font-bold border border-emerald-200 transition-colors cursor-pointer"
+            >
+              Sample (100g)
+            </button>
+          )}
+          {onRequestQuote && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRequestQuote(ingredient);
+              }}
+              className="px-2 py-0.5 rounded-md bg-gray-100 hover:bg-emerald-700 text-gray-700 hover:text-white text-[10px] font-bold border border-gray-200 transition-colors cursor-pointer"
+            >
+              Quote
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Hover Tooltip (Exact replica of "Anti-oxydant-PHYTOBIOACTIF-POMEGRANATE" from Screenshot 1) */}
       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 z-30 bg-[#2d3748] text-white text-[11px] font-medium px-2.5 py-1 rounded shadow-lg whitespace-nowrap max-w-[260px] truncate">

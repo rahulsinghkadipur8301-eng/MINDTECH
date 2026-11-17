@@ -157,7 +157,7 @@ export const generateAndDownloadCatalogPdf = () => {
   doc.setFontSize(8);
   doc.setTextColor(212, 236, 224);
   doc.text('Address: Ground Floor-181, Pkt-D, Sec-3 Bawana Dsidc City, Opp Delhi Jal Board, New Delhi - 110039', 20, 235);
-  doc.text('Phone Hotlines: +91-8368947579  |  +91-8707403441  |  +91-9555446794', 20, 242);
+  doc.text('Contacts: +91-8368947579 (Ajay Patel) | +91 95554 46794 (Mr. Piyush Singh) | +91 870 740 3441 (Mr. Vicky Singh)', 20, 242);
   doc.text('Emails: Ajaypatel@mindtec.org.in  |  sales@mindtec.org.in  |  info@mindtec.org.in', 20, 249);
   doc.text('Government Reg: MSME NO: UDYAM-DL-06-0157900  |  Policy No: 2001/399757984/00/000', 20, 256);
   doc.text('Official Portals: www.mindechbiotechnology.com  |  www.mindtechbiotech.com', 20, 263);
@@ -1569,7 +1569,7 @@ export const generateAndDownloadCatalogPdf = () => {
   doc.text('PHONE NUMBERS:', 20, 196);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(212, 236, 224);
-  doc.text('+91-8368947579  |  +91-8707403441  |  +91-9555446794', 20, 202);
+  doc.text('+91-8368947579 (Ajay Patel) | +91 95554 46794 (Mr. Piyush Singh) | +91 870 740 3441 (Mr. Vicky Singh)', 20, 202);
 
   // Emails
   doc.setFont('helvetica', 'bold');

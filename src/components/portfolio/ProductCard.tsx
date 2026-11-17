@@ -16,12 +16,14 @@ interface ProductCardProps {
   product: ProductItem;
   onSelectProduct: (product: ProductItem) => void;
   onRequestSample?: (product: ProductItem) => void;
+  onRequestQuote?: (product: ProductItem) => void;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onSelectProduct,
-  onRequestSample
+  onRequestSample,
+  onRequestQuote
 }) => {
   const [imageError, setImageError] = useState(false);
   const isGreentech = product.supplierId === 'greentech';
@@ -163,24 +165,38 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Card Footer Actions */}
-      <div className="px-4 sm:px-5 py-3 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between text-xs">
-        <span className="font-bold text-emerald-800 group-hover:text-emerald-950 flex items-center space-x-1">
-          <span>View Dossier</span>
+      <div className="px-4 sm:px-5 py-3 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between gap-2 text-xs">
+        <span className="font-bold text-emerald-800 group-hover:text-emerald-950 flex items-center space-x-1 shrink-0">
+          <span>Dossier</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
         </span>
 
-        {onRequestSample && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onRequestSample(product);
-            }}
-            className="text-[11px] font-bold text-gray-700 hover:text-emerald-900 hover:bg-emerald-50 px-2 py-1 rounded cursor-pointer transition-colors border border-gray-200"
-          >
-            Sample Pack +
-          </button>
-        )}
+        <div className="flex items-center gap-1.5">
+          {onRequestSample && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRequestSample(product);
+              }}
+              className="text-[11px] font-bold text-white bg-[#072414] hover:bg-emerald-900 px-2.5 py-1 rounded cursor-pointer transition-colors"
+            >
+              Sample (100g)
+            </button>
+          )}
+          {onRequestQuote && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRequestQuote(product);
+              }}
+              className="text-[11px] font-bold text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded cursor-pointer transition-colors border border-emerald-300"
+            >
+              Get Quote
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

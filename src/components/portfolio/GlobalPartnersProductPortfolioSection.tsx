@@ -18,7 +18,8 @@ import {
   ChevronRight,
   Package,
   Droplets,
-  Play
+  Play,
+  Receipt
 } from 'lucide-react';
 
 interface GlobalPartnersProductPortfolioSectionProps {
@@ -98,11 +99,19 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
             </button>
 
             <button
-              onClick={() => onOpenInquiry('Sample Request - Global Portfolio')}
+              onClick={() => onOpenInquiry('Certified Sample (100g) Request - Global Portfolio')}
               className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-emerald-950 bg-white hover:bg-emerald-50 px-5 py-3 rounded-full border border-gray-200/90 shadow-2xs transition-all cursor-pointer"
             >
-              <span>Request a Sample</span>
+              <span>Request Certified Sample (100g)</span>
               <ChevronRight className="w-4 h-4 text-emerald-700" />
+            </button>
+
+            <button
+              onClick={() => onOpenInquiry('Commercial Price Quotation Request - Global Portfolio')}
+              className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-emerald-950 bg-emerald-100 hover:bg-emerald-200 px-5 py-3 rounded-full border border-emerald-300 shadow-2xs transition-all cursor-pointer"
+            >
+              <Receipt className="w-4 h-4 text-emerald-800" />
+              <span>Request Quotation</span>
             </button>
           </div>
         </div>
@@ -189,10 +198,32 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 </div>
 
                 {/* Interactive Action Button */}
-                <div className="pt-1">
+                <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
                     <span>Explore Greentech Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Certified Sample (100g) Request: Greentech France');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-emerald-50/70 hover:bg-emerald-100 text-emerald-950 text-[11px] font-bold border border-emerald-200/80 transition-colors cursor-pointer"
+                    >
+                      Sample (100g)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Price Quotation Request: Greentech France');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-800 text-[11px] font-bold border border-gray-200 transition-colors cursor-pointer"
+                    >
+                      Request Quote
+                    </button>
                   </div>
                 </div>
               </div>
@@ -256,10 +287,32 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 </div>
 
                 {/* Interactive Action Button */}
-                <div className="pt-1">
+                <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-blue-50 group-hover:bg-[#072414] text-blue-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
                     <span>Explore SNS Silcos Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Certified Sample (100g) Request: SNS Silcos');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-blue-50/70 hover:bg-blue-100 text-blue-950 text-[11px] font-bold border border-blue-200/80 transition-colors cursor-pointer"
+                    >
+                      Sample (100g)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Price Quotation Request: SNS Silcos');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-800 text-[11px] font-bold border border-gray-200 transition-colors cursor-pointer"
+                    >
+                      Request Quote
+                    </button>
                   </div>
                 </div>
               </div>
@@ -323,10 +376,32 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 </div>
 
                 {/* Interactive Action Button */}
-                <div className="pt-1">
+                <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
                     <span>Explore Fine Organics Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Certified Sample (100g) Request: Fine Organics');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-emerald-50/70 hover:bg-emerald-100 text-emerald-950 text-[11px] font-bold border border-emerald-200/80 transition-colors cursor-pointer"
+                    >
+                      Sample (100g)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Price Quotation Request: Fine Organics');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-800 text-[11px] font-bold border border-gray-200 transition-colors cursor-pointer"
+                    >
+                      Request Quote
+                    </button>
                   </div>
                 </div>
               </div>
@@ -390,10 +465,32 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                 </div>
 
                 {/* Interactive Action Button */}
-                <div className="pt-1">
+                <div className="pt-1 space-y-2">
                   <div className="w-full py-2.5 px-4 rounded-xl bg-teal-50 group-hover:bg-[#072414] text-teal-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
                     <span>Explore VVF Limited Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Certified Sample (100g) Request: VVF Limited');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-teal-50/70 hover:bg-teal-100 text-teal-950 text-[11px] font-bold border border-teal-200/80 transition-colors cursor-pointer"
+                    >
+                      Sample (100g)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenInquiry('Price Quotation Request: VVF Limited');
+                      }}
+                      className="py-1.5 px-2 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-800 text-[11px] font-bold border border-gray-200 transition-colors cursor-pointer"
+                    >
+                      Request Quote
+                    </button>
                   </div>
                 </div>
               </div>
@@ -451,7 +548,7 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
               </div>
 
               {/* Primary Interactive CTA Buttons */}
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+              <div className="flex flex-col gap-2.5 shrink-0">
                 <button
                   type="button"
                   onClick={() => onSelectSupplier('all-products')}
@@ -460,13 +557,23 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
                   <span>Launch Full Technical Dossiers</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
-                <button
-                  type="button"
-                  onClick={() => onOpenInquiry('Multi-Supplier Ingredient Requisition')}
-                  className="px-6 py-3 rounded-xl bg-white hover:bg-gray-50 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-2 cursor-pointer"
-                >
-                  <span>Request Bench Samples</span>
-                </button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => onOpenInquiry('Certified Sample (100g) Requisition: Multi-Supplier Portfolio')}
+                    className="px-4 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
+                  >
+                    <span>Certified Sample (100g)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onOpenInquiry('Commercial Price Quotation Request: Multi-Supplier Portfolio')}
+                    className="px-4 py-2.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
+                  >
+                    <Receipt className="w-3.5 h-3.5 text-emerald-800" />
+                    <span>Request Quotation</span>
+                  </button>
+                </div>
               </div>
             </div>
 

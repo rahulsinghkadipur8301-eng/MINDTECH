@@ -27,7 +27,9 @@ import {
   Building2,
   Sparkles,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Package,
+  Receipt
 } from 'lucide-react';
 
 interface SupplierCataloguePageProps {
@@ -36,6 +38,7 @@ interface SupplierCataloguePageProps {
   onBackToOverview: () => void;
   onSelectProduct: (product: ProductItem) => void;
   onRequestSample: (product: ProductItem) => void;
+  onRequestQuote?: (product: ProductItem) => void;
   onOpenInquiry: (topic?: string) => void;
 }
 
@@ -45,6 +48,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
   onBackToOverview,
   onSelectProduct,
   onRequestSample,
+  onRequestQuote,
   onOpenInquiry
 }) => {
   const supplier = SUPPLIER_PROFILES[supplierId];
@@ -309,14 +313,24 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => onOpenInquiry(`Supplier Portfolio Inquiry: ${supplier.name}`)}
-                className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-xs uppercase tracking-wider transition-colors shadow-md cursor-pointer flex items-center justify-center space-x-2"
-              >
-                <span>Inquire Full Portfolio</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => onOpenInquiry(`Certified Sample (100g) Request: ${supplier.name}`)}
+                  className="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-[11px] uppercase tracking-wider transition-colors shadow-md cursor-pointer flex items-center justify-center space-x-1.5"
+                >
+                  <Package className="w-3.5 h-3.5" />
+                  <span>Sample (100g)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOpenInquiry(`Commercial Price Quotation Request: ${supplier.name}`)}
+                  className="py-2.5 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-[11px] uppercase tracking-wider border border-white/25 transition-colors cursor-pointer flex items-center justify-center space-x-1.5"
+                >
+                  <Receipt className="w-3.5 h-3.5 text-emerald-300" />
+                  <span>Request Quote</span>
+                </button>
+              </div>
             </div>
 
           </div>
@@ -493,6 +507,7 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
                     product={product}
                     onSelectProduct={onSelectProduct}
                     onRequestSample={onRequestSample}
+                    onRequestQuote={onRequestQuote}
                   />
                 ))}
               </div>
@@ -533,10 +548,16 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <button
-              onClick={() => onOpenInquiry(`Technical Data Sheet & Bench Samples: ${supplier.name}`)}
-              className="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
+              onClick={() => onOpenInquiry(`Certified Sample (100g) & Technical Data Sheet: ${supplier.name}`)}
+              className="px-5 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
-              Request Bench Samples
+              Request Certified Sample (100g)
+            </button>
+            <button
+              onClick={() => onOpenInquiry(`Commercial Price Quotation & GST Proforma: ${supplier.name}`)}
+              className="px-5 py-3 rounded-full bg-white hover:bg-emerald-50 text-emerald-950 text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
+            >
+              Request Quotation
             </button>
             <button
               onClick={onBackToOverview}

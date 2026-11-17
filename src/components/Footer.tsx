@@ -252,13 +252,26 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
             </h4>
             
             <div className="text-[13px] text-emerald-100/80 leading-relaxed space-y-1.5">
-              <p className="flex items-start space-x-2">
+              <a
+                href="https://maps.app.goo.gl/RBcEXaRaBkcYNdMC8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start space-x-2 hover:text-white transition-colors"
+              >
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>{COMPANY_DETAILS.address.full}</span>
-              </p>
+              </a>
               <p className="flex items-center space-x-2 pt-0.5">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Sales: {COMPANY_DETAILS.phones[0].number}</span>
+                <span>Ajay Patel: {COMPANY_DETAILS.phones[0].number}</span>
+              </p>
+              <p className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Mr. Piyush Singh: +91 95554 46794</span>
+              </p>
+              <p className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Mr. Vicky Singh: +91 870 740 3441</span>
               </p>
               <p className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-emerald-400 shrink-0" />

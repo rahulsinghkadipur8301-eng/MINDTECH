@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { Play, X, ExternalLink, Sparkles, FileText, Send, Film } from 'lucide-react';
+import { Play, X, ExternalLink, Sparkles, FileText, Send, Film, Receipt } from 'lucide-react';
 import { MasterIngredient } from '../../types/ingredient';
 import { GREENTECH_VIDEOS, GreentechVideoItem } from '../../utils/youtube';
 
 interface GreentechVideoSpotlightProps {
   onSelectIngredient?: (ingredient: MasterIngredient) => void;
   onRequestSample?: (ingredient: MasterIngredient) => void;
+  onRequestQuote?: (ingredient: MasterIngredient) => void;
   hairilineIngredient?: MasterIngredient | null;
   onSelectIngredientById?: (ingredientId: string) => void;
   onRequestSampleById?: (ingredientId: string) => void;
+  onRequestQuoteById?: (ingredientId: string) => void;
 }
 
 export const GreentechVideoSpotlight: React.FC<GreentechVideoSpotlightProps> = ({
   onSelectIngredient,
   onRequestSample,
+  onRequestQuote,
   hairilineIngredient,
   onSelectIngredientById,
   onRequestSampleById,
+  onRequestQuoteById,
 }) => {
   const [activeVideo, setActiveVideo] = useState<GreentechVideoItem>(GREENTECH_VIDEOS[0]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -56,11 +60,22 @@ export const GreentechVideoSpotlight: React.FC<GreentechVideoSpotlightProps> = (
     }
   };
 
+  const handleOpenQuote = () => {
+    if (onRequestQuoteById) {
+      onRequestQuoteById(activeVideo.ingredientId);
+    } else if (activeVideo.ingredientId === 'hairiline' && hairilineIngredient && onRequestQuote) {
+      onRequestQuote(hairilineIngredient);
+    }
+  };
+
   const canOpenDossier = Boolean(
     onSelectIngredientById || (activeVideo.ingredientId === 'hairiline' && hairilineIngredient && onSelectIngredient)
   );
   const canRequestSample = Boolean(
     onRequestSampleById || (activeVideo.ingredientId === 'hairiline' && hairilineIngredient && onRequestSample)
+  );
+  const canRequestQuote = Boolean(
+    onRequestQuoteById || (activeVideo.ingredientId === 'hairiline' && hairilineIngredient && onRequestQuote)
   );
 
   return (
@@ -201,7 +216,17 @@ export const GreentechVideoSpotlight: React.FC<GreentechVideoSpotlightProps> = (
                     className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-[11px] border border-white/20 transition-colors cursor-pointer"
                   >
                     <Send className="w-3 h-3 text-emerald-300" />
-                    <span>Sample</span>
+                    <span>Sample (100g)</span>
+                  </button>
+                )}
+                {canRequestQuote && (
+                  <button
+                    type="button"
+                    onClick={handleOpenQuote}
+                    className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-emerald-400/20 hover:bg-emerald-400/35 text-emerald-200 font-bold text-[11px] border border-emerald-400/35 transition-colors cursor-pointer"
+                  >
+                    <Receipt className="w-3 h-3 text-emerald-300" />
+                    <span>Quote</span>
                   </button>
                 )}
                 <a

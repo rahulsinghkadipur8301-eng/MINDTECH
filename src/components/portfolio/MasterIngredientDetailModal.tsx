@@ -20,13 +20,15 @@ import {
   ArrowRight,
   AlertTriangle,
   Award,
-  Play
+  Play,
+  Receipt
 } from 'lucide-react';
 
 interface MasterIngredientDetailModalProps {
   ingredient: MasterIngredient | null;
   onClose: () => void;
   onRequestSample: (ingredient: MasterIngredient) => void;
+  onRequestQuote?: (ingredient: MasterIngredient) => void;
   onSelectRelated?: (ingredient: MasterIngredient) => void;
   allIngredients?: MasterIngredient[];
 }
@@ -35,6 +37,7 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
   ingredient,
   onClose,
   onRequestSample,
+  onRequestQuote,
   onSelectRelated,
   allIngredients = []
 }) => {
@@ -541,17 +544,31 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
           {/* Modal Footer Actions */}
           <div className="p-4 sm:p-5 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-xs text-gray-500 text-center sm:text-left">
-              <span>Ready for bench evaluation? Standard 50g-100g B2B lab samples dispatched via Bawana Hub.</span>
+              <span>Ready for evaluation? 100g certified B2B samples &amp; GST commercial quotes from Bawana Hub.</span>
             </div>
 
-            <div className="flex items-center space-x-2.5 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 sm:flex-none px-4 py-2.5 rounded-full border border-gray-300 hover:bg-gray-100 text-gray-700 text-xs font-bold transition-colors cursor-pointer"
+                className="px-4 py-2.5 rounded-full border border-gray-300 hover:bg-gray-100 text-gray-700 text-xs font-bold transition-colors cursor-pointer"
               >
                 Close
               </button>
+
+              {onRequestQuote && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onRequestQuote(ingredient);
+                  }}
+                  className="inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-950 border border-emerald-300 text-xs font-bold transition-all cursor-pointer"
+                >
+                  <Receipt className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>Request Quotation</span>
+                </button>
+              )}
 
               <button
                 type="button"
@@ -559,10 +576,10 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
                   onClose();
                   onRequestSample(ingredient);
                 }}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5 text-emerald-300" />
-                <span>Request Sample &amp; TDS</span>
+                <span>Request Certified Sample (100g)</span>
               </button>
             </div>
           </div>

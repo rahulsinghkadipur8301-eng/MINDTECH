@@ -588,7 +588,7 @@ export const IngredientExplorerModal: React.FC<IngredientExplorerModalProps> = (
               <span>Bawana Industrial Area, New Delhi</span>
             </div>
             <div className="text-emerald-800 font-semibold">
-              Direct Formulation Hotline: +91-8707403441
+              Mr. Piyush Singh: +91 95554 46794 • Mr. Vicky Singh: +91 870 740 3441
             </div>
           </div>
         </motion.div>

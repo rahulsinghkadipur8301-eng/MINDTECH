@@ -73,7 +73,15 @@ export const AnimatedBackground: React.FC = () => {
       { fill: '#047857', glow: 'rgba(4, 120, 87, 0.38)' },    // Forest Bio-Green
     ];
 
-    const particleCount = Math.min(Math.floor((width * height) / 11000), 125);
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const particleCount = Math.min(Math.floor((width * height) / 16000), 68);
+    const maxConnDist = 155;
+    const maxConnDistSq = maxConnDist * maxConnDist;
+    const mouseRadiusSq = mouse.radius * mouse.radius;
     const particles: ParticleNode[] = [];
 
     const types: ParticleNode['type'][] = [
@@ -119,15 +127,15 @@ export const AnimatedBackground: React.FC = () => {
     }
 
     let time = 0;
+    let isPageVisible = !document.hidden;
 
     // Drawing routines for high-level biotech molecular geometry
-    const drawBenzene = (p: ParticleNode, currentAlpha: number) => {
+    const drawBenzene = (p: ParticleNode) => {
       const r = p.radius * p.scale;
       ctx.save();
       ctx.translate(p.x, p.y);
       ctx.rotate(p.rotation);
 
-      // Outer aromatic hexagon
       ctx.beginPath();
       for (let i = 0; i < 6; i++) {
         const a = (i * Math.PI) / 3;
@@ -141,7 +149,6 @@ export const AnimatedBackground: React.FC = () => {
       ctx.lineWidth = 1.3;
       ctx.stroke();
 
-      // Inner aromatic electron delocalization ring
       ctx.beginPath();
       ctx.arc(0, 0, r * 0.58, 0, Math.PI * 2);
       ctx.setLineDash([4, 3]);
@@ -150,14 +157,11 @@ export const AnimatedBackground: React.FC = () => {
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Atom node spheres on vertices with glow
+      ctx.fillStyle = p.color;
       for (let i = 0; i < 6; i++) {
         const a = (i * Math.PI) / 3;
-        const hx = r * Math.cos(a);
-        const hy = r * Math.sin(a);
         ctx.beginPath();
-        ctx.arc(hx, hy, 2.4, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
+        ctx.arc(r * Math.cos(a), r * Math.sin(a), 2.4, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -170,7 +174,6 @@ export const AnimatedBackground: React.FC = () => {
       ctx.translate(p.x, p.y);
       ctx.rotate(p.rotation);
 
-      // Si - O - Si linear chain bond
       ctx.beginPath();
       ctx.moveTo(-len, 0);
       ctx.lineTo(len, 0);
@@ -178,22 +181,15 @@ export const AnimatedBackground: React.FC = () => {
       ctx.lineWidth = 1.3;
       ctx.stroke();
 
-      // Silicon atom left
       ctx.beginPath();
       ctx.arc(-len, 0, 3.4, 0, Math.PI * 2);
+      ctx.arc(len, 0, 3.4, 0, Math.PI * 2);
       ctx.fillStyle = '#047857';
       ctx.fill();
 
-      // Central oxygen bridge atom (luminous mint)
       ctx.beginPath();
       ctx.arc(0, 0, 2.4, 0, Math.PI * 2);
       ctx.fillStyle = '#34d399';
-      ctx.fill();
-
-      // Silicon atom right
-      ctx.beginPath();
-      ctx.arc(len, 0, 3.4, 0, Math.PI * 2);
-      ctx.fillStyle = '#047857';
       ctx.fill();
 
       ctx.restore();
@@ -205,7 +201,6 @@ export const AnimatedBackground: React.FC = () => {
       ctx.translate(p.x, p.y);
       ctx.rotate(p.rotation);
 
-      // Dual helical rung bond
       ctx.beginPath();
       ctx.moveTo(-len, -4);
       ctx.lineTo(len, -4);
@@ -215,7 +210,6 @@ export const AnimatedBackground: React.FC = () => {
       ctx.lineWidth = 1.2;
       ctx.stroke();
 
-      // Terminal nucleotide pairs
       ctx.beginPath();
       ctx.arc(-len, -4, 2.2, 0, Math.PI * 2);
       ctx.arc(len, -4, 2.2, 0, Math.PI * 2);
@@ -246,11 +240,11 @@ export const AnimatedBackground: React.FC = () => {
       ctx.lineWidth = 1.2;
       ctx.stroke();
 
+      ctx.fillStyle = p.color;
       for (let i = 0; i < 5; i++) {
         const a = (i * 2 * Math.PI) / 5 - Math.PI / 2;
         ctx.beginPath();
         ctx.arc(r * Math.cos(a), r * Math.sin(a), 2.2, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
         ctx.fill();
       }
 
@@ -258,82 +252,69 @@ export const AnimatedBackground: React.FC = () => {
     };
 
     const drawEnzymeCore = (p: ParticleNode) => {
-      ctx.save();
-      ctx.translate(p.x, p.y);
-
-      // Multi-layer pulsating aura
       ctx.beginPath();
-      ctx.arc(0, 0, p.radius * 2.8, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.radius * 2.8, 0, Math.PI * 2);
       ctx.fillStyle = p.glowColor;
       ctx.fill();
 
-      // Central dense nucleus
       ctx.beginPath();
-      ctx.arc(0, 0, p.radius * 1.3, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.radius * 1.3, 0, Math.PI * 2);
       ctx.fillStyle = p.color;
       ctx.fill();
 
-      // White-hot center
       ctx.beginPath();
-      ctx.arc(0, 0, p.radius * 0.5, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.radius * 0.5, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
       ctx.fill();
-
-      ctx.restore();
     };
 
-    const render = () => {
+    const drawFrame = () => {
       ctx.clearRect(0, 0, width, height);
       time += 0.015;
 
-      // 1. Draw interconnected biotech filaments between proximate nodes
+      // 1. Draw interconnected biotech filaments between proximate nodes (squared dist check avoids needless sqrt/gradients)
+      ctx.lineWidth = 0.95;
       for (let i = 0; i < particles.length; i++) {
+        const pi = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const pj = particles[j];
+          const dx = pi.x - pj.x;
+          const dy = pi.y - pj.y;
+          const distSq = dx * dx + dy * dy;
 
-          if (dist < 165) {
-            const alpha = (1 - dist / 165) * 0.28;
+          if (distSq < maxConnDistSq) {
+            const dist = Math.sqrt(distSq);
+            const alpha = (1 - dist / maxConnDist) * 0.26;
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-
-            const grad = ctx.createLinearGradient(
-              particles[i].x,
-              particles[i].y,
-              particles[j].x,
-              particles[j].y
-            );
-            grad.addColorStop(0, `rgba(16, 124, 65, ${alpha})`);
-            grad.addColorStop(1, `rgba(52, 211, 153, ${alpha})`);
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 0.95;
+            ctx.moveTo(pi.x, pi.y);
+            ctx.lineTo(pj.x, pj.y);
+            ctx.strokeStyle = `rgba(16, 150, 100, ${alpha.toFixed(3)})`;
             ctx.stroke();
           }
         }
       }
 
-      // 2. Interactive mouse connection filaments & magnetic aura
+      // 2. Interactive mouse connection filaments & gentle magnetic repulsion
       if (mouse.x > 0 && mouse.y > 0) {
+        ctx.lineWidth = 1.15;
         for (let i = 0; i < particles.length; i++) {
-          const dx = mouse.x - particles[i].x;
-          const dy = mouse.y - particles[i].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const p = particles[i];
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const distSq = dx * dx + dy * dy;
 
-          if (dist < mouse.radius) {
+          if (distSq < mouseRadiusSq && distSq > 1) {
+            const dist = Math.sqrt(distSq);
             const alpha = (1 - dist / mouse.radius) * 0.5;
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(16, 185, 129, ${alpha})`;
-            ctx.lineWidth = 1.15;
+            ctx.strokeStyle = `rgba(16, 185, 129, ${alpha.toFixed(3)})`;
             ctx.stroke();
 
-            // Slight gentle magnetic repulsion to feel living and interactive
             const force = (1 - dist / mouse.radius) * 0.8;
-            particles[i].x -= (dx / dist) * force;
-            particles[i].y -= (dy / dist) * force;
+            p.x -= (dx / dist) * force;
+            p.y -= (dy / dist) * force;
           }
         }
       }
@@ -342,25 +323,25 @@ export const AnimatedBackground: React.FC = () => {
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        p.x += p.vx;
-        p.y += p.vy;
-        p.rotation += p.rotSpeed;
+        if (!prefersReducedMotion) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rotation += p.rotSpeed;
 
-        // Smooth continuous wrap-around screen boundaries
-        if (p.x < -50) p.x = width + 50;
-        if (p.x > width + 50) p.x = -50;
-        if (p.y < -50) p.y = height + 50;
-        if (p.y > height + 50) p.y = -50;
+          if (p.x < -50) p.x = width + 50;
+          else if (p.x > width + 50) p.x = -50;
+          if (p.y < -50) p.y = height + 50;
+          else if (p.y > height + 50) p.y = -50;
+        }
 
         const currentAlpha =
           p.baseAlpha + Math.sin(time * p.pulseSpeed * 60 + p.pulsePhase) * 0.18;
 
-        ctx.save();
         ctx.globalAlpha = Math.max(0.18, Math.min(0.88, currentAlpha));
 
         switch (p.type) {
           case 'benzene':
-            drawBenzene(p, currentAlpha);
+            drawBenzene(p);
             break;
           case 'silicone-bond':
             drawSiliconeSiloxaneBond(p);
@@ -376,7 +357,6 @@ export const AnimatedBackground: React.FC = () => {
             break;
           case 'green-node':
           default:
-            // High-contrast vibrant bio-node with radial glow
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.radius * 1.6, 0, Math.PI * 2);
             ctx.fillStyle = p.glowColor;
@@ -388,19 +368,36 @@ export const AnimatedBackground: React.FC = () => {
             ctx.fill();
             break;
         }
-
-        ctx.restore();
       }
-
-      animationFrameId = requestAnimationFrame(render);
+      ctx.globalAlpha = 1;
     };
 
-    render();
+    const loop = () => {
+      if (!isPageVisible) return;
+      drawFrame();
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(loop);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+      if (isPageVisible && !prefersReducedMotion) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(loop);
+      } else {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    loop();
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -410,22 +407,22 @@ export const AnimatedBackground: React.FC = () => {
       {/* 1. Dynamic Generative Molecular Network Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 opacity-95" />
 
-      {/* 2. High-Level Multi-Layered Bioluminescent Ambient Glow Spheres with organic breathing animation */}
+      {/* 2. Hardware-Friendly Radial Ambient Glow Layers (avoids expensive real-time CSS blur filters) */}
       <div
-        className="absolute -top-36 -left-36 w-[44rem] h-[44rem] bg-emerald-400/15 rounded-full blur-[100px] animate-pulse"
-        style={{ animationDuration: '9s' }}
+        className="absolute -top-36 -left-36 w-[44rem] h-[44rem] rounded-full opacity-75"
+        style={{ background: 'radial-gradient(circle, rgba(52,211,153,0.16) 0%, rgba(52,211,153,0) 68%)' }}
       />
       <div
-        className="absolute top-1/4 -right-40 w-[42rem] h-[42rem] bg-teal-400/12 rounded-full blur-[110px] animate-pulse"
-        style={{ animationDuration: '12s' }}
+        className="absolute top-1/4 -right-40 w-[42rem] h-[42rem] rounded-full opacity-70"
+        style={{ background: 'radial-gradient(circle, rgba(45,212,191,0.13) 0%, rgba(45,212,191,0) 68%)' }}
       />
       <div
-        className="absolute top-1/2 -left-40 w-[46rem] h-[46rem] bg-emerald-500/12 rounded-full blur-[120px] animate-pulse"
-        style={{ animationDuration: '14s' }}
+        className="absolute top-1/2 -left-40 w-[46rem] h-[46rem] rounded-full opacity-70"
+        style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.13) 0%, rgba(16,185,129,0) 68%)' }}
       />
       <div
-        className="absolute top-3/4 -right-32 w-[44rem] h-[44rem] bg-teal-500/12 rounded-full blur-[110px] animate-pulse"
-        style={{ animationDuration: '11s' }}
+        className="absolute top-3/4 -right-32 w-[44rem] h-[44rem] rounded-full opacity-70"
+        style={{ background: 'radial-gradient(circle, rgba(20,184,166,0.12) 0%, rgba(20,184,166,0) 68%)' }}
       />
 
       {/* 3. Subtle Molecular Scientific Micro-Grid with Green Node Accents */}

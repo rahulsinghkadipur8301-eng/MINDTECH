@@ -25,7 +25,9 @@ import {
   ShieldCheck, 
   FileCheck,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  Package,
+  Receipt
 } from 'lucide-react';
 
 interface GreentechMasterCatalogueProps {
@@ -50,6 +52,7 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
   const [selectedIngredient, setSelectedIngredient] = useState<MasterIngredient | null>(null);
   const [sampleTargetIngredient, setSampleTargetIngredient] = useState<MasterIngredient | null>(null);
   const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
+  const [enquiryMode, setEnquiryMode] = useState<'sample' | 'quotation'>('sample');
   const [isSourceMappingOpen, setIsSourceMappingOpen] = useState(false);
 
   // Hairiline ingredient instance for video spotlight linkage
@@ -173,6 +176,13 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
   };
 
   const handleOpenSampleModal = (ingredient: MasterIngredient) => {
+    setEnquiryMode('sample');
+    setSampleTargetIngredient(ingredient);
+    setIsSampleModalOpen(true);
+  };
+
+  const handleOpenQuoteModal = (ingredient: MasterIngredient) => {
+    setEnquiryMode('quotation');
     setSampleTargetIngredient(ingredient);
     setIsSampleModalOpen(true);
   };
@@ -188,6 +198,13 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
     const found = resolveIngredientById(ingredientId);
     if (found) {
       handleOpenSampleModal(found);
+    }
+  };
+
+  const handleRequestQuoteById = (ingredientId: string) => {
+    const found = resolveIngredientById(ingredientId);
+    if (found) {
+      handleOpenQuoteModal(found);
     }
   };
 
@@ -255,14 +272,20 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
 
               <button
                 type="button"
-                onClick={() => {
-                  setSampleTargetIngredient(MASTER_INGREDIENTS[0]);
-                  setIsSampleModalOpen(true);
-                }}
+                onClick={() => handleOpenSampleModal(MASTER_INGREDIENTS[0])}
                 className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white hover:bg-emerald-50 text-emerald-950 text-xs font-bold transition-colors cursor-pointer shadow-xs"
               >
-                <Send className="w-3.5 h-3.5 text-emerald-700" />
-                <span>Request Formulation Samples</span>
+                <Package className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Request Certified Sample (100g)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleOpenQuoteModal(MASTER_INGREDIENTS[0])}
+                className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-400 hover:bg-emerald-300 text-emerald-950 text-xs font-bold transition-colors cursor-pointer shadow-xs"
+              >
+                <Receipt className="w-3.5 h-3.5 text-emerald-950" />
+                <span>Request Quotation</span>
               </button>
             </div>
           </div>
@@ -290,13 +313,23 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => onOpenInquiry && onOpenInquiry('Greentech Master Catalogue Technical Consultation')}
-              className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-xs uppercase tracking-wider transition-colors shadow-md cursor-pointer flex items-center justify-center space-x-2"
-            >
-              <span>Speak to Formulation Specialist</span>
-            </button>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => handleOpenQuoteModal(MASTER_INGREDIENTS[0])}
+                className="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-xs uppercase tracking-wider transition-colors shadow-md cursor-pointer flex items-center justify-center space-x-1.5"
+              >
+                <Receipt className="w-3.5 h-3.5" />
+                <span>Request Quote</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onOpenInquiry && onOpenInquiry('Greentech Master Catalogue Technical Consultation')}
+                className="py-2.5 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs uppercase tracking-wider border border-white/25 transition-colors cursor-pointer flex items-center justify-center"
+              >
+                <span>Consult Desk</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -307,9 +340,11 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
       <GreentechVideoSpotlight
         onSelectIngredient={setSelectedIngredient}
         onRequestSample={handleOpenSampleModal}
+        onRequestQuote={handleOpenQuoteModal}
         hairilineIngredient={hairilineIngredient}
         onSelectIngredientById={handleSelectFromMapping}
         onRequestSampleById={handleRequestSampleById}
+        onRequestQuoteById={handleRequestQuoteById}
       />
 
       {/* Authentic Greentech Product Showcase (Exact Replica) */}
@@ -480,6 +515,7 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
               ingredient={ingredient}
               onSelectIngredient={setSelectedIngredient}
               onRequestSample={handleOpenSampleModal}
+              onRequestQuote={handleOpenQuoteModal}
             />
           ))}
         </div>
@@ -523,13 +559,18 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
         <div className="flex flex-wrap items-center gap-3 shrink-0">
           <button
             type="button"
-            onClick={() => {
-              setSampleTargetIngredient(MASTER_INGREDIENTS[0]);
-              setIsSampleModalOpen(true);
-            }}
+            onClick={() => handleOpenSampleModal(MASTER_INGREDIENTS[0])}
             className="px-5 py-2.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs transition-colors shadow-sm cursor-pointer"
           >
-            Request a Sample
+            Request Certified Sample (100g)
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenQuoteModal(MASTER_INGREDIENTS[0])}
+            className="px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-sm cursor-pointer"
+          >
+            Request Quotation
           </button>
 
           <button
@@ -556,12 +597,16 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
             setSelectedIngredient(null);
             handleOpenSampleModal(ing);
           }}
+          onRequestQuote={(ing) => {
+            setSelectedIngredient(null);
+            handleOpenQuoteModal(ing);
+          }}
           onSelectRelated={(ing) => setSelectedIngredient(ing)}
           allIngredients={MASTER_INGREDIENTS}
         />
       )}
 
-      {/* B2B Sample Request Form Modal */}
+      {/* B2B Sample & Quotation Request Form Modal */}
       <SampleEnquiryModal
         isOpen={isSampleModalOpen}
         onClose={() => {
@@ -571,6 +616,7 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
         productName={sampleTargetIngredient?.name}
         productCode={sampleTargetIngredient?.supplierCode}
         supplierName="Greentech Biotechnologies"
+        initialMode={enquiryMode}
       />
 
       {/* Source PDF Traceability Modal (136 Pages) */}

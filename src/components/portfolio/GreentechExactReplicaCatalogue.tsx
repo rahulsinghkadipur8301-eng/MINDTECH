@@ -17,7 +17,9 @@ import {
   ChevronRight,
   Sparkles,
   SlidersHorizontal,
-  FlaskConical
+  FlaskConical,
+  Package,
+  Receipt
 } from 'lucide-react';
 
 interface GreentechExactReplicaCatalogueProps {
@@ -38,6 +40,7 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
   const [selectedProduct, setSelectedProduct] = useState<ReplicaProduct | null>(null);
   const [isSampleModalOpen, setIsSampleModalOpen] = useState<boolean>(false);
   const [sampleTargetProduct, setSampleTargetProduct] = useState<ReplicaProduct | null>(null);
+  const [enquiryMode, setEnquiryMode] = useState<'sample' | 'quotation'>('sample');
 
   // Active Category Object
   const activeCategory = useMemo<ReplicaCategory>(() => {
@@ -75,7 +78,32 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
 
   const handleRequestSample = (product: ReplicaProduct, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    setEnquiryMode('sample');
     setSampleTargetProduct(product);
+    setIsSampleModalOpen(true);
+  };
+
+  const handleRequestQuote = (product: ReplicaProduct, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setEnquiryMode('quotation');
+    setSampleTargetProduct(product);
+    setIsSampleModalOpen(true);
+  };
+
+  const handleCategoryEnquiry = (mode: 'sample' | 'quotation') => {
+    const fallbackProduct: ReplicaProduct = displayedProducts[0] || {
+      id: activeCategory.id,
+      name: `${activeCategory.heading} Range`,
+      inci: 'Multiple Greentech Bio-Actives',
+      dosage: '0.5–3%',
+      shortBenefit: activeCategory.heading,
+      description: `Greentech ${activeCategory.heading} active portfolio`,
+      applications: [activeCategory.label],
+      categoryIds: [activeCategory.id],
+      image: '/products/greentech/timelys.png',
+    };
+    setEnquiryMode(mode);
+    setSampleTargetProduct(fallbackProduct);
     setIsSampleModalOpen(true);
   };
 
@@ -109,30 +137,52 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
         {/* =========================================================================
             2. PAGE TITLE (EXACT REPLICA: ANTI-AGEING, Soothing Actives, Eye contour...)
            ========================================================================= */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-3">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-gray-100 pb-3">
           <h1 className="text-3xl sm:text-4xl text-[#1a1a1a] font-light tracking-tight font-['Outfit']">
             {searchQuery ? `Search Results: "${searchQuery}"` : activeCategory.heading}
           </h1>
 
-          {/* Quick Search Input */}
-          <div className="relative w-full sm:w-72">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter active ingredients..."
-              className="w-full pl-9 pr-8 py-2 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200 rounded-full text-xs transition-all focus:outline-hidden focus:ring-2 focus:ring-[#70a83b]"
-            />
-            {searchQuery && (
+          <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-between lg:justify-end">
+            {/* Section-Level Sample (100g) & Quotation Quick Buttons */}
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                onClick={() => handleCategoryEnquiry('sample')}
+                className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-[#072414] hover:bg-emerald-900 text-white text-[11px] font-bold transition-colors cursor-pointer shadow-xs"
               >
-                <X className="w-3.5 h-3.5" />
+                <Package className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Request Certified Sample (100g)</span>
               </button>
-            )}
+              <button
+                type="button"
+                onClick={() => handleCategoryEnquiry('quotation')}
+                className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-950 text-[11px] font-bold border border-emerald-300 transition-colors cursor-pointer"
+              >
+                <Receipt className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Request Quotation</span>
+              </button>
+            </div>
+
+            {/* Quick Search Input */}
+            <div className="relative w-full sm:w-64">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Filter active ingredients..."
+                className="w-full pl-9 pr-8 py-2 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200 rounded-full text-xs transition-all focus:outline-hidden focus:ring-2 focus:ring-[#70a83b]"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -224,6 +274,24 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                 <h3 className="mt-2.5 text-center text-xs sm:text-[13px] font-bold text-gray-900 tracking-wide uppercase font-['Outfit'] leading-snug group-hover:text-[#70a83b] transition-colors max-w-full">
                   {product.name}
                 </h3>
+
+                {/* Quick Sample (100g) & Quotation Strip */}
+                <div className="mt-1.5 flex items-center justify-center gap-1.5 w-full">
+                  <button
+                    type="button"
+                    onClick={(e) => handleRequestSample(product, e)}
+                    className="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-[#072414] text-emerald-900 hover:text-white text-[10px] font-bold border border-emerald-200 transition-colors cursor-pointer"
+                  >
+                    Sample (100g)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => handleRequestQuote(product, e)}
+                    className="px-2 py-0.5 rounded-md bg-gray-100 hover:bg-emerald-700 text-gray-700 hover:text-white text-[10px] font-bold border border-gray-200 transition-colors cursor-pointer"
+                  >
+                    Quote
+                  </button>
+                </div>
 
                 {/* Hover Tooltip (Exact replica of "Anti-oxydant-PHYTOBIOACTIF-POMEGRANATE" from Screenshot 1) */}
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 z-30 bg-[#2d3748] text-white text-[11px] font-medium px-2.5 py-1 rounded shadow-lg whitespace-nowrap max-w-[260px] truncate">
@@ -348,14 +416,15 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
             </div>
 
             {/* Action Buttons */}
-            <div className="pt-2 flex flex-col sm:flex-row gap-3">
+            <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
               <button
                 type="button"
                 onClick={() => {
+                  const prod = selectedProduct;
                   setSelectedProduct(null);
-                  handleRequestSample(selectedProduct);
+                  handleRequestSample(prod);
                 }}
-                className="flex-1 py-3 px-5 rounded-2xl bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center space-x-2 cursor-pointer"
+                className="flex-1 py-3 px-4 rounded-2xl bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center space-x-2 cursor-pointer"
               >
                 <Send className="w-4 h-4 text-emerald-300" />
                 <span>Request Certified Sample (100g)</span>
@@ -364,18 +433,14 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
               <button
                 type="button"
                 onClick={() => {
-                  const subject = `Pricing & COA Request: ${selectedProduct.name}`;
-                  if (onOpenInquiry) {
-                    onOpenInquiry(subject);
-                  } else {
-                    window.open(`https://wa.me/918368947579?text=${encodeURIComponent(`Hello Mr. Ajay Patel, I am inquiring about *${selectedProduct.name}*. Please share pricing & COA.`)}`, '_blank');
-                  }
+                  const prod = selectedProduct;
                   setSelectedProduct(null);
+                  handleRequestQuote(prod);
                 }}
-                className="py-3 px-5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-2 cursor-pointer"
+                className="flex-1 py-3 px-4 rounded-2xl bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-2 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 text-emerald-700" />
-                <span>Inquire With Ajay Patel</span>
+                <Receipt className="w-4 h-4 text-emerald-700" />
+                <span>Request Quotation</span>
               </button>
             </div>
           </div>
@@ -383,7 +448,7 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
       )}
 
       {/* =========================================================================
-          6. SAMPLE ENQUIRY FORM MODAL
+          6. SAMPLE (100g) & QUOTATION ENQUIRY FORM MODAL
          ========================================================================= */}
       {isSampleModalOpen && sampleTargetProduct && (
         <div 
@@ -404,20 +469,44 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
 
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold text-[#70a83b] uppercase">
-                Official Formulation Requisition
+                {enquiryMode === 'quotation' ? 'Commercial Quotation Desk' : 'Official Formulation Requisition'}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-[#072414] font-['Outfit']">
-                Request Lab Sample &amp; COA
+                {enquiryMode === 'quotation' ? 'Request Commercial Quotation & COA' : 'Request Certified Sample (100g) & COA'}
               </h3>
               <p className="text-xs text-gray-600">
-                Directly dispatched from the Central Bawana Hub to your laboratory with complete batch traceability.
+                Directly handled via the Central Bawana Hub with complete batch traceability and GST documentation.
               </p>
+            </div>
+
+            {/* Mode Switcher */}
+            <div className="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-gray-100 border border-gray-200 text-xs">
+              <button
+                type="button"
+                onClick={() => setEnquiryMode('sample')}
+                className={`py-2 px-3 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+                  enquiryMode === 'sample' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <Package className="w-3.5 h-3.5" />
+                <span>Certified Sample (100g)</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setEnquiryMode('quotation')}
+                className={`py-2 px-3 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+                  enquiryMode === 'quotation' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <Receipt className="w-3.5 h-3.5" />
+                <span>Request Quotation</span>
+              </button>
             </div>
 
             <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs space-y-1">
               <div className="font-bold text-[#072414]">{sampleTargetProduct.name}</div>
               <div className="text-gray-600 font-mono text-[11px] truncate">INCI: {sampleTargetProduct.inci}</div>
-              <div className="text-emerald-800 font-semibold text-[11px]">All samples include verified batch COA &amp; TDS.</div>
+              <div className="text-emerald-800 font-semibold text-[11px]">Includes verified batch COA &amp; TDS.</div>
             </div>
 
             <form
@@ -427,10 +516,16 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                 const name = (form.elements.namedItem('chemistName') as HTMLInputElement).value;
                 const company = (form.elements.namedItem('companyName') as HTMLInputElement).value;
                 const phone = (form.elements.namedItem('phone') as HTMLInputElement).value;
+                const qty = (form.elements.namedItem('quantitySpec') as HTMLSelectElement)?.value || 'Standard 100g bench pack';
                 const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
 
+                const headerTitle =
+                  enquiryMode === 'quotation'
+                    ? '*MINDTECH BIOTECHNOLOGY - PRICE QUOTATION REQUEST*'
+                    : '*MINDTECH BIOTECHNOLOGY - CERTIFIED SAMPLE (100g) REQUISITION*';
+
                 const text = encodeURIComponent(
-                  `*MINDTECH BIOTECHNOLOGY - SAMPLE REQUISITION*\n\nProduct: *${sampleTargetProduct.name}*\nINCI: ${sampleTargetProduct.inci}\n\nChemist / Contact: ${name}\nCompany: ${company}\nPhone: ${phone}\nNotes: ${message || 'Standard 100g bench pack'}\n\nPlease dispatch certified sample and COA.`
+                  `${headerTitle}\n\nProduct: *${sampleTargetProduct.name}*\nINCI: ${sampleTargetProduct.inci}\nRequirement: ${enquiryMode === 'quotation' ? `Commercial Quotation (${qty})` : `Certified Sample (${qty})`}\n\nChemist / Contact: ${name}\nCompany: ${company}\nPhone: ${phone}\nNotes: ${message || 'Please share official confirmation'}\n\nPlease share COA, TDS & next steps.`
                 );
 
                 window.open(`https://wa.me/918368947579?text=${text}`, '_blank');
@@ -460,19 +555,47 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                 />
               </div>
 
-              <div>
-                <label className="block text-gray-700 font-bold mb-1">WhatsApp / Phone *</label>
-                <input 
-                  name="phone"
-                  type="tel" 
-                  required 
-                  placeholder="+91 98765 43210" 
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:bg-white focus:outline-hidden"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-gray-700 font-bold mb-1">WhatsApp / Phone *</label>
+                  <input 
+                    name="phone"
+                    type="tel" 
+                    required 
+                    placeholder="+91 98765 43210" 
+                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:bg-white focus:outline-hidden"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-bold mb-1">
+                    {enquiryMode === 'quotation' ? 'Order Volume Tier' : 'Sample Pack Size'}
+                  </label>
+                  <select
+                    name="quantitySpec"
+                    defaultValue={enquiryMode === 'quotation' ? '25 kg Drum / MOQ' : '100g Certified Bench Sample'}
+                    className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:bg-white focus:outline-hidden"
+                  >
+                    {enquiryMode === 'quotation' ? (
+                      <>
+                        <option value="1 kg – 5 kg Pilot">1 kg – 5 kg Pilot</option>
+                        <option value="25 kg Drum / MOQ">25 kg Drum / MOQ</option>
+                        <option value="50 kg – 200 kg Lot">50 kg – 200 kg Lot</option>
+                        <option value="500 kg+ Annual Contract">500 kg+ Annual Contract</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="100g Certified Bench Sample">100g Certified Bench Sample</option>
+                        <option value="50g Bench Sample">50g Bench Sample</option>
+                        <option value="250g Pilot Evaluation Pack">250g Pilot Evaluation Pack</option>
+                      </>
+                    )}
+                  </select>
+                </div>
               </div>
 
               <div>
-                <label className="block text-gray-700 font-bold mb-1">Delivery City &amp; PIN Code</label>
+                <label className="block text-gray-700 font-bold mb-1">Delivery City, PIN Code &amp; Notes</label>
                 <textarea 
                   name="message"
                   rows={2} 
@@ -481,13 +604,28 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-2xl bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center justify-center space-x-2 mt-2"
-              >
-                <Send className="w-4 h-4 text-emerald-300" />
-                <span>Submit Sample Requisition to Ajay Patel</span>
-              </button>
+              <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                <button
+                  type="submit"
+                  className="flex-1 py-3 px-4 rounded-2xl bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center justify-center space-x-2"
+                >
+                  <Send className="w-4 h-4 text-emerald-300" />
+                  <span>{enquiryMode === 'quotation' ? 'Send Quotation on WhatsApp' : 'Send Sample (100g) on WhatsApp'}</span>
+                </button>
+                {onOpenInquiry && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const prefix = enquiryMode === 'quotation' ? 'Quotation Request' : 'Certified Sample (100g) Request';
+                      setIsSampleModalOpen(false);
+                      onOpenInquiry(`${prefix}: ${sampleTargetProduct.name} (${sampleTargetProduct.inci})`);
+                    }}
+                    className="py-3 px-4 rounded-2xl bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-bold text-xs border border-emerald-200 transition-colors cursor-pointer"
+                  >
+                    Email / Desk Form
+                  </button>
+                )}
+              </div>
             </form>
           </div>
         </div>

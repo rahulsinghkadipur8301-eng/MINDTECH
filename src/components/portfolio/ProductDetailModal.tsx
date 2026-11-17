@@ -386,9 +386,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   onClose();
                   onRequestQuote(product);
                 }}
-                className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 text-xs sm:text-sm font-bold transition-colors cursor-pointer"
+                className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-950 border border-emerald-300 text-xs sm:text-sm font-bold transition-colors cursor-pointer"
               >
-                Request TDS / Quote
+                Request Quotation
               </button>
 
               <button
@@ -399,7 +399,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 }}
                 className="flex-1 sm:flex-initial inline-flex items-center justify-center space-x-2 px-5 sm:px-6 py-2.5 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
-                <span>Request Sample Pack</span>
+                <span>Request Certified Sample (100g)</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

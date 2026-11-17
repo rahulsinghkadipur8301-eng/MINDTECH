@@ -20,7 +20,8 @@ import {
   Layers,
   Atom,
   Droplets,
-  Leaf
+  Leaf,
+  Receipt
 } from 'lucide-react';
 
 interface UniversalPartnerReplicaCatalogueProps {
@@ -69,6 +70,7 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
   const [selectedProduct, setSelectedProduct] = useState<ReplicaProduct | null>(null);
   const [isSampleModalOpen, setIsSampleModalOpen] = useState<boolean>(false);
   const [sampleTargetProduct, setSampleTargetProduct] = useState<ReplicaProduct | null>(null);
+  const [enquiryMode, setEnquiryMode] = useState<'sample' | 'quotation'>('sample');
 
   // Active Category Object
   const activeCategory = useMemo<ReplicaCategory>(() => {
@@ -106,7 +108,32 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
 
   const handleRequestSample = (product: ReplicaProduct, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    setEnquiryMode('sample');
     setSampleTargetProduct(product);
+    setIsSampleModalOpen(true);
+  };
+
+  const handleRequestQuote = (product: ReplicaProduct, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setEnquiryMode('quotation');
+    setSampleTargetProduct(product);
+    setIsSampleModalOpen(true);
+  };
+
+  const handleCategoryEnquiry = (mode: 'sample' | 'quotation') => {
+    const fallbackProduct: ReplicaProduct = displayedProducts[0] || {
+      id: activeCategory.id,
+      name: `${activePartner.shortName} — ${activeCategory.heading}`,
+      inci: 'Full Technical Portfolio',
+      dosage: 'Refer to TDS',
+      shortBenefit: activePartner.tagline,
+      description: activePartner.tagline,
+      applications: [activeCategory.label],
+      categoryIds: [activeCategory.id],
+      image: '/products/greentech/timelys.png',
+    };
+    setEnquiryMode(mode);
+    setSampleTargetProduct(fallbackProduct);
     setIsSampleModalOpen(true);
   };
 
@@ -214,30 +241,52 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
         {/* =========================================================================
             2. PAGE TITLE & LIVE SEARCH (EXACT REPLICA)
            ========================================================================= */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-3">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-gray-100 pb-3">
           <h1 className="text-3xl sm:text-4xl text-[#1a1a1a] font-light tracking-tight font-['Outfit']">
             {searchQuery ? `Search Results: "${searchQuery}"` : activeCategory.heading}
           </h1>
 
-          {/* Quick Search Input (matching screenshot) */}
-          <div className="relative w-full sm:w-72">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter active ingredients..."
-              className="w-full pl-9 pr-8 py-2 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200 rounded-full text-xs transition-all focus:outline-hidden focus:ring-2 focus:ring-[#70a83b]"
-            />
-            {searchQuery && (
+          <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-between lg:justify-end">
+            {/* Section-Level Sample (100g) & Quotation Quick Buttons */}
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                onClick={() => handleCategoryEnquiry('sample')}
+                className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-[#072414] hover:bg-emerald-900 text-white text-[11px] font-bold transition-colors cursor-pointer shadow-xs"
               >
-                <X className="w-3.5 h-3.5" />
+                <Package className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Request Certified Sample (100g)</span>
               </button>
-            )}
+              <button
+                type="button"
+                onClick={() => handleCategoryEnquiry('quotation')}
+                className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-950 text-[11px] font-bold border border-emerald-300 transition-colors cursor-pointer"
+              >
+                <Receipt className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Request Quotation</span>
+              </button>
+            </div>
+
+            {/* Quick Search Input (matching screenshot) */}
+            <div className="relative w-full sm:w-64">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Filter active ingredients..."
+                className="w-full pl-9 pr-8 py-2 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200 rounded-full text-xs transition-all focus:outline-hidden focus:ring-2 focus:ring-[#70a83b]"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -341,6 +390,24 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
                 <h3 className="mt-2.5 text-center text-xs sm:text-[13px] font-bold text-gray-900 tracking-wide uppercase font-['Outfit'] leading-snug group-hover:text-[#70a83b] transition-colors max-w-full">
                   {product.name}
                 </h3>
+
+                {/* Quick Sample (100g) & Quotation Strip */}
+                <div className="mt-1.5 flex items-center justify-center gap-1.5 w-full">
+                  <button
+                    type="button"
+                    onClick={(e) => handleRequestSample(product, e)}
+                    className="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-[#072414] text-emerald-900 hover:text-white text-[10px] font-bold border border-emerald-200 transition-colors cursor-pointer"
+                  >
+                    Sample (100g)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => handleRequestQuote(product, e)}
+                    className="px-2 py-0.5 rounded-md bg-gray-100 hover:bg-emerald-700 text-gray-700 hover:text-white text-[10px] font-bold border border-gray-200 transition-colors cursor-pointer"
+                  >
+                    Quote
+                  </button>
+                </div>
 
                 {/* Hover Tooltip (Exact replica from Screenshot) */}
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 z-30 bg-[#2d3748] text-white text-[11px] font-medium px-2.5 py-1 rounded shadow-lg whitespace-nowrap max-w-[280px] truncate">
@@ -487,33 +554,42 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
             )}
 
             {/* Requisition CTAs */}
-            <div className="pt-3 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="pt-3 border-t border-gray-100 space-y-3">
               <div className="flex items-center space-x-2 text-xs text-gray-500">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
                 <span>100% CoA &amp; TDS Traceability from Bawana Hub</span>
               </div>
 
-              <div className="flex items-center space-x-2.5 w-full sm:w-auto">
-                <a
-                  href={`https://wa.me/918368947579?text=${encodeURIComponent(
-                    `Hello Ajay Patel, I would like to request technical specifications, CoA, and a 100g bench formulation sample for: ${selectedProduct.name} (INCI: ${selectedProduct.inci}) from ${activePartner.name}.`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs flex items-center justify-center space-x-2 transition-colors shadow-xs"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>WhatsApp Sample Request</span>
-                </a>
-
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
                 <button
                   type="button"
                   onClick={() => handleRequestSample(selectedProduct)}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs flex items-center justify-center space-x-1.5 transition-colors shadow-xs cursor-pointer"
+                  className="flex-1 px-4 py-2.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs flex items-center justify-center space-x-1.5 transition-colors shadow-xs cursor-pointer"
                 >
-                  <FileCheck className="w-3.5 h-3.5" />
-                  <span>Submit Inquiry</span>
+                  <Package className="w-3.5 h-3.5 text-emerald-300" />
+                  <span>Request Certified Sample (100g)</span>
                 </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleRequestQuote(selectedProduct)}
+                  className="flex-1 px-4 py-2.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-bold text-xs border border-emerald-300 flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
+                >
+                  <Receipt className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>Request Quotation</span>
+                </button>
+
+                <a
+                  href={`https://wa.me/918368947579?text=${encodeURIComponent(
+                    `Hello Ajay Patel, I would like to request a commercial quotation, CoA, and a certified 100g bench formulation sample for: ${selectedProduct.name} (INCI: ${selectedProduct.inci}) from ${activePartner.name}.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs flex items-center justify-center space-x-1.5 transition-colors shadow-xs"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </a>
               </div>
             </div>
 
@@ -521,7 +597,7 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
         </div>
       )}
 
-      {/* Sample Inquiry Modal */}
+      {/* Sample (100g) & Quotation Inquiry Modal */}
       {isSampleModalOpen && sampleTargetProduct && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
@@ -534,25 +610,51 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
             <button
               type="button"
               onClick={() => setIsSampleModalOpen(false)}
-              className="absolute top-5 right-5 text-gray-400 hover:text-gray-700"
+              className="absolute top-5 right-5 text-gray-400 hover:text-gray-700 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider">
-                Official Sample Requisition
+                {enquiryMode === 'quotation' ? 'Commercial Price Quotation' : 'Official Certified Sample Requisition'}
               </span>
               <h3 className="text-xl font-black text-gray-900">
-                Request Bench Sample: {sampleTargetProduct.name}
+                {enquiryMode === 'quotation'
+                  ? `Request Quotation: ${sampleTargetProduct.name}`
+                  : `Request Certified Sample (100g): ${sampleTargetProduct.name}`}
               </h3>
               <p className="text-xs text-gray-500">
-                Directly sent to Mr. Ajay Patel (Sales Head). All laboratory packs include certified batch COA &amp; TDS from the Bawana central warehouse.
+                Directly handled with Mr. Ajay Patel (Sales Head). Includes certified batch COA, TDS &amp; GST commercial billing from Bawana Hub.
               </p>
             </div>
 
+            {/* Mode Switcher */}
+            <div className="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-gray-100 border border-gray-200 text-xs">
+              <button
+                type="button"
+                onClick={() => setEnquiryMode('sample')}
+                className={`py-2 px-3 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+                  enquiryMode === 'sample' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <Package className="w-3.5 h-3.5" />
+                <span>Certified Sample (100g)</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setEnquiryMode('quotation')}
+                className={`py-2 px-3 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+                  enquiryMode === 'quotation' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <Receipt className="w-3.5 h-3.5" />
+                <span>Request Quotation</span>
+              </button>
+            </div>
+
             <div className="p-3 bg-emerald-50 rounded-xl text-xs space-y-1">
-              <span className="font-bold text-emerald-950 block">Selected Active Ingredient:</span>
+              <span className="font-bold text-emerald-950 block">Selected Grade / Ingredient:</span>
               <p className="text-gray-700 font-mono">{sampleTargetProduct.name} — {sampleTargetProduct.inci}</p>
               <p className="text-gray-500">Recommended Dosage: {sampleTargetProduct.dosage}</p>
             </div>
@@ -560,14 +662,20 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
             <div className="pt-2 flex flex-col gap-2.5">
               <a
                 href={`https://wa.me/918368947579?text=${encodeURIComponent(
-                  `Hi Ajay Patel, please dispatch a formulation sample and technical dossier for ${sampleTargetProduct.name} (INCI: ${sampleTargetProduct.inci}) to our formulation lab.`
+                  enquiryMode === 'quotation'
+                    ? `Hi Ajay Patel, please share a commercial GST quotation (MOQ, pack size pricing & lead time) plus CoA/TDS for ${sampleTargetProduct.name} (INCI: ${sampleTargetProduct.inci}) from ${activePartner.name}.`
+                    : `Hi Ajay Patel, please dispatch a certified 100g formulation sample and technical dossier (CoA & TDS) for ${sampleTargetProduct.name} (INCI: ${sampleTargetProduct.inci}) from ${activePartner.name} to our formulation lab.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md"
               >
                 <Send className="w-4 h-4" />
-                <span>Instant WhatsApp Dispatch Request</span>
+                <span>
+                  {enquiryMode === 'quotation'
+                    ? 'Instant WhatsApp Quotation Request'
+                    : 'Instant WhatsApp Sample (100g) Request'}
+                </span>
               </a>
 
               <button
@@ -575,12 +683,13 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
                 onClick={() => {
                   setIsSampleModalOpen(false);
                   if (onOpenInquiry) {
-                    onOpenInquiry(`Sample Request: ${sampleTargetProduct.name} (${sampleTargetProduct.inci})`);
+                    const label = enquiryMode === 'quotation' ? 'Price Quotation Request' : 'Certified Sample (100g) Request';
+                    onOpenInquiry(`${label}: ${sampleTargetProduct.name} (${sampleTargetProduct.inci}) [${activePartner.shortName}]`);
                   }
                 }}
-                className="w-full py-2.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs transition-colors"
+                className="w-full py-2.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs transition-colors cursor-pointer"
               >
-                Continue via Email / Contact Form
+                {enquiryMode === 'quotation' ? 'Continue Quotation via Contact Desk' : 'Continue Sample (100g) via Contact Desk'}
               </button>
             </div>
           </div>

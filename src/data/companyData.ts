@@ -19,8 +19,8 @@ export const COMPANY_DETAILS = {
   philosophy: "At Mindtech, we believe that supplying ingredients is more than a transaction — it is about building dependable partnerships that contribute to innovation, formulation excellence and long-term business growth.",
   phones: [
     { label: "Sales Head (Ajay Patel)", number: "+91-8368947579", raw: "+918368947579" },
-    { label: "Formulation Support", number: "+91-8707403441", raw: "+918707403441" },
-    { label: "Logistics & Warehouse", number: "+91-9555446794", raw: "+919555446794" }
+    { label: "Mr. Piyush Singh", number: "+91 95554 46794", raw: "+919555446794" },
+    { label: "Mr. Vicky Singh", number: "+91 870 740 3441", raw: "+918707403441" }
   ],
   emails: [
     { role: "Sales Head", email: "Ajaypatel@mindtec.org.in" },

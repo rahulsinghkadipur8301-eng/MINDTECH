@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs';
-import {defineConfig, Plugin} from 'vite';
+import {defineConfig, loadEnv, Plugin} from 'vite';
 
 function videoUploadPlugin(): Plugin {
   interface UploadSession {
@@ -222,10 +222,23 @@ function videoUploadPlugin(): Plugin {
     };
   }
 
-export default defineConfig(() => {
+export default defineConfig(({mode}) => {
+  const env = loadEnv(mode, '.', '');
+  const mapsApiKey =
+    process.env.VITE_GOOGLE_MAPS_API_KEY ||
+    env.VITE_GOOGLE_MAPS_API_KEY ||
+    process.env.GOOGLE_MAPS_API_KEY ||
+    env.GOOGLE_MAPS_API_KEY ||
+    '';
+
   return {
     publicDir: 'public',
     plugins: [react(), tailwindcss(), videoUploadPlugin()],
+    define: mapsApiKey
+      ? {
+          'import.meta.env.VITE_GOOGLE_MAPS_API_KEY': JSON.stringify(mapsApiKey),
+        }
+      : undefined,
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
@@ -244,6 +257,12 @@ export default defineConfig(() => {
             if (id.includes('node_modules')) {
               if (id.includes('lucide-react')) {
                 return 'vendor-icons';
+              }
+              if (id.includes('@vis.gl/react-google-maps')) {
+                return 'vendor-maps';
+              }
+              if (id.includes('jspdf') || id.includes('html2canvas')) {
+                return 'vendor-pdf';
               }
               if (id.includes('react') || id.includes('motion')) {
                 return 'vendor-framework';

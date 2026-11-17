@@ -12,16 +12,18 @@ import {
 
 interface NavbarProps {
   onOpenInquiry: (category?: string) => void;
+  onNavigateHome?: (targetSection?: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Monitor scroll position for sticky navbar adaptation
+  // Monitor scroll position for sticky navbar adaptation without redundant re-renders
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const next = window.scrollY > 20;
+      setScrolled((prev) => (prev === next ? prev : next));
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -63,6 +65,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
     };
   }, [mobileMenuOpen]);
 
+  const handleLogoHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (onNavigateHome) {
+      onNavigateHome('hero');
+      return;
+    }
+    const hero = document.getElementById('hero');
+    if (hero) {
+      hero.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const handleMobileNavClick = (hash: string, category?: string) => {
     setMobileMenuOpen(false);
     if (category) {
@@ -81,6 +98,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
         });
         window.history.pushState(null, '', hash);
       }, 120);
+    } else if (onNavigateHome) {
+      onNavigateHome(targetId);
     }
   };
 
@@ -102,6 +121,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
         behavior: 'smooth'
       });
       window.history.pushState(null, '', hash);
+    } else if (onNavigateHome) {
+      onNavigateHome(targetId);
     }
   };
 
@@ -158,18 +179,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
            ========================================================================= */}
         <div className="flex items-center shrink-0">
           <a 
-            href="#hero" 
-            className="flex items-center focus:outline-hidden group/logo" 
+            href="/" 
+            className="flex items-center focus:outline-hidden group/logo cursor-pointer" 
             id="mindtech-main-logo"
             aria-label="Mindtech Biotechnology Home"
-            onClick={(e) => {
-              e.preventDefault();
-              setMobileMenuOpen(false);
-              const hero = document.getElementById('hero');
-              if (hero) {
-                hero.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
+            onClick={handleLogoHomeClick}
           >
             <img 
               src="/mindtech_logo_transparent-1.svg"
@@ -339,11 +353,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                 
                 {/* Official Logo in Drawer */}
                 <div className="flex items-center justify-center py-2">
-                  <img 
-                    src="/mindtech_logo_transparent-1.svg"
-                    alt="Mindtech Biotechnology Logo"
-                    className="h-16 sm:h-20 w-auto max-w-[280px] object-contain"
-                  />
+                  <a
+                    href="/"
+                    onClick={handleLogoHomeClick}
+                    aria-label="Mindtech Biotechnology Home"
+                    className="cursor-pointer focus:outline-hidden"
+                  >
+                    <img 
+                      src="/mindtech_logo_transparent-1.svg"
+                      alt="Mindtech Biotechnology Logo"
+                      className="h-16 sm:h-20 w-auto max-w-[280px] object-contain"
+                    />
+                  </a>
                 </div>
 
                 {/* Direct Contact Banner */}
