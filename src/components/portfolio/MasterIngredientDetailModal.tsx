@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MasterIngredient } from '../../types/ingredient';
+import { extractYouTubeVideoId, getVideoThumbnailForUrl } from '../../utils/youtube';
 import { 
   X, 
   FlaskConical, 
@@ -41,7 +42,14 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
   const [copiedLink, setCopiedLink] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
+  useEffect(() => {
+    setIsVideoPlaying(false);
+  }, [ingredient?.id]);
+
   if (!ingredient) return null;
+
+  const videoId = extractYouTubeVideoId(ingredient.videoUrl);
+  const videoThumbs = getVideoThumbnailForUrl(ingredient.videoUrl);
 
   const handleCopyLink = () => {
     const url = `${window.location.origin}${window.location.pathname}#ingredient/${ingredient.slug}`;
@@ -307,10 +315,10 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
                     </div>
 
                     <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-lg border border-emerald-500/20">
-                      {isVideoPlaying ? (
+                      {isVideoPlaying && videoId ? (
                         <div className="relative w-full h-full">
                           <iframe
-                            src="https://www.youtube-nocookie.com/embed/3aa3iMw0ahU?autoplay=1&rel=0&modestbranding=1"
+                            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
                             title={ingredient.videoTitle || `${ingredient.name} Scientific Video`}
                             className="w-full h-full border-0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -333,14 +341,14 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
                           tabIndex={0}
                         >
                           <img
-                            src="/videos/greentech-hairiline-video-cover.jpg"
+                            src={videoThumbs.primary}
                             alt={ingredient.name}
                             className="w-full h-full object-cover group-hover/modalvideo:scale-105 transition-transform duration-500"
                             loading="eager"
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
-                              if (!target.src.includes('sddefault.jpg')) {
-                                target.src = 'https://img.youtube.com/vi/3aa3iMw0ahU/sddefault.jpg';
+                              if (target.src !== videoThumbs.fallback) {
+                                target.src = videoThumbs.fallback;
                               }
                             }}
                           />

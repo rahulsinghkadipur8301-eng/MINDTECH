@@ -646,7 +646,8 @@ const RAW_SUPPLIER_PRODUCTS: ProductItem[] = [
     keyBenefits: ['Boosts microvascular tone for healthy rosy glow', 'Strengthens epidermal barrier', 'Protects against environmental stress'],
     formulatorBenefits: ['Combines organic fruit acids with bioactive lignans for dual chemical & biological action'],
     verifiedInPdf: true,
-    pdfPage: 13
+    pdfPage: 13,
+    videoUrl: 'https://youtu.be/-eZkTAJktFA'
   },
   {
     id: 'reverskin',
@@ -662,7 +663,8 @@ const RAW_SUPPLIER_PRODUCTS: ProductItem[] = [
     keyBenefits: ['Re-thickens thinning mature skin', 'Strengthens dermo-epidermal junction (DEJ)', 'Smooths crow’s feet and deep wrinkles'],
     formulatorBenefits: ['Clinically proven to reverse epidermal thinning in post-menopausal skin'],
     verifiedInPdf: true,
-    pdfPage: 13
+    pdfPage: 13,
+    videoUrl: 'https://youtu.be/KdFLlIAE1rE'
   },
   {
     id: 'qt40',
@@ -990,7 +992,8 @@ const RAW_SUPPLIER_PRODUCTS: ProductItem[] = [
     keyBenefits: ['Upper eyelid lifting effect', 'Targets vascular and pigmented dark circles', 'Reduces puffiness in 14 days'],
     formulatorBenefits: ['Effective at ultra-low dosage (0.1–0.5%), excellent cost-benefit ratio for premium eye products'],
     verifiedInPdf: true,
-    pdfPage: 15
+    pdfPage: 15,
+    videoUrl: 'https://youtu.be/Mg3NT4CXX3k'
   },
   {
     id: 'cernilys',
@@ -1188,7 +1191,8 @@ const RAW_SUPPLIER_PRODUCTS: ProductItem[] = [
     keyBenefits: ['Reduces neurogenic stinging and burning', 'Downregulates inflammatory interleukins', 'Eliminates visible facial erythema', 'Protects against environmental exposome'],
     formulatorBenefits: ['Specifically engineered for reactive, hypersensitive, and rosacea-prone skin types'],
     verifiedInPdf: true,
-    pdfPage: 17
+    pdfPage: 17,
+    videoUrl: 'https://youtu.be/aC2KDsURwYc'
   },
   {
     id: 'protectol',
@@ -1254,7 +1258,8 @@ const RAW_SUPPLIER_PRODUCTS: ProductItem[] = [
     keyBenefits: ['Restores natural hair color without dye', 'Increases follicular tyrosinase and melanin synthesis', 'Reduces hydrogen peroxide stress on hair follicles'],
     formulatorBenefits: ['Clinical studies demonstrate visible reduction of white hair density after 3 months of use'],
     verifiedInPdf: true,
-    pdfPage: 19
+    pdfPage: 19,
+    videoUrl: 'https://youtu.be/cF7rNuaV_bE'
   },
   {
     id: 'hairiline',

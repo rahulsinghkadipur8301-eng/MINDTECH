@@ -149,6 +149,8 @@ const RAW_MASTER_INGREDIENTS: MasterIngredient[] = [
       { name: 'China Listed Status to Verify with TDS', evidencePage: 7 }
     ],
     image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://youtu.be/-eZkTAJktFA',
+    videoTitle: 'TIMELYS® Skin longevity enhancer',
     sourceRefs: [
       { file: 'Plaquette actifs Greentech 2024-PRINT.pdf', pages: [7], editionYear: 2024, note: 'Listed on p. 7 under Well-ageing / Total Care' }
     ],
@@ -281,6 +283,8 @@ const RAW_MASTER_INGREDIENTS: MasterIngredient[] = [
       { name: 'China Listed (IECIC)', evidencePage: 16 }
     ],
     image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://youtu.be/KdFLlIAE1rE',
+    videoTitle: 'REVERSKIN® Skin volumator and smoothing active',
     sourceRefs: [
       { file: 'Catalogue India_compressed.pdf', pages: [16], editionYear: 2023, note: 'Main skin sheet p. 16' },
       { file: 'Plaquette actifs Greentech 2024-PRINT.pdf', pages: [10], editionYear: 2024, note: 'Firming / anti-sagging section p. 10' }
@@ -449,6 +453,8 @@ const RAW_MASTER_INGREDIENTS: MasterIngredient[] = [
       { name: 'IECIC China Listed', evidencePage: 11 }
     ],
     image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://youtu.be/aC2KDsURwYc',
+    videoTitle: 'EXPOZEN® Madagascar sourcing & soothing red algae active',
     sourceRefs: [
       { file: 'Catalogue India_compressed.pdf', pages: [11], editionYear: 2023, note: 'Sensitive skin sheet p. 11' },
       { file: 'Plaquette Microbiote-PRINT.pdf', pages: [6], editionYear: 2023, note: 'Microbiota & sensitive skin sheet p. 6' },
@@ -575,6 +581,8 @@ const RAW_MASTER_INGREDIENTS: MasterIngredient[] = [
       { name: 'IECIC China Listed', evidencePage: 15 }
     ],
     image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://youtu.be/Mg3NT4CXX3k',
+    videoTitle: 'MYRALYS® Upper eyelid lifter and under-eye rejuvenator',
     sourceRefs: [
       { file: 'Catalogue India_compressed.pdf', pages: [15], editionYear: 2023, note: 'Eye contour active sheet p. 15' },
       { file: 'Plaquette actifs Greentech 2024-PRINT.pdf', pages: [18], editionYear: 2024, note: 'Eye contour group p. 18' }
@@ -913,6 +921,8 @@ const RAW_MASTER_INGREDIENTS: MasterIngredient[] = [
       { name: 'IECIC China Listed', evidencePage: 21 }
     ],
     image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
+    videoUrl: 'https://youtu.be/cF7rNuaV_bE',
+    videoTitle: 'ARCOLYS® Anti-hair graying & self-esteem booster',
     sourceRefs: [
       { file: 'Catalogue India_compressed.pdf', pages: [21], editionYear: 2023, note: 'Anti-greying sheet p. 21' },
       { file: 'Plaquette Hair Care 2021_V02-PRINT.pdf', pages: [3], editionYear: 2023, note: 'Hair care brochure p. 3' },

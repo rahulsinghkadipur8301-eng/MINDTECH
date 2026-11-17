@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ProductItem, SUPPLIER_PROFILES } from '../../data/supplierProductsData';
 import { PartnerLogoRenderer } from '../PartnerLogos';
+import { extractYouTubeVideoId, getVideoThumbnailForUrl } from '../../utils/youtube';
 import { 
   X, 
   FlaskConical, 
@@ -37,8 +38,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [copiedLink, setCopiedLink] = React.useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = React.useState(false);
 
+  React.useEffect(() => {
+    setIsVideoPlaying(false);
+  }, [product?.id]);
+
   if (!product) return null;
 
+  const videoId = extractYouTubeVideoId(product.videoUrl);
+  const videoThumbs = getVideoThumbnailForUrl(product.videoUrl);
   const supplier = SUPPLIER_PROFILES[product.supplierId];
 
   const handleCopyLink = () => {
@@ -219,10 +226,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
 
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-lg border border-emerald-500/20">
-                  {isVideoPlaying ? (
+                  {isVideoPlaying && videoId ? (
                     <div className="relative w-full h-full">
                       <iframe
-                        src="https://www.youtube-nocookie.com/embed/3aa3iMw0ahU?autoplay=1&rel=0&modestbranding=1"
+                        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
                         title={`${product.name} Scientific Video`}
                         className="w-full h-full border-0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -245,14 +252,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       tabIndex={0}
                     >
                       <img
-                        src="/videos/greentech-hairiline-video-cover.jpg"
+                        src={videoThumbs.primary}
                         alt={product.name}
                         className="w-full h-full object-cover group-hover/modalvideo:scale-105 transition-transform duration-500"
                         loading="eager"
                         onError={(e) => {
                           const target = e.currentTarget as HTMLImageElement;
-                          if (!target.src.includes('sddefault.jpg')) {
-                            target.src = 'https://img.youtube.com/vi/3aa3iMw0ahU/sddefault.jpg';
+                          if (target.src !== videoThumbs.fallback) {
+                            target.src = videoThumbs.fallback;
                           }
                         }}
                       />

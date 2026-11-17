@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { MasterIngredient } from '../../types/ingredient';
 import { MASTER_INGREDIENTS, CONCERN_CATEGORIES } from '../../data/masterIngredientsData';
+import { REPLICA_PRODUCTS } from '../../data/greentechReplicaData';
 import { ConcernRail } from './ConcernRail';
 import { ProductTypeTabs } from './ProductTypeTabs';
 import { MasterIngredientCard } from './MasterIngredientCard';
@@ -135,15 +136,58 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
     });
   }, [selectedConcern, selectedProductType, selectedForm, selectedSolubility, searchQuery, selectedSort]);
 
+  const resolveIngredientById = (ingredientId: string): MasterIngredient | null => {
+    const direct = MASTER_INGREDIENTS.find(i => i.id === ingredientId || i.slug === ingredientId);
+    if (direct) return direct;
+
+    const replica = REPLICA_PRODUCTS[ingredientId];
+    if (!replica) return null;
+
+    return {
+      id: replica.id,
+      slug: replica.id,
+      name: replica.name.includes('®') ? replica.name : `${replica.name}®`,
+      partner: 'greentech',
+      productFamily: 'Greentech Active Ingredients 2024',
+      productType: 'bioactive',
+      supplierCode: replica.name.replace(/®/g, '').toUpperCase(),
+      applications: replica.applications,
+      benefitTags: replica.categoryIds,
+      shortBenefit: replica.shortBenefit,
+      description: replica.description,
+      origin: replica.botanicalOrigin || 'Greentech Biotechnologies France',
+      botanicalName: replica.botanicalOrigin,
+      originCountries: ['France'],
+      inci: replica.inci,
+      useLevel: replica.dosage,
+      cosmeticUses: replica.applications,
+      image: replica.image,
+      videoUrl: ingredientId === 'letilys' ? 'https://youtu.be/Wt-qi288jno' : undefined,
+      videoTitle: ingredientId === 'letilys' ? 'GREENTECH - LETILYS®, Radiance modulation & brightening' : undefined,
+      sourceRefs: [
+        { file: replica.sourceDoc || 'Plaquette actifs Greentech 2024-PRINT.pdf', pages: [17], editionYear: 2024 }
+      ],
+      verificationStatus: 'verified',
+      publicApproved: true,
+    };
+  };
+
   const handleOpenSampleModal = (ingredient: MasterIngredient) => {
     setSampleTargetIngredient(ingredient);
     setIsSampleModalOpen(true);
   };
 
   const handleSelectFromMapping = (ingredientId: string) => {
-    const found = MASTER_INGREDIENTS.find(i => i.id === ingredientId);
+    const found = resolveIngredientById(ingredientId);
     if (found) {
       setSelectedIngredient(found);
+    }
+  };
+
+  const handleRequestSampleById = (ingredientId: string) => {
+    const found = resolveIngredientById(ingredientId);
+    if (found) {
+      handleOpenSampleModal(found);
     }
   };
 
@@ -258,12 +302,14 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
       </div>
 
       {/* =========================================================================
-          FEATURED SCIENTIFIC INNOVATION VIDEO (HAIRILINE® SCALP SCIENCE SPOTLIGHT)
+          GREENTECH ACTIVE INNOVATION VIDEO LIBRARY (7 OFFICIAL VIDEOS)
          ========================================================================= */}
       <GreentechVideoSpotlight
         onSelectIngredient={setSelectedIngredient}
         onRequestSample={handleOpenSampleModal}
         hairilineIngredient={hairilineIngredient}
+        onSelectIngredientById={handleSelectFromMapping}
+        onRequestSampleById={handleRequestSampleById}
       />
 
       {/* Authentic Greentech Product Showcase (Exact Replica) */}
