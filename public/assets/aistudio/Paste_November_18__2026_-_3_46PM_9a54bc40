@@ -1,0 +1,1238 @@
+# MASTER TASK: COMPLETE GOOGLE SEO, BRAND SEARCH, FAVICON, SITELINKS & SEARCH VISIBILITY OPTIMIZATION
+
+## PROJECT: MINDTECH BIOTECHNOLOGY INDIA PVT. LTD.
+
+You are a senior Google Technical SEO Engineer, React/TypeScript/Vite Specialist, B2B Chemical Industry Search Strategist, Structured Data Engineer, and Vercel Deployment Expert.
+
+Your task is to conduct a comprehensive technical SEO audit and implement the necessary improvements directly in my existing Mindtech Biotechnology website.
+
+This is an existing production website, not a new project.
+
+### PROJECT DETAILS
+
+- **Company:** Mindtech Biotechnology India Pvt. Ltd.
+- **Preferred Google site name:** Mindtech Biotechnology
+- **Tagline:** NATURE BEYOND THE FUTURE
+- **Production domain:** https://mindtech-bio.com/
+- **Framework:** React 18 + TypeScript + Vite
+- **Styling:** Tailwind CSS
+- **Hosting:** Vercel
+- **Domain registrar:** GoDaddy
+- **Industry:** B2B cosmetic and personal care raw material distribution
+- **Primary market:** India
+- **Business location:** Bawana, New Delhi
+- **Primary conversion actions:** Product enquiries, sample requests, technical documentation requests and quotations
+
+## THE TWO MAIN SEARCH GOALS
+
+### GOAL A — MINDTECH BRAND SEARCH
+
+When someone searches:
+
+- Mindtech Biotechnology
+- Mindtech Biotechnology India
+- Mindtech Biotechnology Pvt Ltd
+- Mindtech cosmetic ingredients
+- Mindtech raw materials
+
+I want my official website to become a highly relevant, recognizable result.
+
+Optimize the homepage, site identity, technical accessibility and brand signals for these searches.
+
+My preferred Google search result appearance is:
+
+**Site name:** Mindtech Biotechnology
+
+**Favicon:** Actual official Mindtech logo
+
+**Title:** Mindtech Biotechnology | Cosmetic Raw Material Supplier India
+
+**Description:** Mindtech Biotechnology supplies cosmetic and personal care ingredients in India, including bio-actives, silicones, specialty esters and surfactants.
+
+Desired sitelink candidates:
+- About Us
+- Product Portfolio
+- Global Partners
+- Greentech Biotechnologies
+- SNS Silcos
+- Fine Organics
+- VVF Limited
+- Contact Us
+
+### GOAL B — GREENTECH SEARCH VISIBILITY
+
+I want Mindtech's Greentech ingredient portfolio to become discoverable to customers looking for Greentech cosmetic ingredients.
+
+Target queries:
+
+- Greentech
+- Greentech India
+- Greentech Biotechnologies
+- Greentech cosmetic ingredients
+- Greentech cosmetic ingredients India
+- Greentech biotechnology ingredients India
+- Greentech cosmetic actives supplier
+- Greentech botanical actives India
+- Greentech Mindtech
+- Mindtech Greentech products
+
+**Important search reality:** Ranking for the broad word "Greentech" is not guaranteed. It may refer to unrelated companies or the manufacturer's own website.
+
+Prioritize accurate supplier-related searches with Indian cosmetic ingredient purchasing intent.
+
+Do not imply that Mindtech owns Greentech, is Greentech's official Indian headquarters or has an exclusive distributorship unless authorization has been independently confirmed.
+
+---
+
+# PHASE 1 — AUDIT THE EXISTING PROJECT BEFORE CHANGING ANYTHING
+
+First inspect the complete React, TypeScript and Vite codebase.
+
+Review:
+
+1. `index.html`
+2. `public/`
+3. `src/`
+4. Application routing
+5. Existing SEO components
+6. Existing structured data
+7. Navbar and footer navigation
+8. Product and supplier page components
+9. Current favicon files
+10. Sitemap and robots.txt
+11. Existing Vercel configuration
+12. Video, images and external resources
+13. Production build configuration
+14. Existing canonical and redirect behavior
+
+Identify whether there are duplicate metadata declarations, outdated favicon references, conflicting canonical tags, broken URLs or client-side rendering problems.
+
+Create a concise baseline report before implementing changes.
+
+Do not overwrite useful SEO work already completed.
+
+**Do not redesign the website.**
+
+Preserve:
+- Original UI and UX
+- Animations and motion effects
+- Interactive supplier and product portfolios
+- Corporate video
+- Desktop responsiveness
+- Tablet and mobile responsiveness
+- All images, galleries and visual assets
+- Existing navigation
+- WhatsApp integration
+- Google Maps integration
+- Contact information
+- Business content
+- Application routes and interactions
+
+---
+
+# PHASE 2 — CONSIDER ACTUAL GOOGLE SEARCH CONSOLE RESULTS
+
+The following results have been observed on 18 November 2026.
+
+### Confirmed Google Search Console Status
+
+Homepage:
+`https://mindtech-bio.com/`
+
+Reported status:
+**URL is on Google**
+
+Page indexing:
+**Page is indexed**
+
+Googlebot:
+**Smartphone**
+
+Crawl:
+**Successful**
+
+Crawl allowed:
+**Yes**
+
+Indexing allowed:
+**Yes**
+
+HTTPS:
+**Page served over HTTPS**
+
+XML sitemap:
+`https://mindtech-bio.com/sitemap.xml`
+
+Sitemap status:
+**Success**
+
+Discovered pages:
+**13**
+
+Submitted:
+**18 November 2026**
+
+Last read:
+**18 November 2026**
+
+These results confirm that Google can access the homepage.
+
+Do not treat the website as unindexed or restart the setup unnecessarily.
+
+### Existing Crawled HTML
+
+Google's crawled HTML already showed:
+
+```html
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+```
+
+The initial HTML also included a title similar to:
+
+`Mindtech Biotechnology — Nature Beyond the Future | Premium Cosmetic & Personal Care Ingredients`
+
+The description described Mindtech as an importer and distributor of cosmetic, personal care and formulation ingredients.
+
+The HTML uses JavaScript module scripts and Vite-generated asset bundles.
+
+Therefore:
+
+- Do not assume the favicon files are missing.
+- Verify whether every referenced favicon actually exists and is served correctly.
+- Check whether Google has cached a previous favicon.
+- Inspect whether page metadata is unique for separate routes.
+- Verify the rendered content of React product pages.
+
+### Other Search Console Results
+
+Google detected:
+
+`https://mindtech-bio.com/videos/mindtech-biotechnology.mp4`
+
+Video indexing status:
+**No video indexed**
+
+Reason:
+**Video isn't on a watch page. It is supplementary content on the page.**
+
+This is not a homepage indexing failure.
+
+Preserve the video and do not unnecessarily change its placement.
+
+A separate video-focused page is optional, only if video search visibility becomes a business goal.
+
+Google also reported two resource-loading problems:
+
+1. An Outfit font resource from `fonts.gstatic.com`
+2. A Google Maps embed resource
+
+Treat them as diagnostic warnings, not confirmed SEO blockers.
+
+Check actual user rendering, fallbacks and Google-rendered content before changing them.
+
+---
+
+# PHASE 3 — REPAIR AND OPTIMIZE THE COMPANY FAVICON
+
+## Objective
+
+Replace the generic globe shown in Google Search with the actual Mindtech Biotechnology brand icon, as far as Google's systems permit.
+
+### Step 1 — Inspect Existing Assets
+
+Search the existing codebase for:
+
+- `favicon.svg`
+- `favicon.ico`
+- `favicon-16x16.png`
+- `favicon-32x32.png`
+- `apple-touch-icon.png`
+- Existing official logo assets
+
+Inspect their actual image content and format.
+
+Check whether all favicon files consistently represent the official Mindtech brand.
+
+The current Search Console property selector appears to display an MT-style icon; investigate whether this is the correct brand asset.
+
+Do not create a new logo if a suitable official brand icon already exists.
+
+### Step 2 — Correct Technical Issues
+
+Check:
+
+- Every favicon URL returns HTTP 200
+- Files return valid image content types
+- No URL returns the React `index.html` fallback
+- Images are not corrupt
+- Images have square proportions
+- Favicon remains recognizable when reduced to small sizes
+- Googlebot can crawl the homepage
+- Googlebot-Image can crawl favicon resources
+- Robots.txt does not block the image paths
+- Favicon paths are stable
+
+Use the original logo and generate missing sizes only when necessary.
+
+Recommended assets:
+
+```text
+public/
+├── favicon.ico
+├── favicon.svg
+├── favicon-16x16.png
+├── favicon-32x32.png
+├── favicon-48x48.png
+├── favicon-512.png
+└── apple-touch-icon.png
+```
+
+Do not create redundant files unnecessarily.
+
+Keep a clear, consistent set of HTML favicon declarations with no conflicting icon sources.
+
+Use the Google-supported ICO or PNG format as the primary search favicon when suitable.
+
+### Step 3 — Validate
+
+Confirm that favicon files appear correctly on:
+
+- Website browser tab
+- Mobile browser
+- Google-accessible homepage HTML
+
+Do not promise that Google will immediately replace the globe. Search appearance is Google's decision and may change after recrawling.
+
+---
+
+# PHASE 4 — GOOGLE SITE NAME & CORPORATE IDENTITY
+
+My preferred Google site name is:
+
+**Mindtech Biotechnology**
+
+Not a generic domain label, unrelated brand or duplicated long description.
+
+Implement or correct the homepage's WebSite structured data.
+
+Use this JSON-LD when no equivalent valid data already exists:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://mindtech-bio.com/#website",
+  "url": "https://mindtech-bio.com/",
+  "name": "Mindtech Biotechnology",
+  "alternateName": "Mindtech Biotechnology India",
+  "publisher": {
+    "@id": "https://mindtech-bio.com/#organization"
+  }
+}
+```
+
+Also implement or maintain an accurate Organization schema containing:
+
+- Legal company name
+- Preferred brand name
+- Official website
+- Authentic company logo
+- Real business address
+- Published business contact details
+- Official social media profiles when verified
+
+Verify the existing organization schema before changing it.
+
+Avoid conflicting names across different structured data blocks.
+
+Use stable `@id` values.
+
+The Organization logo must refer to the real company logo, not an unrelated image or partner logo.
+
+---
+
+# PHASE 5 — HOMEPAGE SEO FOR "MINDTECH BIOTECHNOLOGY"
+
+This phase is essential.
+
+The homepage should be the strongest page for Mindtech branded queries.
+
+### Suggested Homepage SEO Title
+
+Mindtech Biotechnology | Cosmetic Raw Material Supplier India
+
+### Suggested Meta Description
+
+Mindtech Biotechnology supplies cosmetic and personal care ingredients in India, including bio-actives, specialty silicones, emulsifiers, esters and surfactants.
+
+### Suggested Main H1
+
+Mindtech Biotechnology — Cosmetic & Personal Care Ingredients
+
+### Supporting Visible H2 Topics
+
+- Cosmetic Raw Material Distribution in India
+- Global Cosmetic Ingredient Sourcing
+- Specialty Actives, Silicones, Esters & Surfactants
+- Global Manufacturing & Ingredient Partners
+- Technical Documentation & Formulation Support
+- Pan-India Distribution from New Delhi
+- Request Samples & Commercial Quotations
+
+Use these only where they fit the existing website structure.
+
+Preserve:
+
+**NATURE BEYOND THE FUTURE**
+
+as the company's tagline.
+
+Do not add repetitive brand names to every heading.
+
+Make sure the primary brand name and business description are readable in rendered page content, not only inside JavaScript-generated decorative elements.
+
+Check that the homepage has a clear, meaningful H1.
+
+Ensure the title and primary body content describe the same business.
+
+---
+
+# PHASE 6 — HIGH-PRIORITY GREENTECH SEO
+
+Create an accurate, highly discoverable Greentech cosmetic ingredients portfolio experience.
+
+### Step 1 — Audit the Existing Greentech Page
+
+Find its actual URL through the React router and sitemap.
+
+Do not assume a route exists merely because the navigation mentions Greentech.
+
+If it already has a working dedicated route, optimize that page.
+
+If it is only a section or modal, assess whether a dedicated crawlable page is needed.
+
+Preserve the existing interactive product portfolio and Greentech animations.
+
+### Suggested SEO Title
+
+Greentech Cosmetic Ingredients India | Mindtech Biotechnology
+
+### Suggested Meta Description
+
+Explore Greentech cosmetic bio-actives, botanical oils, biotechnology ingredients and skin and hair care formulation ingredients through Mindtech Biotechnology.
+
+### Suggested H1
+
+Greentech Biotechnologies — Cosmetic Actives & Ingredients
+
+### Supporting Headings
+
+- Greentech Cosmetic Ingredients
+- Biotechnology-Derived Cosmetic Actives
+- Botanical Oils & Butters
+- Skin Care Active Ingredients
+- Hair Care Ingredients
+- Microbiota & Skin Barrier Formulation Ingredients
+- Greentech Product Portfolio
+- Product Technical Documentation
+- Request a Sample or Quotation
+
+### Greentech Keyword Targets
+
+Primary:
+- Greentech cosmetic ingredients India
+
+Secondary:
+- Greentech Biotechnologies
+- Greentech botanical ingredients
+- Greentech cosmetic actives
+- Greentech skincare actives India
+- Greentech haircare ingredients
+- Greentech ingredient portfolio
+- Greentech biotechnology products
+- Greentech Mindtech
+
+Use product-specific keywords only where the exact products exist in the supplied catalogues.
+
+### Required Content
+
+Ensure the page has meaningful, original explanations about:
+
+1. Greentech as an ingredient manufacturer or brand
+2. Categories represented in the Mindtech catalogue
+3. Cosmetic formulation applications
+4. Relevant INCI names
+5. Product benefits supported by technical documentation
+6. Technical data sheet availability
+7. Sample and commercial enquiry actions
+8. How Indian buyers can contact Mindtech
+
+Avoid copying long manufacturer product descriptions verbatim.
+
+Do not invent technical specifications.
+
+### Authority and Brand Accuracy
+
+Clearly distinguish:
+
+- Greentech as the supplier/manufacturer
+- Mindtech Biotechnology as the company presenting or distributing its sourced portfolio
+
+Use official manufacturer links where helpful.
+
+Do not claim official authorization or exclusivity without supporting documentation.
+
+The purpose is to build a genuinely useful supplier portfolio, not impersonate Greentech.
+
+---
+
+# PHASE 7 — COMPLETE B2B KEYWORD STRATEGY
+
+Create a page-to-keyword map.
+
+Avoid making every page compete for the same primary keyword.
+
+## Homepage Keywords
+
+- Mindtech Biotechnology
+- cosmetic raw material supplier India
+- cosmetic ingredients distributor India
+- personal care ingredients supplier India
+- specialty cosmetic raw materials India
+
+## Delhi Location Keywords
+
+- cosmetic raw material supplier Delhi
+- cosmetic ingredients distributor New Delhi
+- personal care raw material supplier Delhi NCR
+- cosmetic ingredient suppliers Bawana
+
+## Greentech Keywords
+
+- Greentech cosmetic ingredients India
+- Greentech biotechnology actives
+- Greentech botanical oils
+- cosmetic biotech ingredients India
+
+## SNS Silcos Keywords
+
+- SNS Silcos India
+- silicone elastomer gel supplier India
+- specialty cosmetic silicone fluids
+- silicone crosspolymer cosmetic ingredients
+- cosmetic silicone film formers
+
+## Fine Organics Keywords
+
+- Fine Organics cosmetic ingredients
+- specialty esters supplier India
+- cosmetic emulsifiers supplier
+- glyceryl ester cosmetic ingredients
+- sorbitan ester supplier
+- cosmetic wax ingredients
+
+## VVF Keywords
+
+- VVF personal care ingredients
+- cosmetic surfactants India
+- SCI surfactant supplier
+- BTMS hair conditioning ingredients
+- syndet base supplier India
+- cationic conditioning agents
+
+## Product and Application Keywords
+
+- cosmetic active ingredients
+- skin care formulation raw materials
+- hair conditioning raw materials
+- anti-ageing cosmetic actives
+- mild cleansing surfactants
+- cosmetic botanical oils
+- cosmetic emulsifier ingredients
+- silicone ingredients for hair care
+- specialty waxes for cosmetics
+- cosmetic raw material sample request
+
+For each keyword cluster, identify:
+
+- Search intent
+- Best existing landing page
+- Primary keyword
+- Supporting keywords
+- Recommended H1
+- Unique meta title
+- Meta description
+- Relevant internal links
+- Technical content requirements
+- Conversion CTA
+
+Do not claim exact search volumes without data from an actual keyword research source.
+
+Do not add a useless `meta keywords` tag.
+
+---
+
+# PHASE 8 — OPTIMIZE ALL EXISTING SUPPLIER PAGES
+
+Implement unique SEO metadata for all real supplier pages.
+
+| Page | Suggested SEO Title |
+|---|---|
+| Homepage | Mindtech Biotechnology \| Cosmetic Raw Material Supplier India |
+| About Us | About Mindtech Biotechnology \| Cosmetic Ingredient Distribution |
+| Global Partners | Global Cosmetic Ingredient Partners \| Mindtech |
+| Product Portfolio | Cosmetic Ingredients & Raw Material Portfolio \| Mindtech |
+| Greentech | Greentech Cosmetic Ingredients India \| Mindtech |
+| SNS Silcos | SNS Silcos \| Cosmetic Silicones & Elastomer Gels India |
+| Fine Organics | Fine Organics \| Cosmetic Esters & Emulsifiers |
+| VVF Limited | VVF Limited \| Surfactants & Conditioning Agents |
+| Contact Us | Contact Mindtech Biotechnology \| Bawana, Delhi |
+
+Use these as proposed titles, not guaranteed exact snippets in Google.
+
+Inspect actual existing routes.
+
+Do not invent URLs.
+
+### Individual Product Pages
+
+Where product-specific pages exist, create or validate unique titles using:
+
+`[Product Name] | INCI & Cosmetic Applications | Mindtech`
+
+Include genuine, verified product details such as:
+
+- Product name
+- Supplier/manufacturer
+- INCI name
+- Ingredient category
+- Application
+- Available documentation
+- Relevant technical information
+- Sample enquiry
+- Quotation CTA
+
+Do not fabricate dosage ranges or chemical benefits.
+
+Avoid indexable thin pages with only a heading and enquiry button.
+
+---
+
+# PHASE 9 — IMPLEMENT PROFESSIONAL GOOGLE SITELINK READINESS
+
+I want Google to consider showing clickable sections under the main Mindtech result.
+
+Preferred links:
+
+1. About Us
+2. Product Portfolio
+3. Global Partners
+4. Greentech
+5. SNS Silcos
+6. Fine Organics
+7. VVF Limited
+8. Contact Us
+
+### Required Implementation
+
+Inspect current site architecture.
+
+Confirm these sections have real, working URLs where appropriate.
+
+Create a logical hierarchy:
+
+```text
+HOME
+│
+├── ABOUT US
+│
+├── PRODUCT PORTFOLIO
+│   ├── Product Categories
+│   └── Individual Product Pages
+│
+├── GLOBAL PARTNERS
+│   ├── Greentech Biotechnologies
+│   ├── SNS Silcos
+│   ├── Fine Organics
+│   └── VVF Limited
+│
+└── CONTACT US
+```
+
+This is a conceptual structure. Reuse actual existing routes and components.
+
+Do not force the project to adopt these exact paths.
+
+Ensure:
+
+- Navbar links are crawlable
+- Footer links are crawlable
+- Important pages have descriptive headings
+- Internal anchor text is useful and concise
+- Every important page links to related pages
+- No broken product links exist
+- Canonical URLs are correct
+- Page metadata is unique
+
+Use normal HTML `<a href>` links or framework links that render proper anchor elements.
+
+Do not rely only on buttons, onclick handlers or homepage hash navigation for important indexable pages.
+
+Google chooses sitelinks automatically.
+
+Do not implement fake sitelinks metadata or promise a specific sitelinks layout.
+
+---
+
+# PHASE 10 — FIX REACT JAVASCRIPT SEO LIMITATIONS
+
+This is a particularly important technical task.
+
+The Search Console screenshot displays the original HTML containing Vite JavaScript asset references.
+
+Google can render JavaScript, but every important page must be verified independently.
+
+### Audit
+
+For the homepage and all 13 sitemap URLs:
+
+1. Fetch the initial HTML.
+2. Inspect the rendered HTML after JavaScript.
+3. Verify that important page text is present.
+4. Verify the correct page title is present.
+5. Verify each page's meta description.
+6. Check canonical tags.
+7. Check headings.
+8. Check product names and descriptions.
+9. Check internal links.
+10. Check robots directives.
+11. Check HTTP status.
+12. Check structured data.
+
+Inspect what Google sees using Search Console screenshots and HTML when available.
+
+### Critical Problem to Avoid
+
+Every route must not accidentally expose only:
+
+- The same generic homepage title
+- The same generic meta description
+- A blank `<div id="root">`
+- An uninformative JavaScript application shell
+- A homepage canonical URL
+- An HTTP 200 response for nonexistent pages
+
+If necessary, implement reliable per-route metadata and a compatible prerendering solution.
+
+Prefer incremental changes within the existing Vite/React architecture.
+
+Do not migrate the entire application to Next.js or another framework merely to improve SEO.
+
+A framework migration would require separate justification.
+
+Avoid breaking animations, client-side routing and existing functionality.
+
+---
+
+# PHASE 11 — SITEMAP, ROBOTS.TXT & INDEXABILITY
+
+The sitemap is already accepted by Google.
+
+**Do not delete or recreate it unnecessarily.**
+
+Expected project structure:
+
+```text
+mindtech-website/
+├── public/
+│   ├── sitemap.xml
+│   ├── robots.txt
+│   ├── favicon.ico
+│   └── existing-assets/
+├── index.html
+├── src/
+├── package.json
+└── existing-config-files
+```
+
+### Robots.txt
+
+Verify that the production robots.txt contains rules appropriate for public pages.
+
+A simple starting configuration is:
+
+```text
+User-agent: *
+Allow: /
+
+Sitemap: https://mindtech-bio.com/sitemap.xml
+```
+
+Preserve any necessary, valid existing directives.
+
+### XML Sitemap
+
+Audit the 13 discovered URLs.
+
+For every sitemap URL, verify:
+
+- It exists
+- It is publicly accessible
+- It returns the correct page
+- It is intended for indexing
+- It has a correct canonical
+- It does not duplicate another page
+- It is linked internally
+- It does not accidentally return a soft 404
+
+Add new product pages to the sitemap only when they are genuinely published and suitable for indexing.
+
+Use real modification timestamps if including `<lastmod>`.
+
+Avoid invented dates and automatic daily modification dates for unchanged content.
+
+### Domain Canonicalization
+
+Preferred domain:
+
+`https://mindtech-bio.com/`
+
+Check www and non-www behavior.
+
+Use consistent HTTPS canonical URLs.
+
+Configure appropriate permanent redirects to the preferred domain.
+
+Do not change the primary domain unnecessarily.
+
+---
+
+# PHASE 12 — STRUCTURED DATA IMPLEMENTATION
+
+Inspect the existing JSON-LD first.
+
+Implement or repair applicable Schema.org structured data.
+
+Relevant types:
+
+- WebSite
+- Organization
+- BreadcrumbList
+- Product, where appropriate
+- LocalBusiness, only when applicable and accurately supported
+
+### Organization Information
+
+Name:
+Mindtech Biotechnology India Pvt. Ltd.
+
+Alternate display name:
+Mindtech Biotechnology
+
+Website:
+https://mindtech-bio.com/
+
+Address:
+Ground Floor-181, Pkt-D, Sec-3, Bawana DSIDC City, Opp. Delhi Jal Board, Bawana, New Delhi – 110039, India.
+
+MSME Registration:
+UDYAM-DL-06-0157900
+
+Primary sales contact:
+Ajay Patel
+
+Phone:
++91-8368947579
+
+Email:
+sales@mindtec.org.in
+
+Use contact information only in relevant contexts.
+
+Verify the company's actual preferred contact details.
+
+### Breadcrumbs
+
+If valid hierarchical supplier and product routes exist, add appropriate BreadcrumbList schema.
+
+### Product Schema
+
+Only add Product markup if product pages contain accurate underlying information.
+
+Do not fabricate:
+- Prices
+- Reviews
+- Ratings
+- Availability
+- Supplier certifications
+- Commercial offers
+
+Structured data must accurately represent content visible to users.
+
+Validate JSON-LD and eliminate duplicate, conflicting entities.
+
+---
+
+# PHASE 13 — REPAIR THIRD-PARTY RESOURCE WARNINGS SAFELY
+
+### Google Fonts
+
+Search Console reported a resource-loading error involving the Outfit font.
+
+The site also references other Google Fonts.
+
+Check:
+
+- Actual browser font rendering
+- Loading performance
+- Network failures
+- Fallback fonts
+- Whether the resource is critical to content visibility
+
+If justified, consider local font hosting using a suitable compatible approach.
+
+Do not unnecessarily change typography.
+
+### Google Maps
+
+Search Console reported a resource-loading error for the embedded Bawana map.
+
+Check whether:
+
+- The iframe loads for users
+- The map is visible on desktop and mobile
+- The business address remains readable
+- The Get Directions link works
+- The iframe has an accessible title
+- Lazy loading works correctly
+
+Retain Google Maps if functional.
+
+A Googlebot resource warning alone is not a reason to remove the map.
+
+### Corporate Video
+
+Preserve the existing video.
+
+Google found it successfully, but considers it supplementary content.
+
+Do not interfere with normal homepage SEO.
+
+A dedicated video page can be proposed separately if useful.
+
+---
+
+# PHASE 14 — IMAGE SEO & PERFORMANCE
+
+Inspect images, logos, product photos and supplier visual assets.
+
+Improve:
+
+- Relevant image alt text
+- Appropriate image dimensions
+- Loading strategy
+- Compression
+- Responsive images
+- Consistent brand logo assets
+- Image filenames where appropriate
+- Largest Contentful Paint
+- Interaction to Next Paint
+- Cumulative Layout Shift
+
+Do not remove premium animations or damage visual effects.
+
+Do not convert decorative background images into keyword-stuffed content.
+
+Use actual image descriptions.
+
+Preserve existing aesthetic design.
+
+---
+
+# PHASE 15 — BUILD REAL BRAND AUTHORITY
+
+Technical SEO alone cannot guarantee top rankings.
+
+Create a separate brand authority and business visibility action plan.
+
+### Mindtech Brand Signals
+
+Recommend accurate, authorized actions such as:
+
+1. Ensure consistent business name across official profiles.
+2. Link the website from official company social profiles.
+3. Use the correct website on company business listings.
+4. Maintain consistent company contact information.
+5. Add verified company profile information.
+6. Obtain legitimate mentions or links from relevant industry organizations.
+7. Seek an authentic supplier-directory listing where appropriate.
+8. Publish original ingredient and formulation resources.
+9. Make the company contact and location information easy to find.
+10. Keep the website updated with genuine business information.
+
+### Greentech Search Authority
+
+To improve Greentech-related relevance:
+
+- Maintain a dedicated informative Greentech portfolio page.
+- Include real product names and categories.
+- Use descriptive links to the Greentech portfolio.
+- Link to relevant official manufacturer references.
+- Include accurate technical data where authorized.
+- Obtain a manufacturer or partner website mention only if the business relationship supports it.
+- Publish useful Greentech-specific formulation information.
+
+Never buy spam backlinks or create fake endorsements.
+
+Do not claim the company is officially authorized without documentation.
+
+### Google Business Profile
+
+If Mindtech has an eligible, staffed physical business location serving customers, recommend verifying or optimizing its Google Business Profile with the owner's authorization.
+
+Do not create false locations, duplicate listings or imply a profile is already claimed.
+
+The goal is accurate corporate discoverability, not manipulating Google.
+
+---
+
+# PHASE 16 — SEO CONTENT IDEAS FOR FUTURE ORGANIC TRAFFIC
+
+Recommend useful content based on Mindtech's real ingredient portfolio.
+
+Potential articles:
+
+1. How to Select Cosmetic Raw Materials for Product Formulation
+2. Cosmetic Active Ingredients for Skin Care Formulators
+3. Understanding Silicone Elastomer Gels in Cosmetics
+4. Selecting Emulsifiers for Personal Care Formulations
+5. Specialty Esters in Skin and Hair Care Products
+6. SCI and Syndet Ingredients for Mild Cleansing
+7. Botanical Oils in Cosmetic Formulation
+8. Understanding COA, TDS and INCI Documentation
+9. Hair Conditioning Ingredients and BTMS Systems
+10. Evaluating Specialty Cosmetic Ingredient Suppliers in India
+
+These are future opportunities.
+
+Do not automatically publish thin or unverified technical articles.
+
+Require scientifically accurate content and appropriate source review.
+
+---
+
+# PHASE 17 — BRAND SEARCH PERFORMANCE MONITORING
+
+Create a practical Google Search Console measurement plan.
+
+### Track These Search Queries
+
+Brand:
+- Mindtech Biotechnology
+- Mindtech Biotechnology India
+- Mindtech cosmetic ingredients
+
+Supplier:
+- Greentech
+- Greentech India
+- Greentech cosmetic ingredients
+- Greentech Mindtech
+
+Commercial:
+- cosmetic raw material supplier India
+- cosmetic ingredient distributor Delhi
+- personal care ingredients supplier India
+
+### Track
+
+- Impressions
+- Clicks
+- Average position
+- Click-through rate
+- Indexed URLs
+- Not-indexed URLs
+- Queries generating visibility
+- Supplier page visibility
+- Product page visibility
+
+Record baseline values and compare at 7, 14 and 30 days, allowing for Search Console reporting delays.
+
+Do not invent performance figures.
+
+Do not claim top rankings without evidence.
+
+If Search Console access is unavailable, provide the exact steps needed for the website owner to obtain the data.
+
+---
+
+# PHASE 18 — FINAL BUILD, DEPLOYMENT & QUALITY ASSURANCE
+
+After implementing changes:
+
+1. Run the production build.
+2. Check TypeScript errors.
+3. Check SEO metadata.
+4. Validate structured data.
+5. Validate sitemap XML.
+6. Verify robots.txt.
+7. Verify all existing favicon files.
+8. Verify every live canonical URL.
+9. Check all 13 sitemap URLs.
+10. Test navigation and internal links.
+11. Test page content rendering.
+12. Check mobile, tablet and desktop layouts.
+13. Check supplier page functionality.
+14. Test contact and WhatsApp buttons.
+15. Confirm map functionality.
+16. Confirm video functionality.
+17. Confirm production hosting behavior.
+18. Compare functionality before and after changes.
+
+Deploy using the existing authorized project deployment workflow.
+
+If production deployment access is unavailable, complete the code changes and clearly state what remains to be deployed.
+
+Do not claim a successful deployment without verification.
+
+---
+
+# REQUIRED FINAL DELIVERABLE
+
+When the task is complete, provide a professional SEO implementation report.
+
+## Section A — Website SEO Status
+
+Report:
+
+- Homepage indexing status based on the provided Search Console evidence
+- Sitemaps
+- Robots.txt
+- Canonicals
+- Metadata
+- Favicons
+- Structured data
+- Search engine rendering
+- Internal links
+
+Clearly distinguish previously confirmed status from newly verified results.
+
+## Section B — Actual Code Changes
+
+Show:
+
+- Files created
+- Files modified
+- Favicon corrections
+- Meta title updates
+- Meta description updates
+- Schema updates
+- Routing improvements
+- Sitemap adjustments
+- JavaScript rendering improvements
+
+## Section C — Brand Search Readiness
+
+Explain how the website has been optimized for:
+
+- Mindtech Biotechnology
+- Mindtech Biotechnology India
+- Greentech cosmetic ingredients India
+- Greentech Mindtech
+- Other relevant ingredient-related searches
+
+Be clear that these changes improve eligibility and relevance but cannot guarantee specific rankings.
+
+## Section D — Sitelinks Readiness
+
+List the actual eligible pages for potential Google Sitelinks.
+
+Identify missing dedicated pages and important internal linking issues.
+
+## Section E — Page-Level Keyword Map
+
+Provide a table with:
+
+- Actual URL
+- Primary keyword
+- Secondary keywords
+- SEO title
+- Meta description
+- H1
+- Canonical URL
+- Indexability status
+- Internal linking suggestions
+
+## Section F — Tests
+
+Show:
+
+- Production build results
+- HTTP response verification
+- Favicon accessibility results
+- Sitemap validation
+- Structured data validation
+- React rendered content verification
+- Mobile and desktop checks
+- Any issues not yet resolved
+
+## Section G — Google Search Console Instructions
+
+Provide the exact actions required after deployment:
+
+1. Inspect the homepage after significant changes.
+2. Test and inspect the Greentech portfolio URL.
+3. Submit newly published important URLs where appropriate.
+4. Verify sitemap URLs are accurate.
+5. Check Page Indexing.
+6. Monitor Performance search queries.
+7. Allow normal recrawling for site name and favicon updates.
+
+Avoid repeatedly requesting indexing for unchanged pages.
+
+---
+
+# NON-NEGOTIABLE FINAL RULES
+
+1. Do not redesign the existing website.
+2. Do not remove or degrade existing animations.
+3. Do not break React routes.
+4. Do not replace existing official company branding.
+5. Do not remove the corporate video merely because it is not video-indexed.
+6. Do not remove Google Maps due to a resource warning alone.
+7. Do not invent supplier authorizations or certifications.
+8. Do not invent product specifications.
+9. Do not keyword-stuff.
+10. Do not create fake ratings, reviews or endorsements.
+11. Do not unnecessarily replace existing valid sitemap and favicon files.
+12. Do not guarantee Google rankings, sitelinks or an immediate favicon update.
+13. Do not change important commercial contact information.
+14. Do not claim all 13 pages are indexed merely because they were discovered.
+15. Do not claim tests have passed without actually running them.
+
+## SUCCESS DEFINITION
+
+The website should have:
+
+- A verified, accessible official company favicon
+- Correct preferred website name signals
+- Strong homepage relevance for Mindtech Biotechnology
+- A well-optimized Greentech ingredient portfolio
+- Unique metadata for supplier and product pages
+- Accurate, crawlable internal links
+- Reliable search-engine-readable React content
+- Valid structured data
+- A functioning sitemap
+- Correct canonical URLs
+- Clean technical SEO
+- Stronger eligibility for Google Sitelinks
+- A measurable organic search performance plan
+
+**FINAL BUSINESS GOAL:**
+
+Make Mindtech Biotechnology a professional, technically optimized and discoverable corporate website that is strongly associated with its own brand and accurately connected to its supplier and cosmetic ingredient portfolio—without sacrificing any of its existing design quality or functionality.
+
+Perform the actual implementation, not merely a list of recommendations. Clearly report what was changed, verified, and still requires action.

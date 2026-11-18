@@ -38,7 +38,7 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
 
           <div className="inline-flex items-center space-x-2 text-[13px] sm:text-[14.5px] font-semibold text-emerald-900 bg-emerald-50 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-emerald-200/60 self-start md:self-auto shadow-2xs">
             <Award className="w-4 h-4 text-emerald-700" />
-            <span>Direct Authorized Indian Distributor</span>
+            <span>Indian Ingredient Supply Partner</span>
           </div>
         </div>
 
@@ -60,14 +60,14 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                   {/* Brand Logo Presentation Box - Clickable if internalRoute exists */}
                   {partner.internalRoute ? (
                     <a
-                      href={`#${partner.internalRoute.replace('/', '')}`}
+                      href={partner.internalRoute}
                       onClick={(e) => {
                         e.preventDefault();
-                        window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        window.history.pushState(null, '', partner.internalRoute!);
+                        window.dispatchEvent(new PopStateEvent('popstate'));
                       }}
                       className="bg-white px-5 py-3 rounded-2xl border border-emerald-200/80 shadow-2xs inline-flex items-center justify-center min-h-[68px] hover:border-emerald-500 hover:shadow-lg hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 group/logo relative cursor-pointer"
-                      title={`Explore dedicated ${partner.name} showcase`}
+                      title={`Explore ${partner.name} showcase at Mindtech Biotechnology`}
                     >
                       <PartnerLogoRenderer partnerId={partner.id} height={54} className="group-hover/logo:scale-110 transition-transform duration-300" />
                       <span className="absolute top-2 right-2 text-emerald-700 opacity-80 group-hover/logo:opacity-100 group-hover/logo:translate-x-0.5 group-hover/logo:-translate-y-0.5 transition-all">
@@ -87,7 +87,7 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                     </span>
                     <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-700 text-[10.5px] font-semibold flex items-center space-x-1">
                       <ShieldCheck className="w-3 h-3 text-emerald-600" />
-                      <span>Official Principal</span>
+                      <span>Global Partner</span>
                     </span>
                   </div>
                 </div>
@@ -97,11 +97,11 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                   <div className="flex items-center justify-between gap-2">
                     {partner.internalRoute ? (
                       <a
-                        href={`#${partner.internalRoute.replace('/', '')}`}
+                        href={partner.internalRoute}
                         onClick={(e) => {
                           e.preventDefault();
-                          window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                          window.history.pushState(null, '', partner.internalRoute!);
+                          window.dispatchEvent(new PopStateEvent('popstate'));
                         }}
                         className="inline-flex items-center space-x-1.5 text-xl font-extrabold text-[#072414] tracking-tight hover:text-emerald-700 transition-colors group/title cursor-pointer"
                         title={`Open ${partner.name} dedicated showcase`}
@@ -117,11 +117,11 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
 
                     {partner.internalRoute && (
                       <a
-                        href={`#${partner.internalRoute.replace('/', '')}`}
+                        href={partner.internalRoute}
                         onClick={(e) => {
                           e.preventDefault();
-                          window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                          window.history.pushState(null, '', partner.internalRoute!);
+                          window.dispatchEvent(new PopStateEvent('popstate'));
                         }}
                         className="text-xs font-black text-white bg-gradient-to-r from-emerald-600 to-[#072414] hover:from-emerald-500 hover:to-[#0c4f26] px-3.5 py-1.5 rounded-xl border border-emerald-400 shadow-xs hover:shadow-md transition-all inline-flex items-center space-x-1.5 group/link cursor-pointer hover:-translate-y-0.5 shrink-0"
                         title={`Explore dedicated ${partner.name} showcase`}
@@ -183,11 +183,11 @@ export const GlobalPartnersSection: React.FC<GlobalPartnersProps> = ({ onOpenInq
                 <div className="pt-2.5 border-t border-gray-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
                   {partner.internalRoute ? (
                     <a
-                      href={`#${partner.internalRoute.replace('/', '')}`}
+                      href={partner.internalRoute}
                       onClick={(e) => {
                         e.preventDefault();
-                        window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        window.history.pushState(null, '', partner.internalRoute!);
+                        window.dispatchEvent(new PopStateEvent('popstate'));
                       }}
                       className="inline-flex items-center justify-center space-x-2 text-[13.5px] font-bold text-white bg-emerald-800 hover:bg-emerald-900 px-4 py-2 rounded-xl shadow-xs hover:shadow-md transition-all group/btn cursor-pointer"
                       title={`Explore dedicated ${partner.name} showcase`}

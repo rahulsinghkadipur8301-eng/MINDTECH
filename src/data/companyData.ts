@@ -1,5 +1,6 @@
 export interface IndustrySegment {
   id: string;
+  slug: string;
   title: string;
   subtitle: string;
   description: string;
@@ -47,6 +48,7 @@ export const COMPANY_DETAILS = {
 export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
   {
     id: "skincare",
+    slug: "skin-care",
     title: "Skin Care & Anti-Pigmentation",
     subtitle: "Advanced Radiance, Barrier Repair & Melanin Regulation",
     description: "High-efficacy actives, skin brighteners, ceramides, and hydrators formulated for lightweight creams, targeted serums, and soothing emulsions.",
@@ -61,6 +63,7 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
   },
   {
     id: "haircare",
+    slug: "hair-care",
     title: "Hair Care & Conditioning",
     subtitle: "Fiber Strengthening, Cuticle Smoothing & Scalp Health",
     description: "High-performance conditioning polymers, hydrolyzed proteins, and bio-actives for frizz control, strand nourishment, and scalp revitalization.",
@@ -75,6 +78,7 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
   },
   {
     id: "suncare",
+    slug: "sun-care",
     title: "Sun Care & Photoprotection",
     subtitle: "Broad-Spectrum UVA/UVB Shields & Daily Defense",
     description: "Photostable organic and inorganic UV filters designed for comfortable everyday sunscreens, anti-photoageing lotions, and zero white-cast finishes.",
@@ -89,6 +93,7 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
   },
   {
     id: "color-cosmetics",
+    slug: "color-cosmetics",
     title: "Color Cosmetics & Make-up",
     subtitle: "Sensory Glides, Velvety Primers & Long-Wear Fixatives",
     description: "Silicone elastomer gels, resin film formers, and volatility modifiers for lipsticks, foundations, waterproof eyeliners, and velvety matte finishes.",
@@ -103,6 +108,7 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
   },
   {
     id: "cleansing",
+    slug: "bath-body",
     title: "Bath, Body & Mild Cleansing",
     subtitle: "Gentle Sulfate-Free Foams & Skin-Comfort Surfactants",
     description: "Plant-derived glucosides, isethionates, and betaines delivering rich, velvety lather while respecting delicate skin and scalp moisture barriers.",
@@ -117,6 +123,7 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
   },
   {
     id: "biotech-actives",
+    slug: "biotechnology",
     title: "Active Bio-Technology & Greentech",
     subtitle: "Clinically Validated Cellular & Botanical Innovations",
     description: "Patented fermentation actives, marine polysaccharides, and standardized plant extracts providing targeted cellular rejuvenation and barrier defense.",
@@ -157,7 +164,7 @@ export const GLOBAL_PARTNERS: GlobalPartner[] = [
     badge: "Sustainable Chemistry",
     image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
     logoUrl: "/logos/fine-organics.png",
-    internalRoute: "/portfolio/fine-organics",
+    internalRoute: "/suppliers/fine-organics",
     internalLabel: "Explore Catalogue",
     categories: ["Emollients", "Specialty Esters", "Functional Fluids", "Eco-friendly Ingredients"],
     keyStrengths: [
@@ -175,7 +182,7 @@ export const GLOBAL_PARTNERS: GlobalPartner[] = [
     badge: "Oleochemicals & Cleansing",
     image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1200&q=80",
     logoUrl: "/logo.gif",
-    internalRoute: "/portfolio/vvf-limited",
+    internalRoute: "/suppliers/vvf-limited",
     internalLabel: "Explore Catalogue",
     categories: ["Surfactants", "Emollients", "Specialty Chemicals", "Oleochemicals"],
     keyStrengths: [

@@ -157,25 +157,25 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
             </h4>
             <ul className="space-y-1.5 text-[13px]">
               <li>
-                <a href="#hero" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="/" onClick={(e) => { e.preventDefault(); window.history.pushState(null, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Home</span>
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="/#about" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>About Us</span>
                 </a>
               </li>
               <li>
-                <a href="#vision-mission" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="/#vision-mission" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Vision & Mission</span>
                 </a>
               </li>
               <li>
-                <a href="#portfolio" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="/#portfolio" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Global Partners &amp; Portfolio</span>
                 </a>
@@ -251,13 +251,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
                 </a>
               </li>
               <li>
-                <a href="#why-us" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="/#why-us" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Why Choose Us</span>
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a href="/#contact" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Contact &amp; Hub</span>
                 </a>
@@ -273,13 +273,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
             <ul className="space-y-1.5 text-[13px]">
               {INDUSTRY_SEGMENTS.map((seg) => (
                 <li key={seg.id}>
-                  <button
-                    onClick={() => onOpenInquiry(seg.title)}
+                  <a
+                    href={`/business-lines/${seg.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.history.pushState(null, '', `/business-lines/${seg.slug}`);
+                      window.dispatchEvent(new PopStateEvent('popstate'));
+                    }}
                     className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5 text-left cursor-pointer"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
                     <span>{seg.title}</span>
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -337,21 +342,21 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-3">
             <div className="flex items-center space-x-2 text-[13px] font-semibold text-emerald-300">
               <Award className="w-4 h-4 text-emerald-400" />
-              <span>Direct Manufacturing Alliances & Authorized Principals:</span>
+              <span>Global Ingredient Principals &amp; Supplier Portfolio:</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full md:w-auto">
               {GLOBAL_PARTNERS.map((partner) => (
                 partner.internalRoute ? (
                   <a
                     key={partner.id}
-                    href={`#${partner.internalRoute.replace('/', '')}`}
+                    href={partner.internalRoute}
                     onClick={(e) => {
                       e.preventDefault();
-                      window.location.hash = `#${partner.internalRoute!.replace('/', '')}`;
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      window.history.pushState(null, '', partner.internalRoute!);
+                      window.dispatchEvent(new PopStateEvent('popstate'));
                     }}
                     className="bg-white/95 hover:bg-white rounded-xl px-3 py-1.5 shadow-2xs border border-white/20 hover:border-emerald-400 hover:shadow-md hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer group"
-                    title={`Explore dedicated ${partner.name} showcase`}
+                    title={`Explore ${partner.name} ingredient portfolio at Mindtech Biotechnology`}
                   >
                     <PartnerLogoRenderer partnerId={partner.id} height={26} className="group-hover:scale-110 transition-transform duration-300" />
                   </a>
@@ -360,7 +365,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
                     key={partner.id}
                     onClick={() => onOpenInquiry(`${partner.name} - Sourcing Portfolio`)}
                     className="bg-white/95 hover:bg-white rounded-xl px-3 py-1.5 shadow-2xs border border-white/20 hover:border-emerald-400 hover:shadow-md hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer group"
-                    title={`Authorized distributor for ${partner.name}`}
+                    title={`Explore ${partner.name} sourcing portfolio`}
                   >
                     <PartnerLogoRenderer partnerId={partner.id} height={26} className="group-hover:scale-110 transition-transform duration-300" />
                   </div>

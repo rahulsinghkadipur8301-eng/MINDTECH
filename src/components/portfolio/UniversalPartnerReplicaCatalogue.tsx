@@ -243,9 +243,9 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
             2. PAGE TITLE & LIVE SEARCH (EXACT REPLICA)
            ========================================================================= */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-gray-100 pb-3">
-          <h1 className="text-3xl sm:text-4xl text-[#1a1a1a] font-light tracking-tight font-['Outfit']">
+          <h2 className="text-3xl sm:text-4xl text-[#1a1a1a] font-light tracking-tight font-['Outfit']">
             {searchQuery ? `Search Results: "${searchQuery}"` : activeCategory.heading}
-          </h1>
+          </h2>
 
           <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-between lg:justify-end">
             {/* Section-Level Sample (100g) & Quotation Quick Buttons */}

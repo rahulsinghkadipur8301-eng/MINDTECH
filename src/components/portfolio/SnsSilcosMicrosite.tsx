@@ -893,7 +893,7 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
                 Global Quality Standards, Warehoused at Bawana Hub
               </h2>
               <p className="text-sm text-emerald-100/80 leading-relaxed">
-                As the authorized distribution partner for SNS Silcos, Mindtech Biotechnology provides formulators across India with direct access to certified specialty silicones, complete with batch-to-batch analytical traceability.
+                Through Mindtech Biotechnology&apos;s dedicated SNS Silcos portfolio, formulators across India gain direct access to specialty silicones complete with batch-to-batch analytical traceability and Indian warehouse supply.
               </p>
 
               <div className="space-y-3 pt-2">

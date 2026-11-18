@@ -114,7 +114,7 @@ export const MasterIngredientDetailModal: React.FC<MasterIngredientDetailModalPr
                   Manufactured by Greentech France
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-mono border border-white/20">
-                  Exclusively Distributed by Mindtech India
+                  Supplied in India by Mindtech Biotechnology
                 </span>
                 {ingredient.verificationStatus === 'needs-review' && (
                   <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[11px] border border-amber-400/40">

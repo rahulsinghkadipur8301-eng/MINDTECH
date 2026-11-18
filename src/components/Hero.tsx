@@ -65,15 +65,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry, onOpenExplorer }) => 
 
             {/* Main Headline */}
             <div className="space-y-2.5">
-              <h1 className="text-[34px] sm:text-[42px] md:text-[48px] lg:text-[42px] xl:text-[50px] font-black text-[#072414] tracking-tight leading-[1.14] font-['Outfit']">
-                Reliable Sourcing, Quality & <br className="hidden sm:inline" />
+              <h1 className="text-[32px] sm:text-[40px] md:text-[46px] lg:text-[40px] xl:text-[48px] font-black text-[#072414] tracking-tight leading-[1.14] font-['Outfit']">
+                Mindtech Biotechnology — <br className="hidden sm:inline" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-800 via-emerald-700 to-green-600">
-                  Formulation Support
+                  Cosmetic &amp; Personal Care Ingredients
                 </span>
               </h1>
 
               <p className="text-[18px] sm:text-[19.5px] text-gray-700 leading-relaxed font-normal">
-                We combine international sourcing capabilities with responsive local support to deliver dependable ingredients for your formulation success.
+                Reliable sourcing, quality assurance &amp; formulation support across bio-actives, specialty silicones, emulsifiers, esters and surfactants in India.
               </p>
 
               {/* The 4 Core Capabilities */}

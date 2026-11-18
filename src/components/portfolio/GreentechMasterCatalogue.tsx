@@ -240,24 +240,24 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
               </span>
 
               <span className="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-mono border border-white/20">
-                Indian Partner: Mindtech Biotechnology
+                Indian Supplier: Mindtech Biotechnology
               </span>
             </div>
 
             <div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight font-['Outfit']">
-                Science-Backed Ingredients.{' '}
+                Greentech Biotechnologies —{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-green-400">
-                  Solutions For What’s Next.
+                  Cosmetic Actives &amp; Ingredients
                 </span>
               </h1>
               <p className="text-emerald-200 text-sm sm:text-base font-semibold mt-1">
-                Active bio-technologies, skin/scalp microbiota science, pure vegetable oils, and fair-trade botanicals.
+                Active bio-technologies, skin &amp; scalp microbiota science, botanical oils, and fair-trade plant extracts supplied in India by Mindtech Biotechnology.
               </p>
             </div>
 
             <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed max-w-3xl">
-              Integrating <strong>all 5 client-provided Greentech technical brochures (136 total pages)</strong>: Catalogue India 2023, Hair Care 2021/2023, Microbiote 2023, Actifs Greentech 2024, and Vegetable Oils &amp; Butters 2022. All items are verified with exact source page citations and batch traceability from the Bawana Hub.
+              Manufactured by Greentech (France) and supplied across India by Mindtech Biotechnology (Bawana Hub, New Delhi). Integrating <strong>all 5 Greentech technical brochures (136 total pages)</strong>: Catalogue India 2023, Hair Care 2021/2023, Microbiote 2023, Actifs Greentech 2024, and Vegetable Oils &amp; Butters 2022 with COA, TDS, 100g samples, and 1 kg / 5 kg commercial pack sizes.
             </p>
 
             <div className="pt-1 flex flex-wrap gap-2">

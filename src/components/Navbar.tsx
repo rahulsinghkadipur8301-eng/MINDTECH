@@ -218,8 +218,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
           
           {/* 1. HOME */}
           <motion.a
-            href="#hero"
-            onClick={(e) => handleNavLinkClick('#hero', e)}
+            href="/"
+            onClick={(e) => handleLogoHomeClick(e)}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.16, ease: 'easeOut' }}
@@ -395,69 +395,74 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
                   </div>
                 </div>
 
-                {/* 7 Primary Mobile Navigation Links */}
-                <nav className="divide-y divide-gray-100 text-[16px] font-bold text-[#202A3A]">
+                {/* Primary Mobile Navigation Links */}
+                <nav className="divide-y divide-gray-100 text-[16px] font-bold text-[#202A3A]" aria-label="Mobile Navigation">
                   
                   {/* 1. HOME */}
-                  <motion.button
+                  <motion.a
+                    href="/"
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleMobileNavClick('#hero')}
+                    onClick={(e) => { e.preventDefault(); handleMobileNavClick('#hero'); }}
                     className="w-full py-3 flex items-center justify-between text-left hover:text-[#107c41] transition-colors uppercase cursor-pointer"
                   >
                     <span>HOME</span>
                     <ArrowRight className="w-4 h-4 text-gray-400" />
-                  </motion.button>
+                  </motion.a>
 
                   {/* 2. ABOUT US */}
-                  <motion.button
+                  <motion.a
+                    href="/#about"
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleMobileNavClick('#about')}
+                    onClick={(e) => { e.preventDefault(); handleMobileNavClick('#about'); }}
                     className="w-full py-3 flex items-center justify-between text-left hover:text-[#107c41] transition-colors uppercase cursor-pointer"
                   >
                     <span>ABOUT US</span>
                     <ArrowRight className="w-4 h-4 text-gray-400" />
-                  </motion.button>
+                  </motion.a>
 
                   {/* 3. PORTFOLIO */}
-                  <motion.button
+                  <motion.a
+                    href="/#portfolio"
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleMobileNavClick('#portfolio')}
+                    onClick={(e) => { e.preventDefault(); handleMobileNavClick('#portfolio'); }}
                     className="w-full py-3 flex items-center justify-between text-left hover:text-[#107c41] transition-colors uppercase cursor-pointer"
                   >
                     <span>PORTFOLIO</span>
                     <ArrowRight className="w-4 h-4 text-gray-400" />
-                  </motion.button>
-
+                  </motion.a>
 
                   {/* 5. GLOBAL PARTNERS */}
-                  <motion.button
+                  <motion.a
+                    href="/#partners"
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleMobileNavClick('#partners')}
+                    onClick={(e) => { e.preventDefault(); handleMobileNavClick('#partners'); }}
                     className="w-full py-3 flex items-center justify-between text-left hover:text-[#107c41] transition-colors uppercase cursor-pointer"
                   >
                     <span>GLOBAL PARTNERS</span>
                     <ArrowRight className="w-4 h-4 text-gray-400" />
-                  </motion.button>
+                  </motion.a>
 
                   {/* 6. WHY CHOOSE US */}
-                  <motion.button
+                  <motion.a
+                    href="/#why-us"
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleMobileNavClick('#why-us')}
+                    onClick={(e) => { e.preventDefault(); handleMobileNavClick('#why-us'); }}
                     className="w-full py-3 flex items-center justify-between text-left hover:text-[#107c41] transition-colors uppercase cursor-pointer"
                   >
                     <span>WHY CHOOSE US</span>
                     <ArrowRight className="w-4 h-4 text-gray-400" />
-                  </motion.button>
+                  </motion.a>
 
                   {/* 7. CONTACT US */}
-                  <motion.button
+                  <motion.a
+                    href="/#contact"
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleMobileNavClick('#contact')}
+                    onClick={(e) => { e.preventDefault(); handleMobileNavClick('#contact'); }}
                     className="w-full py-3 flex items-center justify-between text-left text-[#107c41] font-bold transition-colors uppercase cursor-pointer"
                   >
                     <span>CONTACT US</span>
                     <ArrowRight className="w-4 h-4 text-[#107c41]" />
-                  </motion.button>
+                  </motion.a>
 
                 </nav>
 

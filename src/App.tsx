@@ -177,9 +177,29 @@ export default function App() {
     };
   }, []);
 
-  // Synchronize per-page SEO metadata (<title>, description, canonical, OpenGraph, Twitter)
+  // Synchronize per-page SEO metadata (<title>, description, canonical, robots, OpenGraph, Twitter, BreadcrumbList JSON-LD)
   useEffect(() => {
     const baseDomain = 'https://mindtech-bio.com';
+    const currentPath = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+    const knownPaths = new Set([
+      '/',
+      '/partners/sns-silcos',
+      '/portfolio/greentech',
+      '/portfolio/fine-organics',
+      '/portfolio/vvf-limited',
+      '/suppliers/fine-organics',
+      '/suppliers/vvf-limited',
+      '/suppliers/general-range',
+      '/suppliers/all-products',
+      '/business-lines/skin-care',
+      '/business-lines/hair-care',
+      '/business-lines/sun-care',
+      '/business-lines/color-cosmetics',
+      '/business-lines/bath-body',
+      '/business-lines/biotechnology',
+    ]);
+    const isUnknownRoute = !knownPaths.has(currentPath) && !currentPath.startsWith('/suppliers/') && !currentPath.startsWith('/business-lines/');
+
     const businessLineSlugMap: Record<string, string> = {
       'Skin Care & Anti-Pigmentation': 'skin-care',
       'Hair Care & Conditioning': 'hair-care',
@@ -189,51 +209,59 @@ export default function App() {
       'Active Bio-Technology & Greentech': 'biotechnology',
     };
 
-    const routeSeoMap: Record<string, { title: string; description: string; path: string }> = {
+    const routeSeoMap: Record<string, { title: string; description: string; path: string; label: string }> = {
       greentech: {
-        title: 'Greentech Biotechnologies Cosmetic Actives | Mindtech Biotechnology India',
-        description: 'Explore Greentech France natural cosmetic bio-actives, cellular longevity ingredients, and botanical oils distributed in India by Mindtech Biotechnology.',
+        title: 'Greentech Cosmetic Ingredients India | Mindtech Biotechnology',
+        description: 'Explore Greentech cosmetic bio-actives, botanical oils, biotechnology ingredients and skin and hair care formulation ingredients through Mindtech Biotechnology India.',
         path: '/portfolio/greentech',
+        label: 'Greentech Biotechnologies',
       },
       'sns-silcos': {
-        title: 'SNS Silcos Specialty Silicones & Elastomers | Mindtech Biotechnology India',
-        description: 'Authorized distribution of SNS Silcos silicone fluids, elastomer gels, MQ resins, and micro-emulsions for skin care and hair care formulations in India.',
+        title: 'SNS Silcos Silicone Ingredients India | Mindtech Biotechnology',
+        description: 'Explore SNS Silcos specialty silicone fluids, elastomer gels, MQ resins and micro-emulsions for skin care and hair care formulations in India at Mindtech Biotechnology.',
         path: '/partners/sns-silcos',
+        label: 'SNS Silcos',
       },
       'fine-organics': {
-        title: 'Fine Organics Specialty Esters & Emulsifiers | Mindtech Biotechnology India',
-        description: 'Browse Fine Organics specialty esters, bio-solubilizers, glyceryl esters, and structuring waxes supplied across India by Mindtech Biotechnology.',
+        title: 'Fine Organics Esters & Emulsifiers | Mindtech Biotechnology',
+        description: 'Browse Fine Organics specialty esters, bio-solubilizers, glyceryl esters and structuring waxes supplied across India by Mindtech Biotechnology.',
         path: '/suppliers/fine-organics',
+        label: 'Fine Organics',
       },
       'vvf-limited': {
-        title: 'VVF Limited Conditioning Agents & Syndets | Mindtech Biotechnology India',
-        description: 'Discover VVF Limited VEGAROL cationic conditioning quats, Promisoft BTMS emulsifiers, and SCI syndet bases distributed by Mindtech Biotechnology India.',
+        title: 'VVF Limited Surfactants & Conditioning | Mindtech Biotechnology',
+        description: 'Discover VVF Limited VEGAROL cationic conditioning quats, Promisoft BTMS emulsifiers and SCI syndet bases supplied in India by Mindtech Biotechnology.',
         path: '/suppliers/vvf-limited',
+        label: 'VVF Limited',
       },
       'general-range': {
-        title: 'Mindtech General Cosmetic Ingredients Range | Mindtech Biotechnology India',
-        description: 'Specialty actives, UV filters, niacinamide, arbutin, and mild surfactants available from Mindtech Biotechnology India central Bawana warehouse.',
+        title: 'General Cosmetic Ingredients Range | Mindtech Biotechnology India',
+        description: 'Cosmetic actives, UV filters, niacinamide, arbutin and mild surfactants available from Mindtech Biotechnology India Bawana warehouse.',
         path: '/suppliers/general-range',
+        label: 'General Ingredient Range',
       },
       'all-products': {
-        title: 'Cosmetic & Personal Care Ingredient Portfolio | Mindtech Biotechnology India',
-        description: 'Complete multi-supplier portfolio of cosmetic ingredients from Greentech, SNS Silcos, Fine Organics, and VVF Limited at Mindtech Biotechnology India.',
+        title: 'Cosmetic Ingredient Portfolio India | Mindtech Biotechnology',
+        description: 'Complete multi-supplier portfolio of cosmetic raw materials from Greentech, SNS Silcos, Fine Organics and VVF Limited at Mindtech Biotechnology.',
         path: '/suppliers/all-products',
+        label: 'Product Portfolio',
       },
     };
 
     let seo = {
-      title: 'Mindtech Biotechnology India | Cosmetic & Personal Care Ingredients',
-      description: 'Discover cosmetic and personal care ingredients from global partners including Greentech, SNS Silcos, VVF and Fine Organics at Mindtech Biotechnology India.',
+      title: 'Mindtech Biotechnology | Cosmetic Raw Material Supplier India',
+      description: 'Mindtech Biotechnology supplies cosmetic and personal care ingredients in India, including bio-actives, specialty silicones, emulsifiers, esters and surfactants.',
       path: '/',
+      label: 'Home',
     };
 
     if (selectedBusinessLine && businessLineSlugMap[selectedBusinessLine]) {
       const slug = businessLineSlugMap[selectedBusinessLine];
       seo = {
-        title: `${selectedBusinessLine} Ingredients | Mindtech Biotechnology India`,
-        description: `Browse verified raw materials and actives for ${selectedBusinessLine} formulations supplied across India by Mindtech Biotechnology.`,
+        title: `${selectedBusinessLine} Ingredients | Mindtech Biotechnology`,
+        description: `Browse verified raw materials and cosmetic actives for ${selectedBusinessLine} formulations supplied across India by Mindtech Biotechnology.`,
         path: `/business-lines/${slug}`,
+        label: selectedBusinessLine,
       };
     } else if (selectedSupplierId && routeSeoMap[selectedSupplierId]) {
       seo = routeSeoMap[selectedSupplierId];
@@ -241,20 +269,22 @@ export default function App() {
 
     if (selectedProduct) {
       seo = {
-        title: `${selectedProduct.name} | Mindtech Biotechnology India`,
-        description: `${selectedProduct.name} (${selectedProduct.inci || selectedProduct.category}) — request technical datasheet (TDS), COA, or certified 100g bench sample from Mindtech Biotechnology India.`,
+        title: `${selectedProduct.name} | Mindtech Biotechnology`,
+        description: `${selectedProduct.name} (${selectedProduct.inci || selectedProduct.category}) — request technical datasheet (TDS), COA or certified 100g bench sample from Mindtech Biotechnology India.`,
         path: seo.path,
+        label: selectedProduct.name,
       };
     }
 
     const canonicalUrl = `${baseDomain}${seo.path}`;
-    document.title = seo.title;
+    document.title = isUnknownRoute ? 'Page Not Found | Mindtech Biotechnology' : seo.title;
 
     const setMeta = (selector: string, content: string) => {
       const el = document.querySelector(selector);
       if (el) el.setAttribute('content', content);
     };
 
+    setMeta('meta[name="robots"]', isUnknownRoute ? 'noindex, nofollow' : 'index, follow');
     setMeta('meta[name="description"]', seo.description);
     setMeta('meta[property="og:title"]', seo.title);
     setMeta('meta[property="og:description"]', seo.description);
@@ -265,6 +295,28 @@ export default function App() {
     const canonicalLink = document.querySelector('link[rel="canonical"]');
     if (canonicalLink) {
       canonicalLink.setAttribute('href', canonicalUrl);
+    }
+
+    // Maintain BreadcrumbList Schema.org JSON-LD for sub-routes
+    let breadcrumbScript = document.getElementById('dynamic-breadcrumb-jsonld') as HTMLScriptElement | null;
+    if (seo.path !== '/' && !isUnknownRoute) {
+      if (!breadcrumbScript) {
+        breadcrumbScript = document.createElement('script');
+        breadcrumbScript.id = 'dynamic-breadcrumb-jsonld';
+        breadcrumbScript.type = 'application/ld+json';
+        document.head.appendChild(breadcrumbScript);
+      }
+      const items: Array<{ '@type': string; position: number; name: string; item: string }> = [
+        { '@type': 'ListItem', position: 1, name: 'Mindtech Biotechnology', item: `${baseDomain}/` },
+        { '@type': 'ListItem', position: 2, name: seo.label, item: canonicalUrl },
+      ];
+      breadcrumbScript.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items,
+      });
+    } else if (breadcrumbScript) {
+      breadcrumbScript.remove();
     }
   }, [selectedSupplierId, selectedBusinessLine, selectedProduct]);
 

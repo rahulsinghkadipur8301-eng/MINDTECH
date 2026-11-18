@@ -260,10 +260,12 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
               {/* Title & Tagline */}
               <div>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                  {supplier.name}
+                  {selectedBusinessLine !== 'All Business Lines' ? `${selectedBusinessLine} Ingredients` : supplier.name}
                 </h1>
                 <p className="text-emerald-300 text-base sm:text-lg font-semibold mt-1">
-                  {supplier.tagline}
+                  {selectedBusinessLine !== 'All Business Lines'
+                    ? 'Cosmetic & Personal Care Ingredients Supplied in India by Mindtech Biotechnology'
+                    : supplier.tagline}
                 </p>
               </div>
 
