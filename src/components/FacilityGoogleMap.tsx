@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   APIProvider,
   Map as GoogleMap,
@@ -9,6 +9,7 @@ import {
   useApiLoadingStatus,
   APILoadingStatus,
 } from '@vis.gl/react-google-maps';
+import { MapPin, ExternalLink } from 'lucide-react';
 import { COMPANY_DETAILS } from '../data/companyData';
 import { FACILITY_MAPS_URL } from './FacilityGoogleMapConstants';
 
@@ -61,16 +62,84 @@ const FacilityMarkerWithInfoWindow: React.FC = () => {
   );
 };
 
-const EmbeddedGoogleMapFallback: React.FC = () => (
-  <iframe
-    title="Mindtech Biotechnology Central Facility Hub — Bawana, New Delhi"
-    src={`https://maps.google.com/maps?q=${FACILITY_COORDS.lat},${FACILITY_COORDS.lng}&t=k&z=16&output=embed`}
-    className="w-full h-full border-0"
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    allowFullScreen
-  />
-);
+const EmbeddedGoogleMapFallback: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || shouldLoadIframe) return;
+
+    // Defer off-screen iframe mounting so initial above-the-fold page loads & crawls avoid legacy redirects
+    if (typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoadIframe(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '120px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [shouldLoadIframe]);
+
+  return (
+    <div ref={containerRef} className="relative w-full h-full min-h-[256px] bg-gradient-to-br from-[#072414] via-[#0b3b21] to-[#0f4d2c] text-white flex flex-col justify-between p-4">
+      {shouldLoadIframe ? (
+        <iframe
+          title="Mindtech Biotechnology Central Facility Hub — Bawana, New Delhi"
+          src={`https://www.google.com/maps?q=${FACILITY_COORDS.lat},${FACILITY_COORDS.lng}&t=k&z=16&output=embed`}
+          className="absolute inset-0 w-full h-full border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      ) : (
+        <>
+          <div className="flex items-center justify-between gap-2">
+            <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 text-[10px] font-mono font-bold uppercase tracking-wider">
+              <MapPin className="w-3 h-3 text-emerald-300" />
+              <span>Bawana Facility GPS</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-200/90">
+              {FACILITY_COORDS.lat.toFixed(6)}° N, {FACILITY_COORDS.lng.toFixed(6)}° E
+            </span>
+          </div>
+
+          <div className="space-y-1.5 my-auto py-2">
+            <div className="text-sm font-black text-white">
+              {COMPANY_DETAILS.shortName}
+            </div>
+            <p className="text-xs text-emerald-100/85 leading-relaxed">
+              Ground Floor-181, Pkt-D, Sec-3 Bawana DSIDC City, Opp. Delhi Jal Board, New Delhi - 110039
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShouldLoadIframe(true)}
+              className="px-3 py-1.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-[#072414] text-xs font-extrabold cursor-pointer transition-colors"
+            >
+              Load Satellite Map
+            </button>
+            <a
+              href={FACILITY_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition-colors"
+            >
+              <span>Open Maps</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const SdkMapContent: React.FC = () => {
   const status = useApiLoadingStatus();

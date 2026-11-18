@@ -16,7 +16,7 @@
   ],
   "headers": [
     {
-      "source": "/videos/(.*)",
+      "source": "/videos/(.*\\.mp4)",
       "headers": [
         {
           "key": "Content-Type",
@@ -33,6 +33,19 @@
         {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/videos/(.*\\.jpg)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/jpeg"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     },

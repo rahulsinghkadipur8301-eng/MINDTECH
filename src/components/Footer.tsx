@@ -61,6 +61,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
       });
     }
 
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let isPageVisible = !document.hidden;
+
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
 
@@ -84,11 +91,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
       // Draw nodes
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
-        n.x += n.vx;
-        n.y += n.vy;
+        if (!prefersReducedMotion) {
+          n.x += n.vx;
+          n.y += n.vy;
 
-        if (n.x < 0 || n.x > w) n.vx *= -1;
-        if (n.y < 0 || n.y > h) n.vy *= -1;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+        }
 
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
@@ -100,13 +109,27 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
         ctx.shadowBlur = 0;
       }
 
-      animId = requestAnimationFrame(draw);
+      if (!prefersReducedMotion && isPageVisible) {
+        animId = requestAnimationFrame(draw);
+      }
     };
 
+    const handleVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+      if (isPageVisible && !prefersReducedMotion) {
+        cancelAnimationFrame(animId);
+        animId = requestAnimationFrame(draw);
+      } else {
+        cancelAnimationFrame(animId);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     draw();
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animId);
     };
   }, []);

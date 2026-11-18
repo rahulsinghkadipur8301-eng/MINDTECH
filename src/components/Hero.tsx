@@ -61,6 +61,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenInquiry, onOpenExplorer }) => 
                   </span>
                 )}
               </button>
+              <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-emerald-50/90 border border-emerald-200/90 text-emerald-950 text-[12px] sm:text-[13px] font-bold tracking-wide">
+                {COMPANY_DETAILS.name} · {COMPANY_DETAILS.tagline}
+              </span>
             </div>
 
             {/* Main Headline */}

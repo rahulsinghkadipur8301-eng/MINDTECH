@@ -159,7 +159,7 @@ function videoUploadPlugin(): Plugin {
           return;
         }
 
-        // 3. High-performance video streaming with full HTTP 206 Range Request support
+        // 3. High-performance video & poster streaming with full HTTP 206 Range Request support
         if (pathname.startsWith('/videos/') && (req.method === 'GET' || req.method === 'HEAD')) {
           const relativePath = pathname.replace(/^\//, '');
           let filePath = path.resolve(__dirname, 'public', relativePath);
@@ -172,6 +172,17 @@ function videoUploadPlugin(): Plugin {
             res.end('Video not found');
             return;
           }
+
+          const ext = path.extname(filePath).toLowerCase();
+          const contentTypeMap: Record<string, string> = {
+            '.mp4': 'video/mp4',
+            '.webm': 'video/webm',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.webp': 'image/webp',
+          };
+          const contentType = contentTypeMap[ext] || 'application/octet-stream';
 
           const stat = fs.statSync(filePath);
           const fileSize = stat.size;
@@ -194,7 +205,7 @@ function videoUploadPlugin(): Plugin {
               'Content-Range': `bytes ${start}-${end}/${fileSize}`,
               'Accept-Ranges': 'bytes',
               'Content-Length': chunkSize,
-              'Content-Type': 'video/mp4',
+              'Content-Type': contentType,
               'Cache-Control': 'public, max-age=31536000, immutable',
             });
 
@@ -219,7 +230,7 @@ function videoUploadPlugin(): Plugin {
           } else {
             res.writeHead(200, {
               'Content-Length': fileSize,
-              'Content-Type': 'video/mp4',
+              'Content-Type': contentType,
               'Accept-Ranges': 'bytes',
               'Cache-Control': 'public, max-age=31536000, immutable',
             });

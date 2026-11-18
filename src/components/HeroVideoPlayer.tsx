@@ -30,6 +30,7 @@ interface HeroVideoPlayerProps {
 }
 
 const DEFAULT_VIDEO_URL = '/videos/mindtech-biotechnology.mp4';
+const DEFAULT_POSTER_URL = '/videos/mindtech-hero-poster.jpg';
 const TOTAL_DURATION = 26;
 const OWNER_PIN = 'mindtech';
 
@@ -110,8 +111,14 @@ function getVimeoEmbedUrl(url: string): string | null {
 }
 
 export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
+  const shouldDeferAutoplay =
+    typeof window !== 'undefined' &&
+    ((window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+      Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData));
+
   const [videoSrc, setVideoSrc] = useState<string>(DEFAULT_VIDEO_URL);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(!shouldDeferAutoplay);
+  const [hasVideoError, setHasVideoError] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(TOTAL_DURATION);
   const [isMuted, setIsMuted] = useState(true);
@@ -194,6 +201,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
   // 1. Initial Load: Check for persistent video & check if admin mode is requested in URL
   useEffect(() => {
     let active = true;
+    let activeBlobUrl: string | null = null;
 
     // Check if URL has ?admin=true or ?owner=true or ?admin=video
     if (typeof window !== 'undefined') {
@@ -210,9 +218,12 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
     if (customUrl && active) {
       setVideoSrc(customUrl);
       setIsCustomVideo(true);
+      setHasVideoError(false);
       if (videoRef.current) {
         videoRef.current.load();
-        videoRef.current.play().catch(() => {});
+        if (!shouldDeferAutoplay) {
+          videoRef.current.play().catch(() => setIsPlaying(false));
+        }
       }
       return;
     }
@@ -221,11 +232,15 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
     getVideoFromIndexedDB().then((blob) => {
       if (blob && active) {
         const objUrl = URL.createObjectURL(blob);
+        activeBlobUrl = objUrl;
         setVideoSrc(objUrl);
         setIsCustomVideo(true);
+        setHasVideoError(false);
         if (videoRef.current) {
           videoRef.current.load();
-          videoRef.current.play().catch(() => {});
+          if (!shouldDeferAutoplay) {
+            videoRef.current.play().catch(() => setIsPlaying(false));
+          }
         }
 
         // Auto-sync user's video blob to server disk in dev so it writes to public/videos/mindtech-biotechnology.mp4
@@ -237,19 +252,24 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       } else if (active) {
         if (videoRef.current) {
           videoRef.current.currentTime = 0;
-          videoRef.current.play().catch(() => {});
+          if (!shouldDeferAutoplay) {
+            videoRef.current.play().catch(() => setIsPlaying(false));
+          }
         }
       }
     }).catch(() => {
-      if (videoRef.current && active) {
-        videoRef.current.play().catch(() => {});
+      if (videoRef.current && active && !shouldDeferAutoplay) {
+        videoRef.current.play().catch(() => setIsPlaying(false));
       }
     });
 
     return () => {
       active = false;
+      if (activeBlobUrl) {
+        URL.revokeObjectURL(activeBlobUrl);
+      }
     };
-  }, []);
+  }, [shouldDeferAutoplay]);
 
   // 2. Secret Keyboard Shortcut (Ctrl+Shift+U or Cmd+Shift+U) and Custom Event Listener for Owner
   useEffect(() => {
@@ -297,6 +317,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       const objUrl = URL.createObjectURL(file);
       setVideoSrc(objUrl);
       setIsCustomVideo(true);
+      setHasVideoError(false);
       setIsPlaying(true);
 
       // Save to IndexedDB so it permanently plays on every reload
@@ -334,6 +355,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
     localStorage.setItem('mindtech_custom_video_url', url);
     setVideoSrc(url);
     setIsCustomVideo(true);
+    setHasVideoError(false);
     setUrlInput('');
     setStatusMessage('External Video URL saved! Video is now active.');
     setTimeout(() => setStatusMessage(null), 4000);
@@ -350,6 +372,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       await deleteVideoFromIndexedDB();
       setVideoSrc(DEFAULT_VIDEO_URL);
       setIsCustomVideo(false);
+      setHasVideoError(false);
       setStatusMessage('Restored default Mindtech brand video.');
       setTimeout(() => setStatusMessage(null), 3000);
       if (videoRef.current) {
@@ -358,6 +381,16 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleRetryVideo = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setHasVideoError(false);
+    setVideoSrc(DEFAULT_VIDEO_URL);
+    if (videoRef.current) {
+      videoRef.current.load();
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
     }
   };
 
@@ -534,27 +567,71 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = () => {
           title="Mindtech Biotechnology Video"
         />
       ) : (
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          autoPlay
-          muted={isMuted}
-          loop
-          playsInline
-          preload="auto"
-          controlsList="nodownload"
-          className="absolute inset-0 w-full h-full object-contain bg-black"
-          onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
-          onLoadedMetadata={(e) => {
-            if (e.currentTarget.duration) setDuration(e.currentTarget.duration);
-          }}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          onEnded={handleVideoEnded}
-          onError={(e) => {
-            console.warn('[Video Player] Video stream error:', e);
-          }}
-        />
+        <>
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            poster={DEFAULT_POSTER_URL}
+            autoPlay={!shouldDeferAutoplay}
+            muted={isMuted}
+            loop
+            playsInline
+            preload={shouldDeferAutoplay ? 'metadata' : 'auto'}
+            controlsList="nodownload"
+            className="absolute inset-0 w-full h-full object-contain bg-black"
+            onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+            onLoadedMetadata={(e) => {
+              setHasVideoError(false);
+              if (e.currentTarget.duration) setDuration(e.currentTarget.duration);
+            }}
+            onCanPlay={() => setHasVideoError(false)}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onEnded={handleVideoEnded}
+            onError={() => {
+              if (isCustomVideo) {
+                try {
+                  localStorage.removeItem('mindtech_custom_video_url');
+                } catch {
+                  // ignore storage restrictions
+                }
+                setIsCustomVideo(false);
+                setVideoSrc(DEFAULT_VIDEO_URL);
+                setHasVideoError(false);
+                return;
+              }
+              setHasVideoError(true);
+              setIsPlaying(false);
+            }}
+          />
+
+          {hasVideoError && (
+            <div className="absolute inset-0 z-15 flex flex-col items-center justify-center bg-black/80 text-white p-6 text-center">
+              <img
+                src={DEFAULT_POSTER_URL}
+                alt="Mindtech Biotechnology — Cosmetic and Personal Care Ingredients Showcase"
+                className="absolute inset-0 w-full h-full object-cover opacity-45"
+                loading="eager"
+              />
+              <div className="relative z-10 max-w-sm space-y-3 bg-black/65 backdrop-blur-md px-5 py-4 rounded-2xl border border-emerald-400/30">
+                <p className="text-xs font-mono uppercase tracking-wider text-emerald-300 font-bold">
+                  Mindtech Biotechnology Showcase
+                </p>
+                <p className="text-sm font-semibold text-white">
+                  Stream preview paused due to a network interruption.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleRetryVideo}
+                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-xs cursor-pointer transition-colors"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Reload Video</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* 2. TOP BAR: Clean Minimal Visitor Bar (NO Upload, Change, or Download buttons shown to public) */}
