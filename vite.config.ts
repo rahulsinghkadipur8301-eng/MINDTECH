@@ -19,6 +19,20 @@ function videoUploadPlugin(): Plugin {
         const urlObj = new URL(req.url || '/', 'http://localhost:3000');
         const pathname = urlObj.pathname;
 
+        // 0. Serve Google Search Console HTML verification file directly (bypasses Vite SPA HTML fallback)
+        if (pathname === '/googlef9ed93f9fea309d7.html' && (req.method === 'GET' || req.method === 'HEAD')) {
+          const body = 'google-site-verification: googlef9ed93f9fea309d7.html';
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.setHeader('Cache-Control', 'no-cache');
+          if (req.method === 'HEAD') {
+            res.end();
+          } else {
+            res.end(body);
+          }
+          return;
+        }
+
         // 1. Direct single-stream upload (for smaller files)
         if (pathname === '/api/upload-video' && req.method === 'POST') {
           const chunks: Buffer[] = [];
