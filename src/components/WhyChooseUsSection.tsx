@@ -75,14 +75,14 @@ const AUTHENTIC_FACILITIES: FacilityItem[] = [
     name: 'Central Warehouse & Stock Hub',
     locationTag: 'Bawana Industrial City · Central Stockholding',
     headline: 'Extensive climate-managed facility maintaining continuous buffer inventory for Indian formulators.',
-    description: 'Strategically located in the Bawana Industrial Area, New Delhi, our expansive warehousing hub features cleanroom epoxy flooring, high-bay LED lighting, UN-certified chemical drum racking, and dedicated loading bays to guarantee uninterrupted manufacturing runs.',
+    description: 'Strategically located in the Bawana Industrial Area, New Delhi, our expansive warehousing hub features cleanroom epoxy flooring, high-bay LED lighting, UN-certified chemical container racking, and dedicated loading bays to guarantee uninterrupted manufacturing runs.',
     capabilities: [
       'Prompt, temperature-safe dispatch across major Indian cosmetics clusters',
       'Temperature-managed zones for sensitive bio-actives and ferments',
-      'UN-certified spill-proof chemical drum palletization',
+      'UN-certified spill-proof Pack Size palletization',
       'Deep buffer stock across 250+ specialty cosmetic ingredients'
     ],
-    specs: 'Bawana Industrial Area · Pan-India Logistics · UN Drums',
+    specs: 'Bawana Industrial Area · Pan-India Logistics · Certified Pack Sizes',
     image: '/facilities/mindtech-warehouse-hub.webp',
     fallbackImage: '/facilities/mindtech-warehouse-hub.jpg',
     actionText: 'Inquire Stock Availability'

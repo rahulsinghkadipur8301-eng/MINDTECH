@@ -307,7 +307,7 @@ export const GlobalSourcingMap: React.FC<{ onOpenInquiry: (topic?: string) => vo
               <div className="p-3.5 rounded-2xl bg-gray-50 border border-gray-200 text-xs">
                 <span className="font-bold text-gray-800 block">Warehouse Arrival Standard:</span>
                 <p className="text-gray-600 mt-0.5">
-                  Climate-managed customs clearance, quarantined lot sampling, assay re-check, and tamper-proof drum resealing.
+                  Climate-managed customs clearance, quarantined lot sampling, assay re-check, and tamper-proof Pack Size resealing.
                 </p>
               </div>
             </div>

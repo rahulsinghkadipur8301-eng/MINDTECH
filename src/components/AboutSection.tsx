@@ -79,7 +79,7 @@ const ABOUT_PILLARS: AboutPillar[] = [
     description: 'Our import and distribution capabilities are focused on maintaining reliable availability and ensuring a smooth supply experience for our customers. Strategically located warehousing in Bawana, Delhi with deep buffer stock and UN-certified storage prevents production bottlenecks.',
     keyPoints: [
       'Expansive warehouse infrastructure in Bawana Industrial Area, Delhi',
-      'Epoxy cleanroom floors, high-bay lighting and UN-certified drum palletization',
+      'Epoxy cleanroom floors, high-bay lighting and UN-certified Pack Size palletization',
       'Buffer inventory management ensuring uninterrupted manufacturing supply',
       'Prompt and dependable dispatch turnaround across major Indian cosmetics clusters'
     ],

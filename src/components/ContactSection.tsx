@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { COMPANY_DETAILS } from '../data/companyData';
 import { FACILITY_MAPS_URL } from './FacilityGoogleMapConstants';
 
@@ -26,9 +26,7 @@ interface ContactSectionProps {
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ initialSubject }) => {
-  const [selectedTopic] = useState<string>(
-    initialSubject || 'General Formulation & Raw Material Inquiry'
-  );
+  const selectedTopic = initialSubject || 'General Formulation & Raw Material Inquiry';
 
   const getWhatsAppUrl = (topicText?: string) => {
     const rawNumber = '918368947579'; // Ajay Patel
@@ -114,6 +112,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSubject }
                   Direct commercial point of contact for raw material sample dispatch, price negotiations, import timelines, and technical documentation.
                 </p>
               </div>
+
+              {/* Active Custom Requisition Context (when redirected via Email / Desk Form) */}
+              {initialSubject && (
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs space-y-1">
+                  <span className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-emerald-800 block">
+                    Selected Sample / Quotation Message Ready
+                  </span>
+                  <p className="font-semibold text-[#072414] leading-snug break-words">
+                    {initialSubject}
+                  </p>
+                </div>
+              )}
 
               {/* Direct Calling Numbers */}
               <div className="space-y-2">
@@ -286,7 +296,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSubject }
                 </div>
                 <div className="flex items-center space-x-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                  <span>UN-certified spill-proof chemical drums &amp; tamper seals</span>
+                  <span>UN-certified spill-proof Pack Size containers &amp; tamper seals</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Clock className="w-4 h-4 text-emerald-700 shrink-0" />

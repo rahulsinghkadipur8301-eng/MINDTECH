@@ -40,6 +40,7 @@ interface SupplierCataloguePageProps {
   onRequestSample: (product: ProductItem) => void;
   onRequestQuote?: (product: ProductItem) => void;
   onOpenInquiry: (topic?: string) => void;
+  onOpenSampleQuoteModal?: (opts: { mode: 'sample' | 'quotation'; productName?: string; supplierName?: string }) => void;
 }
 
 export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
@@ -49,7 +50,8 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
   onSelectProduct,
   onRequestSample,
   onRequestQuote,
-  onOpenInquiry
+  onOpenInquiry,
+  onOpenSampleQuoteModal
 }) => {
   const supplier = SUPPLIER_PROFILES[supplierId];
   const isAllProducts = supplierId === 'all-products';
@@ -316,7 +318,11 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 <button
                   type="button"
-                  onClick={() => onOpenInquiry(`Certified Sample (100g) Request: ${supplier.name}`)}
+                  onClick={() =>
+                    onOpenSampleQuoteModal
+                      ? onOpenSampleQuoteModal({ mode: 'sample', productName: `${supplier.name} Portfolio`, supplierName: supplier.name })
+                      : onOpenInquiry(`Certified Sample (100g) Request: ${supplier.name}`)
+                  }
                   className="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold text-[11px] uppercase tracking-wider transition-colors shadow-md cursor-pointer flex items-center justify-center space-x-1.5"
                 >
                   <Package className="w-3.5 h-3.5" />
@@ -324,7 +330,11 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => onOpenInquiry(`Commercial Price Quotation Request: ${supplier.name}`)}
+                  onClick={() =>
+                    onOpenSampleQuoteModal
+                      ? onOpenSampleQuoteModal({ mode: 'quotation', productName: `${supplier.name} Portfolio`, supplierName: supplier.name })
+                      : onOpenInquiry(`Commercial Price Quotation Request: ${supplier.name}`)
+                  }
                   className="py-2.5 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-[11px] uppercase tracking-wider border border-white/25 transition-colors cursor-pointer flex items-center justify-center space-x-1.5"
                 >
                   <Receipt className="w-3.5 h-3.5 text-emerald-300" />
@@ -548,13 +558,21 @@ export const SupplierCataloguePage: React.FC<SupplierCataloguePageProps> = ({
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <button
-              onClick={() => onOpenInquiry(`Certified Sample (100g) & Technical Data Sheet: ${supplier.name}`)}
+              onClick={() =>
+                onOpenSampleQuoteModal
+                  ? onOpenSampleQuoteModal({ mode: 'sample', productName: `${supplier.name} Portfolio`, supplierName: supplier.name })
+                  : onOpenInquiry(`Certified Sample (100g) & Technical Data Sheet: ${supplier.name}`)
+              }
               className="px-5 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
               Request Certified Sample (100g)
             </button>
             <button
-              onClick={() => onOpenInquiry(`Commercial Price Quotation & GST Proforma: ${supplier.name}`)}
+              onClick={() =>
+                onOpenSampleQuoteModal
+                  ? onOpenSampleQuoteModal({ mode: 'quotation', productName: `${supplier.name} Portfolio`, supplierName: supplier.name })
+                  : onOpenInquiry(`Commercial Price Quotation & GST Proforma: ${supplier.name}`)
+              }
               className="px-5 py-3 rounded-full bg-white hover:bg-emerald-50 text-emerald-950 text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
               Request Quotation

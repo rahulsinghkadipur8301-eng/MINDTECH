@@ -22,11 +22,46 @@
           "value": "*"
         }
       ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/googlef9ed93f9fea309d7.html",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
     }
   ],
   "rewrites": [
     {
-      "source": "/((?!videos/|assets/|favicon\\.svg|.*\\..*).*)",
+      "source": "/((?!videos/|assets/|sitemap\\.xml|robots\\.txt|googlef9ed93f9fea309d7\\.html|favicon\\.svg|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

@@ -40,6 +40,7 @@ interface SnsSilcosMicrositeProps {
   onRequestSample: (product: ProductItem) => void;
   onRequestQuote: (product: ProductItem) => void;
   onOpenInquiry: (topic?: string) => void;
+  onOpenSampleQuoteModal?: (opts: { mode: 'sample' | 'quotation'; productName?: string; supplierName?: string }) => void;
 }
 
 // Formulation blueprint recipe
@@ -131,7 +132,8 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
   onSelectProduct,
   onRequestSample,
   onRequestQuote,
-  onOpenInquiry
+  onOpenInquiry,
+  onOpenSampleQuoteModal
 }) => {
   // All 14 SNS Silcos products
   const silcosProducts = useMemo(() => {
@@ -809,14 +811,22 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <button
-                    onClick={() => onOpenInquiry(`Certified Sample (100g) & Method Request for: ${currentBlueprint.title}`)}
+                    onClick={() =>
+                      onOpenSampleQuoteModal
+                        ? onOpenSampleQuoteModal({ mode: 'sample', productName: `${currentBlueprint.title} (${currentBlueprint.heroProduct})`, supplierName: 'SNS Silcos' })
+                        : onOpenInquiry(`Certified Sample (100g) & Method Request for: ${currentBlueprint.title}`)
+                    }
                     className="py-3 px-4 rounded-xl bg-[#072414] hover:bg-[#0c4f26] text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-xs flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
                     <FlaskConical className="w-4 h-4 text-emerald-400" />
                     <span>Sample (100g) &amp; Method</span>
                   </button>
                   <button
-                    onClick={() => onOpenInquiry(`Commercial Price Quotation Request for: ${currentBlueprint.title}`)}
+                    onClick={() =>
+                      onOpenSampleQuoteModal
+                        ? onOpenSampleQuoteModal({ mode: 'quotation', productName: `${currentBlueprint.title} (${currentBlueprint.heroProduct})`, supplierName: 'SNS Silcos' })
+                        : onOpenInquiry(`Commercial Price Quotation Request for: ${currentBlueprint.title}`)
+                    }
                     className="py-3 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-extrabold text-xs uppercase tracking-wider border border-emerald-300 transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
                     <Receipt className="w-4 h-4 text-emerald-700" />
@@ -888,7 +898,7 @@ export const SnsSilcosMicrosite: React.FC<SnsSilcosMicrositeProps> = ({
 
               <div className="space-y-3 pt-2">
                 {[
-                  { title: 'Full Certificate of Analysis (COA)', desc: 'Every drum shipment is backed by verified kinematic viscosity, refractive index, and volatile non-residue testing.' },
+                  { title: 'Full Certificate of Analysis (COA)', desc: 'Every Pack Size shipment is backed by verified kinematic viscosity, refractive index, and volatile non-residue testing.' },
                   { title: 'Bawana Hub Ready Stocks', desc: 'Warehousing at Bawana Industrial Area, Delhi ensures immediate stock availability and rapid dispatch without import lead-time delays.' },
                   { title: 'Dedicated Technical Application Support', desc: 'Our cosmetic chemists assist with emulsification strategies, phase inversion guidance, and silicone-organic compatibility testing.' }
                 ].map((item, i) => (

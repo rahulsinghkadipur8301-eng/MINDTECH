@@ -213,7 +213,7 @@ export const BawanaLogisticsVectorIcon: React.FC<PillarIconProps> = ({ className
       <rect x="18" y="42" width="5" height="4" rx="1" fill="#fef08a" />
       <rect x="18" y="47" width="5" height="4" rx="1" fill="#fde047" />
 
-      {/* Right Pallet Drum */}
+      {/* Right Pallet Container */}
       <rect x="41" y="42" width="5" height="9" rx="1.5" fill="#38bdf8" />
 
       {/* Climate-Managed Snowflake Badge Top Right */}

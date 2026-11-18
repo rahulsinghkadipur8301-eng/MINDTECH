@@ -181,31 +181,71 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
                 </a>
               </li>
               <li>
-                <a href="#supplier/greentech" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a
+                  href="/portfolio/greentech"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/portfolio/greentech');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5"
+                >
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Greentech Biotechnologies</span>
                 </a>
               </li>
               <li>
-                <a href="#partners/sns-silcos" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a
+                  href="/partners/sns-silcos"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/partners/sns-silcos');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5"
+                >
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>SNS Silcos (Partner Microsite)</span>
                 </a>
               </li>
               <li>
-                <a href="#supplier/fine-organics" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a
+                  href="/suppliers/fine-organics"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/suppliers/fine-organics');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5"
+                >
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Fine Organics</span>
                 </a>
               </li>
               <li>
-                <a href="#supplier/vvf-limited" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a
+                  href="/suppliers/vvf-limited"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/suppliers/vvf-limited');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5"
+                >
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>VVF Limited</span>
                 </a>
               </li>
               <li>
-                <a href="#portfolio" className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5">
+                <a
+                  href="/suppliers/all-products"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/suppliers/all-products');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5"
+                >
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Product Portfolio</span>
                 </a>

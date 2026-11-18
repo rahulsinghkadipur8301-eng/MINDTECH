@@ -488,8 +488,8 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                   enquiryMode === 'sample' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                <Package className="w-3.5 h-3.5" />
-                <span>Certified Sample (100g)</span>
+                <Package className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Request Certified Sample (100g)</span>
               </button>
               <button
                 type="button"
@@ -498,8 +498,8 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                   enquiryMode === 'quotation' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                <Receipt className="w-3.5 h-3.5" />
-                <span>Request Quotation</span>
+                <Receipt className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Request Quotation</span>
               </button>
             </div>
 
@@ -516,7 +516,7 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                 const name = (form.elements.namedItem('chemistName') as HTMLInputElement).value;
                 const company = (form.elements.namedItem('companyName') as HTMLInputElement).value;
                 const phone = (form.elements.namedItem('phone') as HTMLInputElement).value;
-                const qty = (form.elements.namedItem('quantitySpec') as HTMLSelectElement)?.value || 'Standard 100g bench pack';
+                const qty = (form.elements.namedItem('quantitySpec') as HTMLSelectElement)?.value || '100g Certified Bench Sample';
                 const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
 
                 const headerTitle =
@@ -525,10 +525,16 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                     : '*MINDTECH BIOTECHNOLOGY - CERTIFIED SAMPLE (100g) REQUISITION*';
 
                 const text = encodeURIComponent(
-                  `${headerTitle}\n\nProduct: *${sampleTargetProduct.name}*\nINCI: ${sampleTargetProduct.inci}\nRequirement: ${enquiryMode === 'quotation' ? `Commercial Quotation (${qty})` : `Certified Sample (${qty})`}\n\nChemist / Contact: ${name}\nCompany: ${company}\nPhone: ${phone}\nNotes: ${message || 'Please share official confirmation'}\n\nPlease share COA, TDS & next steps.`
+                  `${headerTitle}\n\nProduct: *${sampleTargetProduct.name}*\nINCI: ${sampleTargetProduct.inci}\n${enquiryMode === 'quotation' ? `Pack Size: ${qty}` : `Sample Pack Size: ${qty}`}\n\nChemist / Contact: ${name}\nCompany / Brand: ${company}\nWhatsApp / Phone: ${phone}\nDelivery City, PIN Code & Notes: ${message || 'Please share official confirmation'}\n\nPlease share COA, TDS & next steps.`
                 );
 
-                window.open(`https://wa.me/918368947579?text=${text}`, '_blank');
+                const link = document.createElement('a');
+                link.href = `https://wa.me/918368947579?text=${text}`;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
                 setIsSampleModalOpen(false);
               }}
               className="space-y-3.5 text-xs"
@@ -569,19 +575,18 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
 
                 <div>
                   <label className="block text-gray-700 font-bold mb-1">
-                    {enquiryMode === 'quotation' ? 'Order Volume Tier' : 'Sample Pack Size'}
+                    {enquiryMode === 'quotation' ? 'Pack Size' : 'Sample Pack Size'}
                   </label>
                   <select
+                    key={enquiryMode}
                     name="quantitySpec"
-                    defaultValue={enquiryMode === 'quotation' ? '25 kg Drum / MOQ' : '100g Certified Bench Sample'}
+                    defaultValue={enquiryMode === 'quotation' ? '1 kg Pack Size' : '100g Certified Bench Sample'}
                     className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:bg-white focus:outline-hidden"
                   >
                     {enquiryMode === 'quotation' ? (
                       <>
-                        <option value="1 kg – 5 kg Pilot">1 kg – 5 kg Pilot</option>
-                        <option value="25 kg Drum / MOQ">25 kg Drum / MOQ</option>
-                        <option value="50 kg – 200 kg Lot">50 kg – 200 kg Lot</option>
-                        <option value="500 kg+ Annual Contract">500 kg+ Annual Contract</option>
+                        <option value="1 kg Pack Size">1 kg Pack Size</option>
+                        <option value="5 kg Pack Size">5 kg Pack Size</option>
                       </>
                     ) : (
                       <>
@@ -615,10 +620,24 @@ export const GreentechExactReplicaCatalogue: React.FC<GreentechExactReplicaCatal
                 {onOpenInquiry && (
                   <button
                     type="button"
-                    onClick={() => {
-                      const prefix = enquiryMode === 'quotation' ? 'Quotation Request' : 'Certified Sample (100g) Request';
+                    onClick={(e) => {
+                      const form = e.currentTarget.form;
+                      const name = (form?.elements.namedItem('chemistName') as HTMLInputElement)?.value?.trim();
+                      const company = (form?.elements.namedItem('companyName') as HTMLInputElement)?.value?.trim();
+                      const phone = (form?.elements.namedItem('phone') as HTMLInputElement)?.value?.trim();
+                      const qty = (form?.elements.namedItem('quantitySpec') as HTMLSelectElement)?.value;
+                      const message = (form?.elements.namedItem('message') as HTMLTextAreaElement)?.value?.trim();
+                      const prefix = enquiryMode === 'quotation' ? `Quotation Request (${qty || '1 kg Pack Size'})` : `Certified Sample (${qty || '100g Certified Bench Sample'}) Request`;
+                      const customDetails = [
+                        `${prefix}: ${sampleTargetProduct.name} (${sampleTargetProduct.inci})`,
+                        'Principal: Greentech Biotechnologies',
+                        name ? `Contact: ${name}` : '',
+                        company ? `Company: ${company}` : '',
+                        phone ? `Phone: ${phone}` : '',
+                        message ? `Delivery / Notes: ${message}` : '',
+                      ].filter(Boolean).join(' | ');
                       setIsSampleModalOpen(false);
-                      onOpenInquiry(`${prefix}: ${sampleTargetProduct.name} (${sampleTargetProduct.inci})`);
+                      onOpenInquiry(customDetails);
                     }}
                     className="py-3 px-4 rounded-2xl bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-bold text-xs border border-emerald-200 transition-colors cursor-pointer"
                   >

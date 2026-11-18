@@ -28,11 +28,13 @@ interface GlobalPartnersProductPortfolioSectionProps {
   onRequestSample: (product: ProductItem) => void;
   onRequestQuote: (product: ProductItem) => void;
   onOpenInquiry: (topic?: string) => void;
+  onOpenSampleQuoteModal?: (opts: { mode: 'sample' | 'quotation'; productName?: string; supplierName?: string }) => void;
 }
 
 export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProductPortfolioSectionProps> = ({
   onSelectSupplier,
-  onOpenInquiry
+  onOpenInquiry,
+  onOpenSampleQuoteModal
 }) => {
   // Supplier product counts calculated strictly from verified dataset
   const greentechCount = useMemo(() => ALL_PRODUCTS.filter(p => p.supplierId === 'greentech').length, []);
@@ -99,7 +101,11 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
             </button>
 
             <button
-              onClick={() => onOpenInquiry('Certified Sample (100g) Request - Global Portfolio')}
+              onClick={() =>
+                onOpenSampleQuoteModal
+                  ? onOpenSampleQuoteModal({ mode: 'sample', productName: 'Global Ingredient Portfolio', supplierName: 'Mindtech Multi-Principal Portfolio' })
+                  : onOpenInquiry('Certified Sample (100g) Request - Global Portfolio')
+              }
               className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-emerald-950 bg-white hover:bg-emerald-50 px-5 py-3 rounded-full border border-gray-200/90 shadow-2xs transition-all cursor-pointer"
             >
               <span>Request Certified Sample (100g)</span>
@@ -107,7 +113,11 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
             </button>
 
             <button
-              onClick={() => onOpenInquiry('Commercial Price Quotation Request - Global Portfolio')}
+              onClick={() =>
+                onOpenSampleQuoteModal
+                  ? onOpenSampleQuoteModal({ mode: 'quotation', productName: 'Global Ingredient Portfolio', supplierName: 'Mindtech Multi-Principal Portfolio' })
+                  : onOpenInquiry('Commercial Price Quotation Request - Global Portfolio')
+              }
               className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-emerald-950 bg-emerald-100 hover:bg-emerald-200 px-5 py-3 rounded-full border border-emerald-300 shadow-2xs transition-all cursor-pointer"
             >
               <Receipt className="w-4 h-4 text-emerald-800" />
@@ -199,10 +209,18 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
 
                 {/* Interactive Action Button */}
                 <div className="pt-1 space-y-2">
-                  <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
+                  <a
+                    href="/portfolio/greentech"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSelectSupplier('greentech');
+                    }}
+                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md"
+                  >
                     <span>Explore Greentech Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  </a>
                   <div className="grid grid-cols-2 gap-1.5">
                     <button
                       type="button"
@@ -288,10 +306,18 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
 
                 {/* Interactive Action Button */}
                 <div className="pt-1 space-y-2">
-                  <div className="w-full py-2.5 px-4 rounded-xl bg-blue-50 group-hover:bg-[#072414] text-blue-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
+                  <a
+                    href="/partners/sns-silcos"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSelectSupplier('sns-silcos');
+                    }}
+                    className="w-full py-2.5 px-4 rounded-xl bg-blue-50 group-hover:bg-[#072414] text-blue-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md"
+                  >
                     <span>Explore SNS Silcos Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  </a>
                   <div className="grid grid-cols-2 gap-1.5">
                     <button
                       type="button"
@@ -377,10 +403,18 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
 
                 {/* Interactive Action Button */}
                 <div className="pt-1 space-y-2">
-                  <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
+                  <a
+                    href="/suppliers/fine-organics"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSelectSupplier('fine-organics');
+                    }}
+                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 group-hover:bg-[#072414] text-emerald-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md"
+                  >
                     <span>Explore Fine Organics Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  </a>
                   <div className="grid grid-cols-2 gap-1.5">
                     <button
                       type="button"
@@ -466,10 +500,18 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
 
                 {/* Interactive Action Button */}
                 <div className="pt-1 space-y-2">
-                  <div className="w-full py-2.5 px-4 rounded-xl bg-teal-50 group-hover:bg-[#072414] text-teal-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md">
+                  <a
+                    href="/suppliers/vvf-limited"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSelectSupplier('vvf-limited');
+                    }}
+                    className="w-full py-2.5 px-4 rounded-xl bg-teal-50 group-hover:bg-[#072414] text-teal-950 group-hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between shadow-2xs group-hover:shadow-md"
+                  >
                     <span>Explore VVF Limited Portfolio</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  </a>
                   <div className="grid grid-cols-2 gap-1.5">
                     <button
                       type="button"
@@ -549,25 +591,36 @@ export const GlobalPartnersProductPortfolioSection: React.FC<GlobalPartnersProdu
 
               {/* Primary Interactive CTA Buttons */}
               <div className="flex flex-col gap-2.5 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => onSelectSupplier('all-products')}
+                <a
+                  href="/suppliers/all-products"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectSupplier('all-products');
+                  }}
                   className="px-6 py-3.5 rounded-xl bg-[#072414] hover:bg-emerald-900 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-lg cursor-pointer"
                 >
                   <span>Launch Full Technical Dossiers</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </a>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <button
                     type="button"
-                    onClick={() => onOpenInquiry('Certified Sample (100g) Requisition: Multi-Supplier Portfolio')}
+                    onClick={() =>
+                      onOpenSampleQuoteModal
+                        ? onOpenSampleQuoteModal({ mode: 'sample', productName: 'Multi-Supplier Cosmetic Portfolio', supplierName: 'Mindtech Multi-Principal Portfolio' })
+                        : onOpenInquiry('Certified Sample (100g) Requisition: Multi-Supplier Portfolio')
+                    }
                     className="px-4 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
                     <span>Certified Sample (100g)</span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => onOpenInquiry('Commercial Price Quotation Request: Multi-Supplier Portfolio')}
+                    onClick={() =>
+                      onOpenSampleQuoteModal
+                        ? onOpenSampleQuoteModal({ mode: 'quotation', productName: 'Multi-Supplier Cosmetic Portfolio', supplierName: 'Mindtech Multi-Principal Portfolio' })
+                        : onOpenInquiry('Commercial Price Quotation Request: Multi-Supplier Portfolio')
+                    }
                     className="px-4 py-2.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold text-xs uppercase tracking-wider border border-emerald-300 transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
                     <Receipt className="w-3.5 h-3.5 text-emerald-800" />

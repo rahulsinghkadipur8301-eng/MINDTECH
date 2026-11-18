@@ -615,8 +615,11 @@ export const GreentechMasterCatalogue: React.FC<GreentechMasterCatalogueProps> =
         }}
         productName={sampleTargetIngredient?.name}
         productCode={sampleTargetIngredient?.supplierCode}
+        productInci={sampleTargetIngredient?.inci}
+        dosage={sampleTargetIngredient?.useLevel}
         supplierName="Greentech Biotechnologies"
         initialMode={enquiryMode}
+        onOpenEmailDesk={onOpenInquiry}
       />
 
       {/* Source PDF Traceability Modal (136 Pages) */}

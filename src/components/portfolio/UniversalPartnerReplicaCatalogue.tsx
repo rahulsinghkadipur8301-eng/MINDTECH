@@ -5,6 +5,7 @@ import {
 } from '../../data/allPartnersReplicaData';
 import { ReplicaProduct, ReplicaCategory } from '../../data/greentechReplicaData';
 import { CategoryLineArtIcon } from './CategoryLineArtIcon';
+import { SampleEnquiryModal } from './SampleEnquiryModal';
 import { 
   Search, 
   X, 
@@ -598,103 +599,19 @@ export const UniversalPartnerReplicaCatalogue: React.FC<UniversalPartnerReplicaC
       )}
 
       {/* Sample (100g) & Quotation Inquiry Modal */}
-      {isSampleModalOpen && sampleTargetProduct && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
-          onClick={() => setIsSampleModalOpen(false)}
-        >
-          <div 
-            className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 text-left shadow-2xl relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setIsSampleModalOpen(false)}
-              className="absolute top-5 right-5 text-gray-400 hover:text-gray-700 cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="space-y-1">
-              <span className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider">
-                {enquiryMode === 'quotation' ? 'Commercial Price Quotation' : 'Official Certified Sample Requisition'}
-              </span>
-              <h3 className="text-xl font-black text-gray-900">
-                {enquiryMode === 'quotation'
-                  ? `Request Quotation: ${sampleTargetProduct.name}`
-                  : `Request Certified Sample (100g): ${sampleTargetProduct.name}`}
-              </h3>
-              <p className="text-xs text-gray-500">
-                Directly handled with Mr. Ajay Patel (Sales Head). Includes certified batch COA, TDS &amp; GST commercial billing from Bawana Hub.
-              </p>
-            </div>
-
-            {/* Mode Switcher */}
-            <div className="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-gray-100 border border-gray-200 text-xs">
-              <button
-                type="button"
-                onClick={() => setEnquiryMode('sample')}
-                className={`py-2 px-3 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
-                  enquiryMode === 'sample' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                <Package className="w-3.5 h-3.5" />
-                <span>Certified Sample (100g)</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setEnquiryMode('quotation')}
-                className={`py-2 px-3 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
-                  enquiryMode === 'quotation' ? 'bg-[#072414] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                <Receipt className="w-3.5 h-3.5" />
-                <span>Request Quotation</span>
-              </button>
-            </div>
-
-            <div className="p-3 bg-emerald-50 rounded-xl text-xs space-y-1">
-              <span className="font-bold text-emerald-950 block">Selected Grade / Ingredient:</span>
-              <p className="text-gray-700 font-mono">{sampleTargetProduct.name} — {sampleTargetProduct.inci}</p>
-              <p className="text-gray-500">Recommended Dosage: {sampleTargetProduct.dosage}</p>
-            </div>
-
-            <div className="pt-2 flex flex-col gap-2.5">
-              <a
-                href={`https://wa.me/918368947579?text=${encodeURIComponent(
-                  enquiryMode === 'quotation'
-                    ? `Hi Ajay Patel, please share a commercial GST quotation (MOQ, pack size pricing & lead time) plus CoA/TDS for ${sampleTargetProduct.name} (INCI: ${sampleTargetProduct.inci}) from ${activePartner.name}.`
-                    : `Hi Ajay Patel, please dispatch a certified 100g formulation sample and technical dossier (CoA & TDS) for ${sampleTargetProduct.name} (INCI: ${sampleTargetProduct.inci}) from ${activePartner.name} to our formulation lab.`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md"
-              >
-                <Send className="w-4 h-4" />
-                <span>
-                  {enquiryMode === 'quotation'
-                    ? 'Instant WhatsApp Quotation Request'
-                    : 'Instant WhatsApp Sample (100g) Request'}
-                </span>
-              </a>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setIsSampleModalOpen(false);
-                  if (onOpenInquiry) {
-                    const label = enquiryMode === 'quotation' ? 'Price Quotation Request' : 'Certified Sample (100g) Request';
-                    onOpenInquiry(`${label}: ${sampleTargetProduct.name} (${sampleTargetProduct.inci}) [${activePartner.shortName}]`);
-                  }
-                }}
-                className="w-full py-2.5 rounded-full bg-[#072414] hover:bg-emerald-900 text-white font-bold text-xs transition-colors cursor-pointer"
-              >
-                {enquiryMode === 'quotation' ? 'Continue Quotation via Contact Desk' : 'Continue Sample (100g) via Contact Desk'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <SampleEnquiryModal
+        isOpen={isSampleModalOpen && Boolean(sampleTargetProduct)}
+        onClose={() => {
+          setIsSampleModalOpen(false);
+          setSampleTargetProduct(null);
+        }}
+        productName={sampleTargetProduct?.name}
+        productInci={sampleTargetProduct?.inci}
+        dosage={sampleTargetProduct?.dosage}
+        supplierName={activePartner.name}
+        initialMode={enquiryMode}
+        onOpenEmailDesk={onOpenInquiry}
+      />
 
     </div>
   );

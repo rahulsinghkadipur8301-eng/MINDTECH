@@ -19,7 +19,7 @@ function videoUploadPlugin(): Plugin {
         const urlObj = new URL(req.url || '/', 'http://localhost:3000');
         const pathname = urlObj.pathname;
 
-        // 0. Serve Google Search Console HTML verification file directly (bypasses Vite SPA HTML fallback)
+        // 0. Serve Google Search Console HTML verification, sitemap.xml, and robots.txt directly
         if (pathname === '/googlef9ed93f9fea309d7.html' && (req.method === 'GET' || req.method === 'HEAD')) {
           const body = 'google-site-verification: googlef9ed93f9fea309d7.html';
           res.statusCode = 200;
@@ -31,6 +31,30 @@ function videoUploadPlugin(): Plugin {
             res.end(body);
           }
           return;
+        }
+
+        if (pathname === '/sitemap.xml' && (req.method === 'GET' || req.method === 'HEAD')) {
+          const sitemapPath = path.resolve(__dirname, 'public/sitemap.xml');
+          if (fs.existsSync(sitemapPath)) {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+            res.setHeader('Cache-Control', 'no-cache');
+            if (req.method === 'HEAD') res.end();
+            else res.end(fs.readFileSync(sitemapPath));
+            return;
+          }
+        }
+
+        if (pathname === '/robots.txt' && (req.method === 'GET' || req.method === 'HEAD')) {
+          const robotsPath = path.resolve(__dirname, 'public/robots.txt');
+          if (fs.existsSync(robotsPath)) {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+            res.setHeader('Cache-Control', 'no-cache');
+            if (req.method === 'HEAD') res.end();
+            else res.end(fs.readFileSync(robotsPath));
+            return;
+          }
         }
 
         // 1. Direct single-stream upload (for smaller files)

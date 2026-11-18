@@ -15,7 +15,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { FadeInSection } from './components/FadeInSection';
 import { ScrollToTop } from './components/ScrollToTop';
-import { ProductItem, ALL_PRODUCTS } from './data/supplierProductsData';
+import { ProductItem, ALL_PRODUCTS, SUPPLIER_PROFILES } from './data/supplierProductsData';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Code-split heavy partner microsites, catalogues, PDF generators & modals
@@ -30,6 +30,9 @@ const ProductDetailModal = lazy(() =>
 );
 const IngredientExplorerModal = lazy(() =>
   import('./components/IngredientExplorerModal').then((m) => ({ default: m.IngredientExplorerModal }))
+);
+const SampleEnquiryModal = lazy(() =>
+  import('./components/portfolio/SampleEnquiryModal').then((m) => ({ default: m.SampleEnquiryModal }))
 );
 
 const PageChunkFallback = () => (
@@ -47,6 +50,15 @@ export default function App() {
   const [selectedSupplierId, setSelectedSupplierId] = useState<'greentech' | 'sns-silcos' | 'fine-organics' | 'vvf-limited' | 'vvf-fine-organics' | 'general-range' | 'all-products' | null>(null);
   const [selectedBusinessLine, setSelectedBusinessLine] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+  const [enquiryModalState, setEnquiryModalState] = useState<{
+    isOpen: boolean;
+    mode: 'sample' | 'quotation';
+    productName?: string;
+    productCode?: string;
+    productInci?: string;
+    dosage?: string;
+    supplierName?: string;
+  }>({ isOpen: false, mode: 'sample' });
 
   useEffect(() => {
     const handleQuotaExceeded = () => setMapsQuotaExceeded(true);
@@ -127,8 +139,18 @@ export default function App() {
         setSelectedSupplierId('all-products');
         setSelectedBusinessLine(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (path.startsWith('/portfolio/fine-organics')) {
+        setSelectedSupplierId('fine-organics');
+        setSelectedBusinessLine(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      } else if (path.startsWith('/portfolio/vvf-limited')) {
+        setSelectedSupplierId('vvf-limited');
+        setSelectedBusinessLine(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
       } else if (path.startsWith('/suppliers/')) {
-        const id = path.replace('/suppliers/', '') as any;
+        const id = path.replace('/suppliers/', '').replace(/\/$/, '') as any;
         if (['greentech', 'sns-silcos', 'fine-organics', 'vvf-limited', 'vvf-fine-organics', 'general-range', 'all-products'].includes(id)) {
           setSelectedSupplierId(id);
           setSelectedBusinessLine(null);
@@ -155,16 +177,114 @@ export default function App() {
     };
   }, []);
 
+  // Synchronize per-page SEO metadata (<title>, description, canonical, OpenGraph, Twitter)
+  useEffect(() => {
+    const baseDomain = 'https://mindtech-bio.com';
+    const businessLineSlugMap: Record<string, string> = {
+      'Skin Care & Anti-Pigmentation': 'skin-care',
+      'Hair Care & Conditioning': 'hair-care',
+      'Sun Care & Photoprotection': 'sun-care',
+      'Color Cosmetics & Make-up': 'color-cosmetics',
+      'Bath, Body & Mild Cleansing': 'bath-body',
+      'Active Bio-Technology & Greentech': 'biotechnology',
+    };
+
+    const routeSeoMap: Record<string, { title: string; description: string; path: string }> = {
+      greentech: {
+        title: 'Greentech Biotechnologies Cosmetic Actives | Mindtech Biotechnology India',
+        description: 'Explore Greentech France natural cosmetic bio-actives, cellular longevity ingredients, and botanical oils distributed in India by Mindtech Biotechnology.',
+        path: '/portfolio/greentech',
+      },
+      'sns-silcos': {
+        title: 'SNS Silcos Specialty Silicones & Elastomers | Mindtech Biotechnology India',
+        description: 'Authorized distribution of SNS Silcos silicone fluids, elastomer gels, MQ resins, and micro-emulsions for skin care and hair care formulations in India.',
+        path: '/partners/sns-silcos',
+      },
+      'fine-organics': {
+        title: 'Fine Organics Specialty Esters & Emulsifiers | Mindtech Biotechnology India',
+        description: 'Browse Fine Organics specialty esters, bio-solubilizers, glyceryl esters, and structuring waxes supplied across India by Mindtech Biotechnology.',
+        path: '/suppliers/fine-organics',
+      },
+      'vvf-limited': {
+        title: 'VVF Limited Conditioning Agents & Syndets | Mindtech Biotechnology India',
+        description: 'Discover VVF Limited VEGAROL cationic conditioning quats, Promisoft BTMS emulsifiers, and SCI syndet bases distributed by Mindtech Biotechnology India.',
+        path: '/suppliers/vvf-limited',
+      },
+      'general-range': {
+        title: 'Mindtech General Cosmetic Ingredients Range | Mindtech Biotechnology India',
+        description: 'Specialty actives, UV filters, niacinamide, arbutin, and mild surfactants available from Mindtech Biotechnology India central Bawana warehouse.',
+        path: '/suppliers/general-range',
+      },
+      'all-products': {
+        title: 'Cosmetic & Personal Care Ingredient Portfolio | Mindtech Biotechnology India',
+        description: 'Complete multi-supplier portfolio of cosmetic ingredients from Greentech, SNS Silcos, Fine Organics, and VVF Limited at Mindtech Biotechnology India.',
+        path: '/suppliers/all-products',
+      },
+    };
+
+    let seo = {
+      title: 'Mindtech Biotechnology India | Cosmetic & Personal Care Ingredients',
+      description: 'Discover cosmetic and personal care ingredients from global partners including Greentech, SNS Silcos, VVF and Fine Organics at Mindtech Biotechnology India.',
+      path: '/',
+    };
+
+    if (selectedBusinessLine && businessLineSlugMap[selectedBusinessLine]) {
+      const slug = businessLineSlugMap[selectedBusinessLine];
+      seo = {
+        title: `${selectedBusinessLine} Ingredients | Mindtech Biotechnology India`,
+        description: `Browse verified raw materials and actives for ${selectedBusinessLine} formulations supplied across India by Mindtech Biotechnology.`,
+        path: `/business-lines/${slug}`,
+      };
+    } else if (selectedSupplierId && routeSeoMap[selectedSupplierId]) {
+      seo = routeSeoMap[selectedSupplierId];
+    }
+
+    if (selectedProduct) {
+      seo = {
+        title: `${selectedProduct.name} | Mindtech Biotechnology India`,
+        description: `${selectedProduct.name} (${selectedProduct.inci || selectedProduct.category}) — request technical datasheet (TDS), COA, or certified 100g bench sample from Mindtech Biotechnology India.`,
+        path: seo.path,
+      };
+    }
+
+    const canonicalUrl = `${baseDomain}${seo.path}`;
+    document.title = seo.title;
+
+    const setMeta = (selector: string, content: string) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute('content', content);
+    };
+
+    setMeta('meta[name="description"]', seo.description);
+    setMeta('meta[property="og:title"]', seo.title);
+    setMeta('meta[property="og:description"]', seo.description);
+    setMeta('meta[property="og:url"]', canonicalUrl);
+    setMeta('meta[name="twitter:title"]', seo.title);
+    setMeta('meta[name="twitter:description"]', seo.description);
+
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+      canonicalLink.setAttribute('href', canonicalUrl);
+    }
+  }, [selectedSupplierId, selectedBusinessLine, selectedProduct]);
+
   const handleSelectSupplier = useCallback((supplierId: 'greentech' | 'sns-silcos' | 'fine-organics' | 'vvf-limited' | 'vvf-fine-organics' | 'general-range' | 'all-products') => {
     setSelectedSupplierId(supplierId);
-    if (supplierId === 'sns-silcos') {
-      window.location.hash = '#partners/sns-silcos';
-      if (window.history && window.history.pushState) {
-        try {
-          window.history.pushState(null, '', '/partners/sns-silcos');
-        } catch {
-          // ignore if history pushState is restricted
-        }
+    setSelectedBusinessLine(null);
+    const cleanPathMap: Record<string, string> = {
+      greentech: '/portfolio/greentech',
+      'sns-silcos': '/partners/sns-silcos',
+      'fine-organics': '/suppliers/fine-organics',
+      'vvf-limited': '/suppliers/vvf-limited',
+      'general-range': '/suppliers/general-range',
+      'all-products': '/suppliers/all-products',
+    };
+    const nextPath = cleanPathMap[supplierId];
+    if (nextPath && window.history && window.history.pushState) {
+      try {
+        window.history.pushState(null, '', nextPath);
+      } catch {
+        window.location.hash = `#supplier/${supplierId}`;
       }
     } else {
       window.location.hash = `#supplier/${supplierId}`;
@@ -242,31 +362,48 @@ export default function App() {
     }
   }, [handleNavigateHome]);
 
+  const resolveSupplierLabel = useCallback((product: ProductItem) => {
+    if (product.subSupplier) return product.subSupplier;
+    return SUPPLIER_PROFILES[product.supplierId]?.name || product.supplierId;
+  }, []);
+
   const handleRequestSample = useCallback((product: ProductItem) => {
     setSelectedProduct(null);
-    setSelectedSupplierId(null);
-    setInquiryCategory(`Sample Request: ${product.name} (Code: ${product.code || 'N/A'}, Category: ${product.category}) [Supplier: ${product.supplierId}]`);
-    window.location.hash = '#contact';
-    setTimeout(() => {
-      const contactElement = document.getElementById('contact');
-      if (contactElement) {
-        contactElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  }, []);
+    setEnquiryModalState({
+      isOpen: true,
+      mode: 'sample',
+      productName: product.name,
+      productCode: product.code,
+      productInci: product.inci,
+      dosage: product.dosage,
+      supplierName: resolveSupplierLabel(product),
+    });
+  }, [resolveSupplierLabel]);
 
   const handleRequestQuote = useCallback((product: ProductItem) => {
     setSelectedProduct(null);
-    setSelectedSupplierId(null);
-    setInquiryCategory(`Quotation & TDS: ${product.name} (Code: ${product.code || 'N/A'}) [Supplier: ${product.supplierId}]`);
-    window.location.hash = '#contact';
-    setTimeout(() => {
-      const contactElement = document.getElementById('contact');
-      if (contactElement) {
-        contactElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  }, []);
+    setEnquiryModalState({
+      isOpen: true,
+      mode: 'quotation',
+      productName: product.name,
+      productCode: product.code,
+      productInci: product.inci,
+      dosage: product.dosage,
+      supplierName: resolveSupplierLabel(product),
+    });
+  }, [resolveSupplierLabel]);
+
+  const handleOpenSampleQuoteModal = useCallback(
+    (opts: { mode: 'sample' | 'quotation'; productName?: string; supplierName?: string }) => {
+      setEnquiryModalState({
+        isOpen: true,
+        mode: opts.mode,
+        productName: opts.productName,
+        supplierName: opts.supplierName || 'Mindtech Multi-Principal Portfolio',
+      });
+    },
+    []
+  );
 
   return (
     <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-white text-gray-900 selection:bg-emerald-100 selection:text-emerald-950 relative">
@@ -308,6 +445,7 @@ export default function App() {
                 onRequestSample={handleRequestSample}
                 onRequestQuote={handleRequestQuote}
                 onOpenInquiry={handleOpenInquiry}
+                onOpenSampleQuoteModal={handleOpenSampleQuoteModal}
               />
             </Suspense>
           ) : selectedSupplierId ? (
@@ -321,6 +459,7 @@ export default function App() {
                 onRequestSample={handleRequestSample}
                 onRequestQuote={handleRequestQuote}
                 onOpenInquiry={handleOpenInquiry}
+                onOpenSampleQuoteModal={handleOpenSampleQuoteModal}
               />
             </Suspense>
           ) : (
@@ -345,6 +484,7 @@ export default function App() {
                   onRequestSample={handleRequestSample}
                   onRequestQuote={handleRequestQuote}
                   onOpenInquiry={handleOpenInquiry}
+                  onOpenSampleQuoteModal={handleOpenSampleQuoteModal}
                 />
               </FadeInSection>
 
@@ -389,6 +529,22 @@ export default function App() {
               onClose={handleCloseProductModal}
               onRequestSample={handleRequestSample}
               onRequestQuote={handleRequestQuote}
+            />
+          </Suspense>
+        )}
+
+        {enquiryModalState.isOpen && (
+          <Suspense fallback={null}>
+            <SampleEnquiryModal
+              isOpen={enquiryModalState.isOpen}
+              onClose={() => setEnquiryModalState((prev) => ({ ...prev, isOpen: false }))}
+              productName={enquiryModalState.productName}
+              productCode={enquiryModalState.productCode}
+              productInci={enquiryModalState.productInci}
+              dosage={enquiryModalState.dosage}
+              supplierName={enquiryModalState.supplierName}
+              initialMode={enquiryModalState.mode}
+              onOpenEmailDesk={(customMsg) => handleOpenInquiry(customMsg)}
             />
           </Suspense>
         )}

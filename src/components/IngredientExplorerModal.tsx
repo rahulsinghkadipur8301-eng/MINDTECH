@@ -538,7 +538,7 @@ export const IngredientExplorerModal: React.FC<IngredientExplorerModalProps> = (
                       <div className="sm:border-l sm:border-emerald-800/60 sm:pl-4">
                         <span className="text-xs text-emerald-300 font-medium">Standard Pack Size Suggestion</span>
                         <div className="text-xl font-bold text-white mt-1">
-                          {((batchSizeKg * activePercentage) / 100) <= 5 ? '5 kg Lab / Pilot Carboy' : ((batchSizeKg * activePercentage) / 100) <= 25 ? '25 kg Drum / Canister' : '200 kg Commercial Drum'}
+                          {((batchSizeKg * activePercentage) / 100) <= 5 ? '1 kg – 5 kg Pack Size' : ((batchSizeKg * activePercentage) / 100) <= 50 ? '50 kg Pack Size' : '190 kg Pack Size'}
                         </div>
                         <span className="text-[11px] text-emerald-200">
                           Bawana Central Depot Stock
