@@ -151,7 +151,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
           {/* Column 1: Company Profile (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
             {/* Footer Company Identity Logo */}
-            <a href="#hero" className="inline-block py-1 group focus:outline-hidden relative" aria-label="Return to top">
+            <a href="/" onClick={(e) => { e.preventDefault(); window.history.pushState(null, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="inline-block py-1 group focus:outline-hidden relative" aria-label="Return to top">
               <div className="relative bg-white/95 px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl inline-flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:shadow-xl group-hover:shadow-emerald-500/20 group-hover:-translate-y-1 border border-emerald-900/30">
                 <Logo className="h-[88px] sm:h-[104px] lg:h-[120px] w-auto" />
               </div>
@@ -257,6 +257,20 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                   <span>VVF Limited</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/suppliers/general-range"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.history.pushState(null, '', '/suppliers/general-range');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="text-emerald-100/80 hover:text-white transition-colors flex items-center space-x-1.5"
+                >
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>General Ingredient Range</span>
                 </a>
               </li>
               <li>

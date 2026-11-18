@@ -203,6 +203,11 @@ function escapeHtml(value) {
 function buildRouteNavLinks() {
   const navRoutes = [
     { href: '/', label: 'Home' },
+    { href: '/#about', label: 'About Us' },
+    { href: '/#portfolio', label: 'Product Portfolio' },
+    { href: '/#partners', label: 'Global Partners' },
+    { href: '/#why-us', label: 'Why Choose Us' },
+    { href: '/#contact', label: 'Contact Us' },
     { href: '/portfolio/greentech', label: 'Greentech Biotechnologies' },
     { href: '/partners/sns-silcos', label: 'SNS Silcos Silicones' },
     { href: '/suppliers/fine-organics', label: 'Fine Organics Esters' },

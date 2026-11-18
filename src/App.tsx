@@ -180,7 +180,8 @@ export default function App() {
   // Synchronize per-page SEO metadata (<title>, description, canonical, robots, OpenGraph, Twitter, BreadcrumbList JSON-LD)
   useEffect(() => {
     const baseDomain = 'https://mindtech-bio.com';
-    const currentPath = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+    const rawPath = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+    const currentPath = rawPath === '/index.html' ? '/' : rawPath;
     const knownPaths = new Set([
       '/',
       '/partners/sns-silcos',
@@ -198,7 +199,7 @@ export default function App() {
       '/business-lines/bath-body',
       '/business-lines/biotechnology',
     ]);
-    const isUnknownRoute = !knownPaths.has(currentPath) && !currentPath.startsWith('/suppliers/') && !currentPath.startsWith('/business-lines/');
+    const isUnknownRoute = !knownPaths.has(currentPath);
 
     const businessLineSlugMap: Record<string, string> = {
       'Skin Care & Anti-Pigmentation': 'skin-care',

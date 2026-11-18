@@ -96,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
           top: offsetPosition,
           behavior: 'smooth'
         });
-        window.history.pushState(null, '', hash);
+        window.history.pushState(null, '', `/${hash}`);
       }, 120);
     } else if (onNavigateHome) {
       onNavigateHome(targetId);
@@ -120,7 +120,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
         top: offsetPosition,
         behavior: 'smooth'
       });
-      window.history.pushState(null, '', hash);
+      window.history.pushState(null, '', `/${hash}`);
     } else if (onNavigateHome) {
       onNavigateHome(targetId);
     }
@@ -231,7 +231,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
 
           {/* 2. ABOUT US */}
           <motion.a
-            href="#about"
+            href="/#about"
             onClick={(e) => handleNavLinkClick('#about', e)}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.96 }}
@@ -244,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
 
           {/* 3. PORTFOLIO */}
           <motion.a
-            href="#portfolio"
+            href="/#portfolio"
             onClick={(e) => handleNavLinkClick('#portfolio', e)}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.96 }}
@@ -258,7 +258,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
 
           {/* 5. GLOBAL PARTNERS */}
           <motion.a
-            href="#partners"
+            href="/#partners"
             onClick={(e) => handleNavLinkClick('#partners', e)}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.96 }}
@@ -271,7 +271,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
 
           {/* 6. WHY CHOOSE US */}
           <motion.a
-            href="#why-us"
+            href="/#why-us"
             onClick={(e) => handleNavLinkClick('#why-us', e)}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.96 }}
@@ -284,7 +284,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onNavigateHome })
 
           {/* 7. CONTACT US with Live Glass Shimmer & Pulsing Beacon */}
           <motion.a
-            href="#contact"
+            href="/#contact"
             onClick={(e) => handleNavLinkClick('#contact', e)}
             whileHover={{ y: -2, scale: 1.03 }}
             whileTap={{ scale: 0.96 }}
